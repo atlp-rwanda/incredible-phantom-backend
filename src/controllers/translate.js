@@ -1,14 +1,13 @@
 import sucessRes from '../helpers/successHandler';
 import errorRes from '../helpers/errorHandler';
-import pkg from '@google-cloud/translate';
-import dotenv from 'dotenv';
+// import {Translate} from '@google-cloud/translate';
+const { Translate } = require('@google-cloud/translate').v2;
+require('dotenv').config();
 
-dotenv.config();
-const { Translate } = pkg.v2;
-
-//Google cloud translate API credentials
+// Your credentials
 const CREDENTIALS = JSON.parse(process.env.CREDENTIALS);
 
+// Configuration for the client
 const translate = new Translate({
   credentials: CREDENTIALS,
   projectId: CREDENTIALS.project_id,
