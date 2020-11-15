@@ -12,7 +12,7 @@ app.use(json());
 
 app.get('/api', (req, res) => {
   res.status(200).json({
-    message: 'Welcome to phantom',
+    message: 'Welcome to phantom an app which is used to track buses ',
   });
 });
 
