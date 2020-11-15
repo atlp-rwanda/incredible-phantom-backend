@@ -1,5 +1,3 @@
 node_modules
 .nyc_output
 .env
-package-lock.json
-.dccache
