@@ -16,22 +16,25 @@ const spec = {
       contact: {
         name: 'Phantom',
         url: 'https://phantom-atlp.netlify.app',
-        email: 'atlpincredible@gmail.com'
-      }
+        email: 'atlpincredible@gmail.com',
+      },
     },
     servers: [
       {
-        url: 'http://localhost:3000'
+        url: 'http://localhost:3000',
       },
       {
-        url: 'https://incredible-phantom.herokuapp.com'
+        url: 'https://incredible-phantom.herokuapp.com',
       },
       {
-        url: 'https://incredible-p-feat-assig-5wnz6n.herokuapp.com/'
-      }
-    ]
+        url: 'https://incredible-p-ft-crud-fo-9mpxdj.herokuapp.com',
+      },
+      {
+        url: 'https://incredible-p-ft-assignd-satil3.herokuapp.com',
+      },
+    ],
   },
-  apis: ['./src/routers/*.js']
+  apis: ['./src/routers/*.js'],
 };
 
 const swaggerDocument = swaggerJsDoc(spec);
@@ -39,7 +42,7 @@ const swaggerDocument = swaggerJsDoc(spec);
 docRouter.use(
   '/',
   swaggerui.serve,
-  swaggerui.setup(swaggerDocument, { explorer: true })
+  swaggerui.setup(swaggerDocument, { explorer: true }),
 );
 
 export default docRouter;

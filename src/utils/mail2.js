@@ -5,7 +5,7 @@ import signToken from '../helpers/signToken';
 
 config();
 const { EMAIL, PASS, HOST } = process.env;
-const sendEmail = async (type, data = {}) => {
+const sendEmail = async (type, data = {}, busInfo) => {
   try {
     const mailGenerator = new Mailgen({
       theme: 'default',
@@ -80,6 +80,27 @@ const sendEmail = async (type, data = {}) => {
             },
             outro:
               "Remember, if you don't do it this link will expire in 1day.",
+          },
+        };
+        mailOptions.html = mailGenerator.generate(email);
+        break;
+
+      case 'assignment':
+        email = {
+          body: {
+            name: data.name,
+            intro: `You are now Assigned to bus: <h2>Brand: ${busInfo.brand}</h2><h2>Plate no: ${busInfo.plate}</h2>`,
+            outro: 'You are now driving that until futher email.',
+          },
+        };
+        mailOptions.html = mailGenerator.generate(email);
+        break;
+      case 'unassignment':
+        email = {
+          body: {
+            name: data.name,
+            intro: 'You are unassigned to the bus you were driving',
+            outro: 'You will get another email assigning you to another bus.',
           },
         };
         mailOptions.html = mailGenerator.generate(email);

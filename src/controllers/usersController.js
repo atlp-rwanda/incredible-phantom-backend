@@ -1,10 +1,6 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable consistent-return */
-/* eslint-disable no-undef */
 import bcrypt from 'bcrypt';
 import { Op } from 'sequelize';
-import jwt from 'jsonwebtoken';
-import { parse } from 'path';
+import { paginate } from 'paginate-info';
 import redisClient from '../configs/redisClient';
 import successRes from '../helpers/successHandler';
 import errorRes from '../helpers/errorHandler';
@@ -14,7 +10,7 @@ import sendEmail from '../utils/mail2';
 import hashPwd from '../helpers/pwd';
 import signToken from '../helpers/signToken';
 
-const { User, Role } = Models;
+const { User, Role, Notification } = Models;
 
 const setToken = (key, value) => Promise.resolve(redisClient.set(key, value));
 const deleteToken = (key) => Promise.resolve(redisClient.del(key));
@@ -45,33 +41,33 @@ export const register = async (req, res) => {
       password: hash,
       verficationLink: '',
       comfirmed: false,
-      resetLink: ''
+      resetLink: '',
     });
     const verficationLink = `${process.env.HOST}/api/users/verify/${user.id}`;
     const resetLink = `${process.env.HOST}/api/users/reset/${user.id}`;
 
     await User.update(
       { verficationLink, resetLink },
-      { where: { id: user.id } }
+      { where: { id: user.id } },
     );
 
     await sendEmail('verify', {
       name: user.firstName,
       email: user.email,
       id: user.id,
-      password: generatedPwd
+      password: generatedPwd,
     });
     return successRes(
       res,
       201,
       res.__('User created Successfully and email was sent'),
-      user
+      user,
     );
   } catch (error) {
     return errorRes(
       res,
       500,
-      res.__('There was an error while registering a user')
+      res.__('There was an error while registering a user'),
     );
   }
 };
@@ -84,14 +80,14 @@ export const verifyAccount = async (req, res) => {
     await sendEmail('comfirmation', {
       name: user.firstName,
       email: user.email,
-      id
+      id,
     });
     return successRes(res, 200, res.__('Successfully verfied your Email.'));
   } catch (error) {
     return errorRes(
       res,
       500,
-      res.__('There was error while verfing your Account')
+      res.__('There was error while verfing your Account'),
     );
   }
 };
@@ -99,18 +95,21 @@ export const verifyAccount = async (req, res) => {
 export const getAll = async (req, res) => {
   try {
     const userFromToken = req.user;
-    const signedUser = await User.findOne({ where: { id: userFromToken.id } });
+    const signedUser = await User.findOne({
+      where: { id: userFromToken.id },
+    });
 
     if (signedUser.role === 'operator') {
       const users = await User.findAll({ where: { role: 'driver' } });
       successRes(res, 200, res.__('Successfully got All drivers'), users);
     } else {
       const users = await User.findAll({
+        order: [['updatedAt', 'DESC']],
         where: {
           role: {
-            [Op.or]: ['operator', 'driver']
-          }
-        }
+            [Op.or]: ['operator', 'driver'],
+          },
+        },
       });
       return successRes(res, 200, res.__('Successfully got All users'), users);
     }
@@ -118,7 +117,7 @@ export const getAll = async (req, res) => {
     return errorRes(
       res,
       500,
-      res.__('There was an error while getting all a user')
+      res.__('There was an error while getting all a user'),
     );
   }
 };
@@ -137,7 +136,7 @@ export const signin = async (req, res) => {
           successRes(res, 200, res.__('Signed in successfully'), {
             id: foundUser.id,
             email: foundUser.email,
-            token
+            token,
           });
         })();
       } else {
@@ -170,7 +169,7 @@ export const forgotPassword = async (req, res) => {
       return errorRes(
         res,
         404,
-        res.__('No user found with that email address.')
+        res.__('No user found with that email address.'),
       );
     }
     const token = signToken({ email: user.email, id: user.id });
@@ -179,13 +178,13 @@ export const forgotPassword = async (req, res) => {
     await sendEmail('forgotPassword', {
       email: user.email,
       id: user.id,
-      token
+      token,
     });
     successRes(
       res,
       200,
       res.__('check your email'),
-      `${HOST}/api/users/reset/${token}`
+      `${HOST}/api/users/reset/${token}`,
     );
   } catch (error) {
     return errorRes(res, 500, res.__('error while requesting!'));
@@ -202,18 +201,18 @@ export const resetPassword = async (req, res) => {
       return errorRes(
         res,
         500,
-        res.__('Sorry. You are not allowed to reset password on that email')
+        res.__('Sorry. You are not allowed to reset password on that email'),
       );
     }
     const newPassword = await hashPwd(password);
     const updateUser = await User.update(
       { password: newPassword },
-      { where: { id: user.id } }
+      { where: { id: user.id } },
     );
     successRes(
       res,
       200,
-      res.__('your Password is reset Successfully', updateUser)
+      res.__('your Password is reset Successfully', updateUser),
     );
     const delTok = await deleteToken(token);
     if (!delTok) errorRes(res, 500, res.__('error while clearing your data'));
@@ -221,7 +220,7 @@ export const resetPassword = async (req, res) => {
     return errorRes(
       res,
       500,
-      res.__('There was an error while reseting password')
+      res.__('There was an error while reseting password'),
     );
   }
 };
@@ -243,9 +242,9 @@ export const updateProfile = async (req, res) => {
           lastName,
           role,
           phone,
-          language
+          language,
         },
-        { where: { id }, returning: true, plain: true }
+        { where: { id }, returning: true, plain: true },
       );
       const updatedResponse = updatedUser[1].dataValues;
 
@@ -256,7 +255,81 @@ export const updateProfile = async (req, res) => {
     return errorRes(
       res,
       500,
-      res.__('There was an error while updating the User')
+      res.__('There was an error while updating the User'),
     );
+  }
+};
+
+export const allNotifications = async (req, res) => {
+  const userId = req.user.id;
+  try {
+    const { page = 1, limit = 8 } = req.query;
+    const offset = (page - 1) * limit;
+    const { rows, count } = await Notification.findAndCountAll({
+      page,
+      limit,
+      order: [['updatedAt', 'DESC']],
+      where: { receiverId: userId },
+    });
+    const pagination = paginate(page, count, rows, limit);
+
+    if (offset >= count) {
+      return errorRes(res, 404, res.__('You have no notification yet'));
+    }
+
+    return successRes(res, 200, res.__('All notifications of this user'), {
+      pagination,
+      rows,
+    });
+  } catch (error) {
+    return errorRes(res, 500, res.__('Error while getting notifications'));
+  }
+};
+
+export const readOneNotification = async (req, res) => {
+  try {
+    const { notificationId } = req.params;
+    const notification = await Notification.findOne({
+      where: { id: notificationId, receiverId: req.user.id },
+    });
+    if (!notification) {
+      return errorRes(res, 404, res.__('No notification found with that id'));
+    }
+    await Notification.update(
+      { is_read: true },
+      { where: { id: notificationId, receiverId: req.user.id } },
+    );
+    successRes(
+      res,
+      200,
+      res.__('Successfully read notification'),
+      notification,
+    );
+  } catch (error) {
+    return errorRes(res, 500, res.__('Error while reading notification'));
+  }
+};
+
+export const deleteNotification = async (req, res) => {
+  try {
+    const { notificationId } = req.params;
+    const notification = await Notification.findOne({
+      where: { id: notificationId, receiverId: req.user.id },
+    });
+
+    if (!notification) {
+      return errorRes(res, 404, res.__('No notification found with that id'));
+    }
+    await Notification.destroy({
+      where: { id: notificationId, receiverId: req.user.id },
+    });
+    successRes(
+      res,
+      200,
+      res.__('Successfully Deleted notification'),
+      notification,
+    );
+  } catch (error) {
+    return errorRes(res, 500, res.__('Error while deleting  notification'));
   }
 };

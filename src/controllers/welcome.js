@@ -12,5 +12,3 @@ export default async (req, res) => {
     return errorRes(res, 500, res.__('There was error welcoming you'));
   }
 };
-
-

@@ -8,6 +8,7 @@ export default Joi.object({
   language: Joi.string().default('en'),
   phone: Joi.string().min(10).max(13),
   role: Joi.string().required(),
+  busId: Joi.number(),
   email: Joi.string()
     .required()
     .email({

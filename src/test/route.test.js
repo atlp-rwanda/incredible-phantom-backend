@@ -79,7 +79,7 @@ describe('Route testing', async () => {
       .send({ busStopId });
     expect(res.status).to.be.equal(200);
     expect(res.body.message).to.be.equal(
-      'Bus stop added to route successfully!'
+      'Bus stop added to route successfully!',
     );
   });
   it('it should delete a route', async () => {

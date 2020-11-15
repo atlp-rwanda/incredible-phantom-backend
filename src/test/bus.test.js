@@ -27,6 +27,7 @@ describe('Bus CRUD tesing', async () => {
       truncate: true,
     });
   });
+
   it('it should create a bus ', async () => {
     const token = await signIn(mockAdmin);
     const res = await chai
@@ -37,6 +38,7 @@ describe('Bus CRUD tesing', async () => {
     expect(res.status).to.be.equal(201);
     expect(res.body.message).to.be.equal('Bus created successfully.');
   });
+
   it('it should get all buses ', async () => {
     const token = await signIn(mockAdmin);
     await chai.request(app).post('/api/bus').set('auth', token).send(mockBus);
@@ -55,6 +57,7 @@ describe('Bus CRUD tesing', async () => {
     expect(res.status).to.be.equal(200);
     expect(res.body.message).to.be.equal('Bus found');
   });
+
   it('it should update a bus', async () => {
     const token = await signIn(mockAdmin);
     const res1 = await chai

@@ -7,6 +7,7 @@ import i18n from './controllers/i18n';
 import router from './routers/index';
 import successRes from './helpers/successHandler';
 import docRouter from './documentation/index';
+import socket from './utils/socket.io';
 
 config();
 
@@ -15,6 +16,7 @@ app.use(morgan('dev'));
 app.use(cors());
 app.use(json());
 app.use(express.static('public'));
+app.use(express.static('simulateSockets'));
 app.use(i18n.init);
 app.use('/api/documentation', docRouter);
 app.use('/api', router);
@@ -24,6 +26,8 @@ app.get('/', (req, res) => {
 });
 
 const port = process.env.PORT;
-app.listen(port, console.log(`Server started on port ${port}`));
+const server = app.listen(port, console.log(`Server started on port ${port}`));
+
+socket.socketFunction.socketStarter(server);
 
 export default app;

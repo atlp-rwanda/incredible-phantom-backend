@@ -7,11 +7,23 @@ import {
   forgotPassword,
   resetPassword,
   logout,
-  updateProfile
+  updateProfile,
+  allNotifications,
+  readOneNotification,
+  deleteNotification,
 } from '../controllers/usersController';
 import checktoken from '../middlewares/checktoken';
-import { isNotDriver, validateRegisterInput, validateUpdateInput } from '../middlewares/validator';
+import {
+  isNotDriver,
+  validateRegisterInput,
+  validateUpdateInput,
+} from '../middlewares/validator';
 import checkTokenreset from '../middlewares/checkpasstoken';
+import {
+  assignDriverToBus,
+  driversAssignedTobus,
+  unAssignDriverToBus,
+} from '../controllers/assignDriverTobusController';
 
 const userRouter = Router();
 /**
@@ -275,5 +287,220 @@ userRouter.post('/logout', checktoken, logout);
  * */
 userRouter.patch('/update/:id', checktoken, validateUpdateInput, updateProfile);
 
+/**
+ * @swagger
+ * /api/users/{driverId}/assignToBus:
+ *   patch:
+ *     tags:
+ *       - Assignments
+ *     name: Assign Driver to Bus
+ *     summary: Assigning drivers to buses
+ *     produces:
+ *       - application/json
+ *     consumes:
+ *       - application/json
+ *     parameters:
+ *       - name: driverId
+ *         in: path
+ *         description: Id of driver
+ *       - name: auth
+ *         in: header
+ *         description: Token you get after signin
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               busId:
+ *                  type: integer
+ *     responses:
+ *       '200':
+ *             description: Driver assigned to bus successfully.
+ *       '404':
+ *             description: User not found or not authorized
+ *       '500':
+ *             description: There was an error while assigning driver to bus
+ * */
+
+userRouter.patch(
+  '/:driverId/assignToBus',
+  checktoken,
+  isNotDriver,
+  assignDriverToBus,
+);
+
+/**
+ * @swagger
+ * /api/users/{driverId}/unassignToBus:
+ *   patch:
+ *     tags:
+ *       - Assignments
+ *     name: Unassign Driver to Bus
+ *     summary: Unassigning drivers to buses
+ *     produces:
+ *       - application/json
+ *     consumes:
+ *       - application/json
+ *     parameters:
+ *       - name: driverId
+ *         in: path
+ *         description: Id of driver
+ *       - name: auth
+ *         in: header
+ *         description: Token you get after signin
+ *     responses:
+ *       '200':
+ *             description: Driver Unassigned to bus successfully.
+ *       '404':
+ *             description: User not found or not authorized
+ *       '500':
+ *             description: There was an error while Unassigning driver to bus
+ * */
+
+userRouter.patch(
+  '/:driverId/unAssignToBus',
+  checktoken,
+  isNotDriver,
+  unAssignDriverToBus,
+);
+
+/**
+ * @swagger
+ * /api/users/driversAssignedToBuses:
+ *   get:
+ *     tags:
+ *       - Assignments
+ *     name: Get drivers at work
+ *     summary: Getting all drivers who are assigned to a certain bus
+ *     consumes:
+ *       - application/json
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: auth
+ *         in: header
+ *         description: Token you get after signin
+ *         required: true
+ *         type: string
+ *     responses:
+ *       '200':
+ *             description:  drivers fetched successfully.
+ *       '401':
+ *             description: Unauthorized.
+ *       '500':
+ *             description: There was an error while getting Drivers.
+ * */
+
+userRouter.get(
+  '/driversAssignedToBuses',
+  checktoken,
+  isNotDriver,
+  driversAssignedTobus,
+);
+
+/**
+ * @swagger
+ * /api/users/notifications:
+ *   get:
+ *     tags:
+ *       - Users
+ *     name: Get all notifications
+ *     summary: Getting all notifcations
+ *     consumes:
+ *       - application/json
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: auth
+ *         in: header
+ *         description: Token you get after signin
+ *         required: true
+ *         type: string
+ *     responses:
+ *       '200':
+ *             description:  all notification fetched successfully.
+ *       '401':
+ *             description: Unauthorized.
+ *       '500':
+ *             description: There was an error while getting All notifications.
+ * */
+userRouter.get('/notifications', checktoken, allNotifications);
+
+/**
+ * @swagger
+ * /api/users/notifications/{notificationId}:
+ *   get:
+ *     tags:
+ *       - Users
+ *     name: Get one notification
+ *     summary: Getting one notifcation
+ *     consumes:
+ *       - application/json
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: auth
+ *         in: header
+ *         description: Token you get after signin
+ *         required: true
+ *         type: string
+ *       - name: notificationId
+ *         in: path
+ *         description: Id of notification
+ *         required: true
+ *         type: integer
+ *     responses:
+ *       '200':
+ *             description: Notification fetched successfully.
+ *       '401':
+ *             description: Unauthorized.
+ *       '500':
+ *             description: There was an error while getting Notifications.
+ * */
+
+userRouter.get(
+  '/notifications/:notificationId',
+  checktoken,
+  readOneNotification,
+);
+
+/**
+ * @swagger
+ * /api/users/notifications/{notificationId}:
+ *   delete:
+ *     tags:
+ *       - Users
+ *     name: Delete  notification
+ *     summary: Delete one notifcation
+ *     consumes:
+ *       - application/json
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: auth
+ *         in: header
+ *         description: Token you get after signin
+ *         required: true
+ *         type: string
+ *       - name: notificationId
+ *         in: path
+ *         description: Id of notification
+ *         required: true
+ *         type: string
+ *     responses:
+ *       '200':
+ *             description: Notification Deleted successfully.
+ *       '401':
+ *             description: Unauthorized.
+ *       '500':
+ *             description: There was an error while deleting Notifications.
+ * */
+
+userRouter.delete(
+  '/notifications/:notificationId',
+  checktoken,
+  deleteNotification,
+);
 
 export default userRouter;

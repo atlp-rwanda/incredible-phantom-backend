@@ -1,24 +1,20 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Buses', {
+    await queryInterface.createTable('Notifications', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      brand: {
-        type: Sequelize.STRING,
-        allowNull: false,
+      is_read: {
+        type: Sequelize.BOOLEAN,
       },
-      plateNo: {
+      content: {
         type: Sequelize.STRING,
-        allowNull: false,
-        unique: true,
       },
-      seats: {
+      receiverId: {
         type: Sequelize.INTEGER,
-        defaultValue: 0,
       },
       createdAt: {
         allowNull: false,
@@ -31,6 +27,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Buses');
+    await queryInterface.dropTable('Notifications');
   },
 };
