@@ -26,7 +26,7 @@ describe('busStop API', () => {
     expect(response.status).to.be.equal(201);
     expect(response.body).to.have.property(
       'message',
-      'Bus stop created successfully'
+      'Bus stop created successfully',
     );
   });
   it('it should get all the bus stops', async () => {
@@ -64,7 +64,7 @@ describe('busStop API', () => {
     expect(response.status).to.be.equal(200);
     expect(response.body).to.have.property(
       'message',
-      'Bus stop updated successfully'
+      'Bus stop updated successfully',
     );
   });
   it('it should delete One bus stop by ID', async () => {

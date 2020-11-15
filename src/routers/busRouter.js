@@ -7,7 +7,7 @@ import {
   deleteBus,
 } from '../controllers/busControllers';
 import checkToken from '../middlewares/checktoken';
-import { isNotDriver,validateBusInput } from '../middlewares/validator';
+import { isNotDriver, validateBusInput } from '../middlewares/validator';
 
 const busRouter = Router();
 
@@ -39,8 +39,6 @@ const busRouter = Router();
  *               type: string
  *             plateNo:
  *               type: string
- *             driver:
- *               type: string
  *             seats:
  *               type: integer
  *   responses:
@@ -52,7 +50,7 @@ const busRouter = Router();
  *     description:  Internal server error
  */
 
-busRouter.post('/',validateBusInput ,checkToken, isNotDriver, createBus);
+busRouter.post('/', validateBusInput, checkToken, isNotDriver, createBus);
 /**
  * @swagger
  * /api/bus:
@@ -132,8 +130,6 @@ busRouter.get('/:id', getOneBus);
  *             brand:
  *               type: string
  *             plateNo:
- *               type: string
- *             driver:
  *               type: string
  *             seats:
  *               type: integer

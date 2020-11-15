@@ -49,6 +49,10 @@ module.exports = {
       verficationLink: {
         type: Sequelize.STRING,
       },
+      busId: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
       resetLink: {
         type: Sequelize.STRING,
       },

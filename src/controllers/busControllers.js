@@ -6,52 +6,60 @@ import model from '../database/models';
 const { Bus } = model;
 export const createBus = async (req, res) => {
   try {
-    const { plateNo }  = req.body;
+    const { plateNo, brand, seats } = req.body;
     const existingBus = await Bus.findOne({
-      where: { plateNo }
+      where: { plateNo },
     });
     if (existingBus) {
       return res.status(400).json({
         status: 400,
-        message: res.__('Bus already exists in the system.')
+        message: res.__('Bus already exists in the system.'),
       });
     }
-    const createdBus = await Bus.create(req.body);
+    const createdBus = await Bus.create({
+      plateNo,
+      brand,
+      seats,
+    });
     return res.status(201).json({
       status: 201,
       message: res.__('Bus created successfully.'),
-      Bus: createdBus
+      Bus: createdBus,
     });
   } catch (error) {
     return errorRes(
       res,
       500,
-      res.__('Internal Server Error : ') + error.message
+      res.__('Internal Server Error : ') + error.message,
     );
   }
 };
 export const getBus = async (req, res) => {
   try {
     const {
-      query: { page = 1, limit = 10 }
+      query: { page = 1, limit = 10 },
     } = req;
     const offset = (page - 1) * limit;
     const { rows, count } = await Bus.findAndCountAll({
       page,
       limit,
-      offset
+      offset,
     });
     const pagination = paginate(page, count, rows, limit);
 
     if (offset >= count) {
-      errorRes(res, 404, res.__('There are no buses registered in the system'));
+      return errorRes(
+        res,
+        404,
+        res.__('There are no buses registered in the system'),
+      );
     }
     return successRes(res, 200, pagination, rows);
   } catch (error) {
     return errorRes(
       res,
       500,
-      res.__('Internal Server Error : ') + error.message
+      res.__('Internal Server Error : ') + error.message,
     );
   }
 };
@@ -67,7 +75,7 @@ export const getOneBus = async (req, res) => {
     return errorRes(
       res,
       500,
-      res.__('Internal Server Error : ') + error.message
+      res.__('Internal Server Error : ') + error.message,
     );
   }
 };
@@ -84,7 +92,7 @@ export const updateBus = async (req, res) => {
           res,
           200,
           res.__('Bus updated successfully'),
-          updatedBus
+          updatedBus,
         );
       }
       return errorRes(res, 400, res.__('Bus not updated '));
@@ -94,7 +102,7 @@ export const updateBus = async (req, res) => {
     return errorRes(
       res,
       500,
-      res.__('Internal Server Error : ') + error.message
+      res.__('Internal Server Error : ') + error.message,
     );
   }
 };
@@ -104,14 +112,14 @@ export const deleteBus = async (req, res) => {
     const { id } = req.params;
     const deletedBus = await Bus.findOne({ where: { id } });
     const bus = await Bus.destroy({
-      where: { id }
+      where: { id },
     });
     if (bus) {
       return successRes(
         res,
         201,
         res.__('Bus deleted successfully'),
-        deletedBus
+        deletedBus,
       );
     }
     return errorRes(res, 404, res.__('Bus not found '));
@@ -119,7 +127,7 @@ export const deleteBus = async (req, res) => {
     return errorRes(
       res,
       500,
-      res.__('Internal Server Error : ') + error.message
+      res.__('Internal Server Error : ') + error.message,
     );
   }
 };

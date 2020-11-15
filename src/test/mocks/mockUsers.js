@@ -15,6 +15,10 @@ export const mockOperator = {
   email: 'operator@test.test',
   password: '123abc',
 };
+export const mockDriver = {
+  email: 'driver@test.test',
+  password: '123abc',
+};
 export const wrongPwd = {
   email: 'admin@test.test',
   password: '123ab278',
@@ -38,7 +42,6 @@ export const emptyFirstname = {
   role: 'driver',
   phone: '0785464542',
   language: 'en',
-
 };
 export const emptyLastname = {
   firstName: 'Ntare',

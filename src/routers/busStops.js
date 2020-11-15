@@ -4,7 +4,7 @@ import {
   getBusStops,
   oneStop,
   updateBusStop,
-  deleteBusStop
+  deleteBusStop,
 } from '../controllers/busStop';
 import checktoken from '../middlewares/checktoken';
 import { isNotDriver, validateBusStopInput } from '../middlewares/validator';
@@ -120,13 +120,7 @@ router.get('/:busStopId', checktoken, oneStop);
  *             description: There was an error while creating the bus stop.
  * */
 
-router.post(
-  '/',
-  checktoken,
-  validateBusStopInput,
-  isNotDriver,
-  createBusStop
-);
+router.post('/', checktoken, validateBusStopInput, isNotDriver, createBusStop);
 
 /**
  * @swagger

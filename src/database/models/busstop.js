@@ -10,16 +10,16 @@ module.exports = (sequelize, DataTypes) => {
       busStopId: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        unique: true
+        unique: true,
       },
       coordinates: { type: DataTypes.STRING, allowNull: false, unique: true },
       sector: { type: DataTypes.STRING, allowNull: false },
-      cell: { type: DataTypes.STRING, allowNull: false }
+      cell: { type: DataTypes.STRING, allowNull: false },
     },
     {
       sequelize,
-      modelName: 'busStop'
-    }
+      modelName: 'busStop',
+    },
   );
   return busStop;
 };
