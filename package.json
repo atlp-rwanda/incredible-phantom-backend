@@ -1,8 +1,10 @@
 {
   "name": "incredible-phantom-backend",
   "version": "1.0.0",
+  "description": "",
   "main": "index.js",
   "dependencies": {
+    "@babel/core": "^7.12.3",
     "@babel/node": "^7.12.6",
     "@babel/polyfill": "^7.12.1",
     "@babel/preset-env": "^7.12.1",
@@ -46,6 +48,5 @@
   "bugs": {
     "url": "https://github.com/atlp-rwanda/incredible-phantom-backend/issues"
   },
-  "homepage": "https://github.com/atlp-rwanda/incredible-phantom-backend#readme",
-  "description": ""
+  "homepage": "https://github.com/atlp-rwanda/incredible-phantom-backend#readme"
 }
