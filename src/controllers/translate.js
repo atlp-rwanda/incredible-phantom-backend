@@ -14,17 +14,19 @@ const translate = new Translate({
   projectId: CREDENTIALS.project_id,
 });
 
-
-
-const translateText = async (req,res) => {
-    var text = req.body.html;
-    let targetLanguage = req.body.language
-    try {
-        let [response] = await translate.translate(text, targetLanguage);
-        return sucessRes(res,200,response);
-    } catch (error) {
-        return errorRes(res,500,`Opps there was an error while translating Text --> ${error}`);
-    }
+const translateText = async (req, res) => {
+  var text = req.body.html;
+  let targetLanguage = req.body.language;
+  try {
+    let [response] = await translate.translate(text, targetLanguage);
+    return sucessRes(res, 200, response);
+  } catch (error) {
+    return errorRes(
+      res,
+      500,
+      `Opps there was an error while translating Text --> ${error}`,
+    );
+  }
 };
 
 export default translateText;

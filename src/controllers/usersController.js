@@ -22,7 +22,7 @@ export const register = async (req, res) => {
     } = req.body;
     if (validateUser.error) {
       console.log(validateUser.error.message);
-      return errorRes(res, 500, 'Validation error', validateUser.error);
+      errorRes(res, 500, 'Validation error', validateUser.error);
     } else {
       await bcrypt.hash(password, 10, async (err, hash) => {
         if (err) {
