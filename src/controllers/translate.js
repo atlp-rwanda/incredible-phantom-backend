@@ -14,10 +14,17 @@ const translate = new Translate({
 });
 
 const translateText = async (req, res) => {
+<<<<<<< HEAD
   const text = req.body.html;
   const targetLanguage = req.body.language;
   try {
     const [response] = await translate.translate(text, targetLanguage);
+=======
+  var text = req.body.html;
+  let targetLanguage = req.body.language;
+  try {
+    let [response] = await translate.translate(text, targetLanguage);
+>>>>>>> ch-setup(initial setup): setting up project
     return sucessRes(res, 200, response);
   } catch (error) {
     return errorRes(res, 500, `Error while translating Text --> ${error}`);
