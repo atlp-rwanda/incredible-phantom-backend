@@ -1,6 +1,5 @@
 import bcrypt from 'bcrypt';
 import { Op } from 'sequelize';
-import jwt from 'jsonwebtoken';
 import redisClient from '../configs/redisClient';
 import successRes from '../helpers/successHandler';
 import errorRes from '../helpers/errorHandler';
@@ -8,6 +7,7 @@ import Models from '../database/models';
 import generatePassword from '../utils/passwordGenerator';
 import sendEmail from '../utils/mail2';
 import hashPwd from '../helpers/pwd';
+import signToken from '../helpers/signToken';
 
 const { User, Role } = Models;
 
@@ -126,13 +126,12 @@ export const signin = async (req, res) => {
 
     await bcrypt.compare(password, foundUser.password, (err, result) => {
       if (result) {
-        const token = jwt.sign(
-          { id: foundUser.id, email: foundUser.email },
-          process.env.JWT_KEY,
-        );
+        const token = signToken({ id: foundUser.id, email: foundUser.email });
         (async () => {
           await setToken(token, foundUser.id);
           successRes(res, 200, res.__('Signed in successfully'), {
+            id: foundUser.id,
+            email: foundUser.email,
             token,
           });
         })();
@@ -153,5 +152,71 @@ export const logout = async (req, res) => {
     successRes(res, 200, res.__('Logged out successfully'));
   } catch (error) {
     return errorRes(res, 500, res.__('There was error loging out'));
+  }
+};
+
+export const forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const { HOST } = process.env;
+    const user = await User.findOne({ where: { email } });
+
+    if (!user) {
+      return errorRes(
+        res,
+        404,
+        res.__('No user found with that email address.'),
+      );
+    }
+    const token = signToken({ email: user.email, id: user.id });
+    await setToken(token, user.id);
+
+    await sendEmail('forgotPassword', {
+      email: user.email,
+      id: user.id,
+      token,
+    });
+    successRes(
+      res,
+      200,
+      res.__('check your email'),
+      `${HOST}/api/users/reset/${token}`,
+    );
+  } catch (error) {
+    return errorRes(res, 500, res.__('error while requesting!'));
+  }
+};
+
+export const resetPassword = async (req, res) => {
+  try {
+    const { email, token } = req.user;
+    const { password } = req.body;
+
+    const user = await User.findOne({ where: { email } });
+    if (!user) {
+      return errorRes(
+        res,
+        500,
+        res.__('Sorry. You are not allowed to reset password on that email'),
+      );
+    }
+    const newPassword = await hashPwd(password);
+    const updateUser = await User.update(
+      { password: newPassword },
+      { where: { id: user.id } },
+    );
+    successRes(
+      res,
+      200,
+      res.__('your Password is reset Successfully', updateUser),
+    );
+    const delTok = await deleteToken(token);
+    if (!delTok) errorRes(res, 500, res.__('error while clearing your data'));
+  } catch (error) {
+    return errorRes(
+      res,
+      500,
+      res.__('There was an error while reseting password'),
+    );
   }
 };

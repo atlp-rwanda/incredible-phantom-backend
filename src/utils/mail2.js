@@ -1,11 +1,10 @@
-import jwt from 'jsonwebtoken';
 import { config } from 'dotenv';
 import nodemailer from 'nodemailer';
 import Mailgen from 'mailgen';
+import signToken from '../helpers/signToken';
 
 config();
-const { EMAIL, PASS, JWT_KEY, HOST } = process.env;
-
+const { EMAIL, PASS, HOST } = process.env;
 const sendEmail = async (type, data = {}) => {
   try {
     const mailGenerator = new Mailgen({
@@ -15,8 +14,7 @@ const sendEmail = async (type, data = {}) => {
         link: `${process.env.HOST}`,
       },
     });
-
-    const token = jwt.sign(data, JWT_KEY, { expiresIn: '8h' });
+    const token = signToken(data);
     const transporter = nodemailer.createTransport({
       host: 'smtp.gmail.com',
       port: 587,
@@ -36,7 +34,7 @@ const sendEmail = async (type, data = {}) => {
       case 'comfirmation':
         email = {
           body: {
-            name: 'John Appleseed',
+            name: data.name,
             intro:
               'Welcome to Phantom! You have successfully Verified Your email. Enjoy Your New role',
             outro:
@@ -64,19 +62,35 @@ const sendEmail = async (type, data = {}) => {
               "Remember, if you don't do it this link will expire in 1day.",
           },
         };
-
         mailOptions.html = mailGenerator.generate(email);
         break;
-
+      case 'forgotPassword':
+        email = {
+          body: {
+            name: data.name,
+            intro: 'Your request of reseting password has been received',
+            action: {
+              instructions:
+                'Please click the button below to reset your password',
+              button: {
+                color: '#008c52',
+                text: 'Reset your password',
+                link: `${HOST}/api/users/reset/${data.token}`,
+              },
+            },
+            outro:
+              "Remember, if you don't do it this link will expire in 1day.",
+          },
+        };
+        mailOptions.html = mailGenerator.generate(email);
+        break;
       default:
         mailOptions.html = '';
     }
-
     const info = await transporter.sendMail(mailOptions);
     console.log('Preview URL:', nodemailer.getTestMessageUrl(info));
   } catch (error) {
     return console.log(error);
   }
 };
-
 export default sendEmail;

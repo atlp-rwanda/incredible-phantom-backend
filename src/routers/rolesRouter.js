@@ -87,7 +87,7 @@ rolesRouter
  *     parameters:
  *       - name: id
  *         in: path
- *         description: The id of admin
+ *         description: Id of role
  *       - name: auth
  *         in : header
  *     requestBody:
@@ -122,7 +122,7 @@ rolesRouter
  *     parameters:
  *       - name: id
  *         in: path
- *         description: The id of admin
+ *         description: Id of role
  *       - name: auth
  *         in : header
  *     responses:

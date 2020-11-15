@@ -4,10 +4,13 @@ import {
   getAll,
   signin,
   verifyAccount,
+  forgotPassword,
+  resetPassword,
   logout,
 } from '../controllers/usersController';
 import checktoken from '../middlewares/checktoken';
 import { isNotDriver, validateRegisterInput } from '../middlewares/validator';
+import checkTokenreset from '../middlewares/checkpasstoken';
 
 const userRouter = Router();
 /**
@@ -32,9 +35,9 @@ const userRouter = Router();
  *           schema:
  *             type: object
  *             properties:
- *               firstname:
+ *               firstName:
  *                 type: string
- *               lastname:
+ *               lastName:
  *                 type: string
  *               email:
  *                 type: string
@@ -115,6 +118,65 @@ userRouter
  *             description: There was an error while signing in or incorrect password.
  * */
 
+userRouter.route('/').post(register).get(getAll);
+userRouter.route('/forgot').post(forgotPassword);
+/**
+ * @swagger
+ * /api/users/forgot:
+ *   post:
+ *     tags:
+ *       - Users
+ *     name: forgot Password
+ *     summary: Forgot password
+ *     produces:
+ *       - application/json
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *
+ *     responses:
+ *       '200':
+ *             description:  check your Email!
+ *       '500':
+ *             description: error while requesting.
+ * */
+userRouter.route('/reset/:token').patch(checkTokenreset, resetPassword);
+/**
+ * @swagger
+ * /api/users/reset/{token}:
+ *   patch:
+ *     tags:
+ *       - Users
+ *     name: reset Password
+ *     summary: Reset password
+ *     produces:
+ *       - application/json
+ *     consumes:
+ *       - application/json
+ *     parameters:
+ *       - name: token
+ *         in: path
+ *         description: Token from link without Bearer
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               password:
+ *                  type: string
+ *     responses:
+ *       '200':
+ *             description:  Your Password is reseted Successfully
+ *       '500':
+ *             description: There was an error while reseting ypur password.
+ * */
+
 userRouter.post('/signin', signin);
 
 /**
@@ -132,7 +194,7 @@ userRouter.post('/signin', signin);
  *     parameters:
  *       - name: id
  *         in: path
- *         description: The id of user
+ *         description: Id of user
  *     responses:
  *       '200':
  *             description: Verified your email successfully .
@@ -143,6 +205,56 @@ userRouter.post('/signin', signin);
  * */
 
 userRouter.put('/verify/:id', verifyAccount);
+
+/**
+ * @swagger
+ * /api/users/logout:
+ *   post:
+ *     tags:
+ *       - Users
+ *     name: Logout
+ *     summary: Logout from account
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: auth
+ *         in: header
+ *         description: The token you get after signin
+ *     responses:
+ *       '200':
+ *             description: Logged out successfully .
+ *       '401':
+ *             description: User not found
+ *       '500':
+ *             description: There was an error while logging out
+ * */
+
+userRouter.post('/logout', checktoken, logout);
+
+/**
+ * @swagger
+ * /api/users/logout:
+ *   post:
+ *     tags:
+ *       - Users
+ *     name: Logout
+ *     summary: Logout from account
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: auth
+ *         in: header
+ *         description: The token you get after signin
+ *     responses:
+ *       '200':
+ *             description: Logged out successfully .
+ *       '401':
+ *             description: User not found
+ *       '500':
+ *             description: There was an error while logging out
+ * */
+
+userRouter.post('/logout', checktoken, logout);
 
 /**
  * @swagger

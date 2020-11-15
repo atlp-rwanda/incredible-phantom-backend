@@ -17,12 +17,13 @@ app.use(json());
 app.use(express.static('public'));
 app.use(i18n.init);
 app.use('/api/documentation', docRouter);
+app.use('/api', router);
 
 app.get('/', (req, res) => {
   successRes(res, 200, res.__('Welcome to Phantom'));
 });
 
-app.use('/api', router);
+
 
 const port = process.env.PORT;
 app.listen(port, console.log(`Server started on port ${port}`));

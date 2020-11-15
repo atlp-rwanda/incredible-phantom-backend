@@ -2,6 +2,11 @@
   "Welcome to Phantom": "Murakza neza kuri Phantom",
   "Welcome to phantom an app which is used to track buses": "Murakza neza kuri phantom igufasha kureba ingendo za bus yawe",
   "There was error welcoming you": "Hari ikibazo cyagateganyo kivutse mugiha turi kubaramutsa",
+  "No user found with that email address.": "Imeri yawe ntibashije kuboneka",
+  "check your email": "Reba muri Imeri yawe",
+  "error while requesting!": "Habaye ikibazo mugusaba!",
+  "Sorry!No user found with that email address.": "Ihangane! Nta mukoresha wabonetse ufite iyo aderesi imeri",
+  "your Password is reset Successfully": "Ijambobanga ryawe ryasubiwemo neza",
   "Please sign in as admin": "Injira nka admin",
   "You are not allowed. Check Your token": "Ntago ubyemerewe, reba ko token yawe yuzuye",
   "Not authorized. No token provided": "Nta token watanze",
@@ -30,5 +35,10 @@
   "error while clearing your data": "Habayemo ikibazo mugisiba ibikwerekeyeho",
   "Logged out successfully": "Byagenze neza mwavuye kuri Phantom",
   "There was error loging out": "Habayemo ikibazo mukuva muri  Phantom",
-  "There was error while verfing your Account": "Habayemo ikibazo turi kwemeza conti yawe"
+  "There was error while verfing your Account": "Habayemo ikibazo turi kwemeza conti yawe",
+  "There was an error while reseting password": "Habayemo ikibazo turi guhindura ijambobanga ryawe",
+  "No token received": "Ntaruhashya rwakiriwe",
+  "No user found with that token": "Ntamuntu wanditse ufite urwo ruhushya",
+  "Not authorized, check your token": "Ntago ubyemerewe reba uruhushya rwawe",
+  "Sorry. You are not allowed to reset password on that email": "Mwihangane. Ntago mwemerewe gukora iki gikorwa kuri iyi email"
 }

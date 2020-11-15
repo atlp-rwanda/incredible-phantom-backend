@@ -24,7 +24,7 @@ const siginIn = async (user) => {
 describe('Users Related Tests', async () => {
   beforeEach(async () => {
     await User.destroy({
-      where: { email: { [Op.not]: ['admin@gmail.com', 'operator@gmail.com'] } },
+      where: { email: { [Op.not]: ['admin@test.test', 'operator@test.test'] } },
     });
     await Role.destroy({
       where: {},
@@ -33,7 +33,7 @@ describe('Users Related Tests', async () => {
   });
   afterEach(async () => {
     await User.destroy({
-      where: { email: { [Op.not]: ['admin@gmail.com', 'operator@gmail.com'] } },
+      where: { email: { [Op.not]: ['admin@test.test', 'operator@test.test'] } },
     });
   });
 
@@ -76,7 +76,6 @@ describe('Users Related Tests', async () => {
       .post('/api/users')
       .send(mockUser)
       .set('auth', token);
-
     expect(res.status).to.be.equal(201);
     expect(res.body).to.have.property(
       'message',
@@ -123,7 +122,6 @@ describe('Users Related Tests', async () => {
     const res = await request(app).put(
       `/api/users/verify/${res1.body.data.id}`,
     );
-    console.log('THIS MY CONSOLE', res.body);
     expect(res.status).to.be.equal(200);
     expect(res.body).to.have.property(
       'message',
@@ -139,5 +137,32 @@ describe('Users Related Tests', async () => {
       .set('auth', token);
     expect(res.status).to.be.equal(200);
     expect(res.body).to.have.property('message', 'Logged out successfully');
+  });
+
+  it('Should test forgot and reset password reset', async () => {
+    const token = await siginIn(mockAdmin);
+
+    await chai
+      .request(app)
+      .post('/api/roles')
+      .send({ role: 'operator' })
+      .set('auth', token);
+
+    const res = await chai
+      .request(app)
+      .post('/api/users')
+      .send(mockUser)
+      .set('auth', token);
+
+    const res1 = await request(app).post('/api/users/forgot').send({
+      email: res.body.data.email,
+    });
+
+    const resetToken = res1.body.data.split('reset/')[1];
+    const res2 = await chai
+      .request(app)
+      .patch(`/api/users/reset/${resetToken}`)
+      .send({ password: 'newpassword' });
+    expect(res2.status).to.be.equal(200);
   });
 });
