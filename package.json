@@ -19,6 +19,9 @@
     "nyc": "^15.1.0",
     "path": "^0.12.7",
     "sinon": "^9.2.1",
+    "pg": "^8.5.1",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^6.3.5",
     "swagger-ui-express": "^4.1.4",
     "translate": "^1.1.2"
   },
@@ -27,7 +30,8 @@
     "chai-http": "^4.3.0",
     "mocha": "^8.2.1",
     "@babel/cli": "^7.12.1",
-    "@babel/core": "^7.12.3"
+    "@babel/core": "^7.12.3",
+    "sequelize-cli": "^6.2.0"
   },
   "scripts": {
     "dev": "nodemon --exec babel-node src ",
