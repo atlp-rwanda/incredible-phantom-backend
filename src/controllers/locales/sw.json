@@ -1,4 +1,14 @@
 {
-  "Welcome to Phantom": "Karibu kwenye phantom",
-  "Welcome to phantom an app which is used to track buses": "Karibu kwenye phantom programu ambayo hutumiwa kufuatilia mabasi"
+  "Welcome to phantom": "Karibu kwenye phantom",
+  "No user found with that email address.": "Hakuna mtumiaji aliyepatikana na anwani hii ya barua pepe",
+  "check your email": "angalia barua pepe yako",
+  "error while requesting!": "kosa wakati wa kuomba!",
+  "Sorry!No user found with that email address.": "Samahani! Hakuna mtumiaji aliyepatikana na anwani hiyo ya barua pepe",
+  "your Password is reseted Successfully": "Nenosiri lako limewekwa upya kwa Ufanisi",
+  "Welcome to phantom an app which is used to track buses": "Karibu kwenye phantom programu ambayo hutumiwa kufuatilia mabasi",
+  "There was an error while reseting password": "Kulikuwa na hitilafu wakati wa kuweka upya nenosiri",
+  "No token received": "Hakuna ishara iliyopokelewa",
+  "No user found with that token": "Hakuna mtumiaji aliyepatikana na ishara hiyo",
+  "Not authorized, check your token": "Haijaruhusiwa, angalia tokeni yako",
+  "Sorry. You are not allowed to reset password on that email": "Samahani. Hauruhusiwi kuweka upya nywila kwenye barua pepe hiyo"
 }

@@ -12,6 +12,6 @@ export default Joi.object({
     .required()
     .email({
       minDomainSegments: 2,
-      tlds: { allow: ['com', 'net', 'rw', 'co'] },
+      tlds: { allow: ['com', 'net', 'rw', 'co', 'test'] },
     }),
 });

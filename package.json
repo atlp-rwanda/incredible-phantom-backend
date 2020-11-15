@@ -7,10 +7,12 @@
     "@babel/cli": "^7.12.8",
     "@babel/core": "^7.12.9",
     "@babel/node": "^7.12.6",
+    "@babel/plugin-transform-runtime": "^7.12.10",
     "@babel/polyfill": "^7.12.1",
     "@babel/preset-env": "^7.12.7",
     "@babel/register": "^7.12.1",
     "@google-cloud/translate": "^6.0.3",
+    "@sendgrid/mail": "^7.4.0",
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
@@ -27,7 +29,6 @@
     "mocha": "^8.2.1",
     "morgan": "^1.10.0",
     "nodemailer": "^6.4.16",
-    "nodemon": "^2.0.6",
     "nyc": "^15.1.0",
     "path": "^0.12.7",
     "pg": "^8.5.1",
@@ -42,20 +43,26 @@
     "chai-http": "^4.3.0"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "cross-env": "^7.0.2",
     "eslint": "^7.13.0",
     "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-plugin-import": "^2.22.1"
+    "eslint-plugin-import": "^2.22.1",
+    "mocha": "^8.2.1",
+    "nodemon": "^2.0.6",
+    "sequelize-cli": "^6.2.0"
   },
   "scripts": {
     "dev": "nodemon --exec babel-node src ",
     "migrate": "sequelize db:migrate",
     "migrate:undo": "sequelize db:migrate:undo",
     "seed": "npm run migrate:undo && npm run migrate && npx sequelize db:seed:undo:all && npx sequelize db:seed:all",
-    "seed:test": "NODE_ENV=test npm run seed",
+    "seed:test": "cross-env NODE_ENV=test npm run seed",
     "build": "babel ./src --out-dir build",
     "start": "npm run seed && npm run build && node build",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
-    "test": "npm run seed:test && NODE_ENV=test mocha --timeout 20000 ./src/test/**.js --require @babel/register --exit",
+    "test": "npm run seed:test && cross-env NODE_ENV=test mocha --timeout 40000 ./src/test/**.js --require @babel/register --exit",
     "coverage": "nyc npm run test"
   },
   "repository": {

@@ -4,7 +4,7 @@ module.exports = {
       {
         firstName: 'Admin',
         lastName: 'Doe',
-        email: 'admin@gmail.com',
+        email: 'admin@test.test',
         nationalId: 1197000000000000,
         password:
           '$2b$10$8WdnrCR8QypWwkOP2aDTOeA.nRa695r8oZWqEQX6EiV8egzT0vfqW',
@@ -20,7 +20,7 @@ module.exports = {
       {
         firstName: 'Driver',
         lastName: 'Check',
-        email: 'driver@gmail.com',
+        email: 'driver@test.test',
         nationalId: 1198000000000000,
         password:
           '$2b$10$8WdnrCR8QypWwkOP2aDTOeA.nRa695r8oZWqEQX6EiV8egzT0vfqW',
@@ -36,7 +36,7 @@ module.exports = {
       {
         firstName: 'Operator',
         lastName: 'lastone',
-        email: 'operator@gmail.com',
+        email: 'operator@test.test',
         nationalId: 1199000000000000,
         password:
           '$2b$10$8WdnrCR8QypWwkOP2aDTOeA.nRa695r8oZWqEQX6EiV8egzT0vfqW',

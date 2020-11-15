@@ -30,5 +30,13 @@
   "error while clearing your data": "erreur lors de la suppression de vos données",
   "Logged out successfully": "Déconnexion réussie",
   "There was error loging out": "Une erreur s'est produite lors de la déconnexion",
-  "There was error while verfing your Account": "Une erreur s'est produite lors de la vérification de votre compte"
+  "There was error while verfing your Account": "Une erreur s'est produite lors de la vérification de votre compte",
+  "There was an error while reseting password": "Une erreur s'est produite lors de la réinitialisation du mot de passe",
+  "No token received": "jeton no recue",
+  "No user found with that token": "Aucun utilisateur trouvé avec ce jeton",
+  "Not authorized, check your token": "Non autorisé, vérifiez votre token",
+  "No user found with that email address.": " Aucun utilisateur trouvé avec cette adresse e-mail.",
+  "Sorry. You are not allowed to reset password on that email": "Désolé. Vous n'êtes pas autorisé à réinitialiser le mot de passe sur cet e-mail",
+  "check your email": "vérifiez votre email",
+  "your Password is reset Successfully": "votre mot de passe est réinitialisé avec succès"
 }
