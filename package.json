@@ -1,22 +1,26 @@
 {
   "name": "incredible-phantom-backend",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "dependencies": {
-    "@babel/core": "^7.12.3",
     "@babel/node": "^7.12.6",
     "@babel/polyfill": "^7.12.1",
     "@babel/preset-env": "^7.12.1",
     "@babel/register": "^7.12.1",
+    "@google-cloud/translate": "^6.0.3",
+    "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.6",
-    "swagger-ui-express": "^4.1.4"
+    "swagger-ui-express": "^4.1.4",
+    "translate": "^1.1.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.3"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon --exec babel-node src ",
@@ -31,5 +35,6 @@
   "bugs": {
     "url": "https://github.com/atlp-rwanda/incredible-phantom-backend/issues"
   },
-  "homepage": "https://github.com/atlp-rwanda/incredible-phantom-backend#readme"
+  "homepage": "https://github.com/atlp-rwanda/incredible-phantom-backend#readme",
+  "description": ""
 }
