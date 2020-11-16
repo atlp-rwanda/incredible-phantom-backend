@@ -13,4 +13,5 @@ const welcome = async (req, res) => {
   }
 };
 
+
 export default welcome;

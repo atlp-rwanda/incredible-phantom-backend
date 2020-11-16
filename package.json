@@ -1,23 +1,39 @@
 {
   "name": "incredible-phantom-backend",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "dependencies": {
-    "@babel/core": "^7.12.3",
     "@babel/node": "^7.12.6",
     "@babel/polyfill": "^7.12.1",
     "@babel/preset-env": "^7.12.1",
     "@babel/register": "^7.12.1",
+    "@google-cloud/translate": "^6.0.3",
+    "body-parser": "^1.19.0",
     "cors": "^2.8.5",
+    "coveralls": "^3.1.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "jsdom": "^16.4.0",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.6",
+<<<<<<< HEAD
     "sinon": "^9.2.1",
-    "swagger-ui-express": "^4.1.4"
+=======
+    "path": "^0.12.7",
+>>>>>>> dc3d3c5... Changing languages from user input
+    "swagger-ui-express": "^4.1.4",
+    "translate": "^1.1.2",
+    "sinon": "^9.2.1",
+    "nyc": "^15.1.0"
+
+    
   },
   "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "mocha": "^8.2.1",
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.3",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "mocha": "^8.2.1"
@@ -25,7 +41,10 @@
   "scripts": {
     "dev": "nodemon --exec babel-node src ",
     "start": "babel-node src",
-    "test": "mocha ./src/test/test.js --require @babel/register --exit"
+    "coveralls": "nyc report --reporter=text-lcov | coveralls",
+    "test": "mocha ./src/test/test.js --require @babel/register --exit",
+    "coverage":"nyc npm run test"
+
   },
   "repository": {
     "type": "git",
@@ -36,5 +55,6 @@
   "bugs": {
     "url": "https://github.com/atlp-rwanda/incredible-phantom-backend/issues"
   },
-  "homepage": "https://github.com/atlp-rwanda/incredible-phantom-backend#readme"
+  "homepage": "https://github.com/atlp-rwanda/incredible-phantom-backend#readme",
+  "description": ""
 }
