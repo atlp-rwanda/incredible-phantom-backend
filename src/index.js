@@ -14,6 +14,7 @@ app.use(morgan('dev'));
 app.use(cors());
 app.use(json());
 app.use(bodyParser.urlencoded({extended : true}));
+app.use(express.static('public'));
 
 app.use('/api/documentation', swagger.serve, swagger.setup(swaggerDoc));
 
