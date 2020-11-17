@@ -64,7 +64,6 @@ const userRouter = Router();
  *     summary: Getting all Users(Admin  and operator are allowed only)
  *     produces:
  *       - application/json
-
  *     parameters:
  *       - name: auth
  *         in: header

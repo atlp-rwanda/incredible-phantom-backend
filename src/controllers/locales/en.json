@@ -1,4 +1,12 @@
 {
-  "Welcome to phantom an app which is used to track buses": "Welcome to phantom an app which is used to track buses",
-  "There was error welcoming you": "There was error welcoming you"
+	"bus stop not found :(": "bus stop not found :(",
+	"Bus stop created successfully": "Bus stop created successfully",
+	"bus stop not found": "bus stop not found",
+	"All routes": "All routes",
+	"Route already exists": "Route already exists",
+	"One of the routes has the same information": "One of the routes has the same information",
+	"One route": "One route",
+	"Route not found :(": "Route not found :(",
+	"Welcome to phantom an app which is used to track buses": "Welcome to phantom an app which is used to track buses",
+	"No created busStops , Please add one": "No created busStops , Please add one"
 }

@@ -53,7 +53,6 @@ const rolesRouter = Router();
  *     summary: Getting all Role(Admin is allowed only)
  *     produces:
  *       - application/json
-
  *     parameters:
  *       - name: auth
  *         in: header

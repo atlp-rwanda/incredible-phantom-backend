@@ -24,16 +24,10 @@ const spec = {
         url: 'http://localhost:3000',
       },
       {
-        url: 'https://incredible-phantom.herokuapp.com',
+        url: 'https://incredible-phantomapp-heroku.herokuapp.com',
       },
       {
         url: 'https://incredible-p-ft-registe-3svvwj.herokuapp.com',
-      },
-      {
-        url: 'https://incredible-p-j7srcz5l-f-poejwu.herokuapp.com/',
-      },
-      {
-        url: 'https://incredible-p-j7srcz5l-f-vf2qkg.herokuapp.com/',
       },
     ],
   },

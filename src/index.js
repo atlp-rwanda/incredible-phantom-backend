@@ -13,11 +13,14 @@ const app = express();
 app.use(morgan('dev'));
 app.use(cors());
 app.use(json());
+app.use(express.static('public'));
+
 app.use(i18n.init);
+
 app.use('/api/documentation', docRouter);
 
 app.get('/', (req, res) => {
-  res.status(200).json('Welcome to Phantom ');
+  res.status(200).json(res.__('Welcome to Phantom '));
 });
 
 app.use('/api', router);

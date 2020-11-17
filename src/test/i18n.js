@@ -22,7 +22,7 @@ describe('Testing translations', () => {
     expect(res.status).to.be.equal(200);
     expect(res.body).to.have.property(
       'message',
-      'Murakza neza kuri phantom igufasha kureba ingendo za bus yawe',
+      'Murakaza neza kuri phantom igufasha kureba ingendo zose za bus yawe mubiganza byawe!',
     );
   });
 });
