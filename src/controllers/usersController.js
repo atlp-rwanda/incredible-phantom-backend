@@ -15,7 +15,6 @@ export const register = async (req, res) => {
   if (!validRole) errorRes(res, 404, `Role ${req.body.role} is not allowed`);
 
   try {
-<<<<<<< HEAD
     const userFromToken = req.user;
     const signedUser = await User.findOne({ where: { id: userFromToken.id } });
 
@@ -23,39 +22,6 @@ export const register = async (req, res) => {
       if (req.body.role === 'operator') {
         return errorRes(res, 401, 'Please sign in as admin');
       }
-=======
-    const validateUser = RegisterValidator.validate(req.body);
-    const {
-      firstName,
-      lastName,
-      email,
-      phone,
-      language,
-      nationalId,
-      password,
-      role,
-    } = req.body;
-    if (validateUser.error) {
-      console.log(validateUser.error.message);
-      errorRes(res, 500, 'Validation error', validateUser.error);
-    } else {
-      await bcrypt.hash(password, 10, async (err, hash) => {
-        if (err) {
-          errorRes(res, 500, 'error while hashing password');
-        }
-        const user = await User.create({
-          firstName,
-          lastName,
-          nationalId,
-          email,
-          language,
-          password: hash,
-          phone,
-          role,
-        });
-        return successRes(res, 201, 'User created Successfully', user);
-      });
->>>>>>> ch-setup(initial setup): setting up project
     }
 
     const generatedPwd = generatePassword();
