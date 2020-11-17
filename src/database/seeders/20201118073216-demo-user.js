@@ -10,9 +10,12 @@ module.exports = {
         phone: '073222222',
         language: 'en',
         role: 'admin',
+<<<<<<< HEAD
         comfirmed: false,
         verficationLink: '',
         resetLink: '',
+=======
+>>>>>>> feat(authentication):signin
         createdAt: new Date(),
         updatedAt: new Date(),
       },

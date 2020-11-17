@@ -4,7 +4,6 @@ import welcome from '../controllers/welcome';
 import translate from '../controllers/translate';
 import rolesRouter from './rolesRouter';
 import userRouter from './usersRouter';
-import path from 'path';
 import translation from '../controllers/i18n';
 
 const router = Router();

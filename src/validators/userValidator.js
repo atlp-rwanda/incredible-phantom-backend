@@ -8,6 +8,7 @@ export const RegisterValidator = Joi.object({
   language: Joi.string(),
   phone: Joi.string().min(10).max(13),
   role: Joi.string().required(),
+  language: Joi.string().default('en'),
   email: Joi.string()
     .required()
     .email({

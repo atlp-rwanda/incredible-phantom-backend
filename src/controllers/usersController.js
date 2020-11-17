@@ -1,58 +1,101 @@
 import bcrypt from 'bcrypt';
+import { Op } from 'sequelize';
 import jwt from 'jsonwebtoken';
 import successRes from '../helpers/successHandler';
 import errorRes from '../helpers/errorHandler';
 import Models from '../database/models';
-import { RegisterValidator } from '../validators/userValidator';
+import generatePassword from '../utils/passwordGenerator';
+import sendEmail from '../utils/mail2';
+import { hashPwd } from '../helpers/pwd';
 
-const { User } = Models;
+const { User, Role } = Models;
 
 export const register = async (req, res) => {
+  const validRole = await Role.findOne({ where: { role: req.body.role } });
+  if (!validRole)
+    return errorRes(res, 404, `Role ${req.body.role} is not allowed`);
+
   try {
-    const validateUser = RegisterValidator.validate(req.body);
-    const {
-      firstName,
-      lastName,
-      email,
-      phone,
-      language,
-      nationalId,
-      password,
-      role,
-    } = req.body;
-    if (validateUser.error) {
-      console.log(validateUser.error.message);
-      errorRes(res, 500, 'Validation error', validateUser.error);
-    } else {
-      await bcrypt.hash(password, 10, async (err, hash) => {
-        if (err) {
-          errorRes(res, 500, 'error while hashing password');
-        }
-        const user = await User.create({
-          firstName,
-          lastName,
-          nationalId,
-          email,
-          language,
-          password: hash,
-          phone,
-          role,
-        });
-        return successRes(res, 201, 'User created Successfully', user);
-      });
+    const userFromToken = req.user;
+    const signedUser = await User.findOne({ where: { id: userFromToken.id } });
+
+    if (signedUser.role === 'operator') {
+      if (req.body.role === 'operator') {
+         errorRes(res, 401, 'Please sign in as admin');
+      }
     }
+
+    const generatedPwd = generatePassword();
+    const hash = await hashPwd(generatedPwd);
+    const user = await User.create({
+      ...req.body,
+      password: hash,
+      verficationLink: '',
+      comfirmed: false,
+      resetLink: '',
+    });
+    const verficationLink = `http://localhost:${process.env.PORT}/api/users/verify/${user.id}`;
+    const resetLink = `http://localhost:${process.env.PORT}/api/users/reset/${user.id}`;
+
+    await User.update(
+      { verficationLink, resetLink },
+      { where: { id: user.id } },
+    );
+
+    await sendEmail('verify', {
+      name: user.firstName,
+      email: user.email,
+      id: user.id,
+      password: generatedPwd,
+    });
+    return successRes(
+      res,
+      201,
+      'User created Successfully and email was sent',
+      user,
+    );
   } catch (error) {
-    console.log(error);
     return errorRes(res, 500, 'There was an error while registering a user');
+  }
+};
+
+export const verifyAccount = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findOne({ where: { id } });
+    await User.update({ comfirmed: true }, { where: { id } });
+    await sendEmail('comfirmation', {
+      name: user.firstName,
+      email: user.email,
+      id,
+    });
+    return successRes(res, 200, 'Successfully verfied your Email.');
+  } catch (error) {
+    return errorRes(res, 500, 'There was error while verfing your Account');
   }
 };
 
 export const getAll = async (req, res) => {
   try {
-    const users = await User.findAll();
-    successRes(res, 200, 'Successfully got All users', users);
+    const userFromToken = req.user;
+    const signedUser = await User.findOne({ where: { id: userFromToken.id } });
+
+    if (signedUser.role === 'operator') {
+      const users = await User.findAll({ where: { role: 'driver' } });
+      return successRes(res, 200, 'Successfully got All drivers', users);
+    } else {
+      const users = await User.findAll({
+        where: {
+          role: {
+            [Op.or]: ['operator', 'driver'],
+          },
+        },
+      });
+      successRes(res, 200, 'Successfully got All users', users);
+    }
   } catch (error) {
-    errorRes(res, 500, 'There was an error while getting all a user');
+    console.log(error);
+    return errorRes(res, 500, 'There was an error while getting all a user');
   }
 };
 
@@ -68,7 +111,7 @@ export const signin = async (req, res) => {
           const token = jwt.sign(
             { id: foundUser.id, email: foundUser.email },
             process.env.JWT_KEY,
-            { expiresIn: '4h' },
+            { expiresIn: '8h' },
           );
           successRes(res, 200, 'Signed in successfullt', {
             token,
