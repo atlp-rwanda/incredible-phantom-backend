@@ -29,12 +29,6 @@ const spec = {
       {
         url: 'https://incredible-p-ft-registe-3svvwj.herokuapp.com',
       },
-      {
-        url: 'https://incredible-p-j7srcz5l-f-poejwu.herokuapp.com/',
-      },
-      {
-        url: 'https://incredible-p-j7srcz5l-f-vf2qkg.herokuapp.com/',
-      },
     ],
   },
   apis: ['./src/routers/*.js'],

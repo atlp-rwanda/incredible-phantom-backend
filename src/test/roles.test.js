@@ -96,7 +96,6 @@ describe('roles Related Tests', async () => {
   it('Should Get all roles as Admin', async () => {
     const token = await siginIn(mockAdmin);
     const res = await chai.request(app).get('/api/roles').set('auth', token);
-    console.log('RESPONSE', res);
     expect(res.status).to.be.equal(200);
     expect(res.body).to.have.property('message', 'Successfully got All roles');
   });

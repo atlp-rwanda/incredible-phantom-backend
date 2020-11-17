@@ -1,3 +1,30 @@
 {
-    "Welcome to Phantom" : "Murakaza nexa kuri Phantom"
+	"Welcome to Phantom ": "Murakaza neza kuri phantom",
+	"Welcome to phantom an app which is used to track buses": "Murakaza neza kuri phantom igufasha kureba ingendo zose za bus yawe mubiganza byawe!",
+	"All routes": "Imihanda yose",
+	"Internal server error : ": "Ikibazo kivutse muri seriveri ya phantom :",
+	"No created routes , Please add one": "Ntamihanda yashizwemo, Musabwe kubanza kuyishiramo",
+	"Route created successfully":"Umuhanda wanditswe muri sisteme birakozwe",
+	"Route already exists":"Umuhanda usanzwe uri muri sisteme",
+	"Route not found :(":"Ntamuhanda ubonetse :(",
+	"One route":"Umuhanda umwe",
+	"Route updated successfully":"Umuhanda uhinduwe imyirondoro yabwo",
+	"One of the routes has the same information":"Hari umuhanda wundi ufite iyo myirondoro",
+	"Route deleted":"Umuhanda urasibwe birakozwe",
+	"Bus stop added to route successfully!":"Iyi arete bus yongewe kuruwo muhanda",
+	"Bus stop already exists on that route":"Iyi arete bus isanzwe iri kuruwo muhanda!",
+	"There is no route corresponding to that ID":"Ntamuhanda ufite iyo ID ubashijwe kuboneka",
+	"There is no matching bus stops":"Nta arete bus ifite iyo ID ibashije kuboneka",
+	"Neither bus stop ID or route ID does not exists":"Reba imyirondoro y'umuhanda cyangwa se arete bus washizemo urebe niba bijyanye",
+	"Bus stop created successfully":"Arete bus yanditswe muri system birakozwe",
+	"Bus stop already exists":"Arete bus isanzwe iri muri system",
+	"No created busStops , Please add one":"Nta arete bus ziri muri system, Musabwe kuzishiramo",
+	"All busStops":"Arete bus zose",
+	"bus stop not found :(":"Arete bus nabwo ibonetse :(",
+	"One bus stop":"Arete bus imwe",
+	"Bus stop updated successfully":"Arete bus ihinduwe imyirondoro yayo birakozwe",
+	"One of the bus stops has the same information":"Imwe muri arete bus isanzwe ifite iyo myirondoro",
+	"bus stop deleted":"Arete bus irasibwe"
+
+
 }
