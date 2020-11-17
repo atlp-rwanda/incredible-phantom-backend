@@ -5,6 +5,7 @@ import translation from '../controllers/i18n';
 const router = Router();
 
 router.get('/', welcome);
-router.get('/translate', translation);
+router.post('/translate', translate);
+router.use('/users', userRouter);
 
 export default router;

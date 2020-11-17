@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 require('@babel/register');
+=======
+>>>>>>> bc24fbc... feat(authentication):signin
 const path = require('path')
 
 module.exports = {
