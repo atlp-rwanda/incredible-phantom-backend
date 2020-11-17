@@ -29,6 +29,10 @@ router.use('/users', userRouter);
 router.use('/roles', rolesRouter);
 router.get('/translate', translation);
 
+<<<<<<< HEAD
+=======
+router.post('/translate', translate);
+>>>>>>> feat(authentication):signin
 router.use('/users', userRouter);
 
 export default router;

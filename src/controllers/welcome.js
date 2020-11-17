@@ -9,6 +9,10 @@ export default async (req, res) => {
       'Welcome to phantom an app which is used to track buses',
     );
   } catch (error) {
+    res.status(500).json({
+      message: 'There was error welcoming you',
+    });
+
     return errorRes(res, 500, 'There was error welcoming you');
   }
 };
