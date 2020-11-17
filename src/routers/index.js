@@ -1,12 +1,9 @@
 import { Router } from 'express';
-import welcome from '../controllers/welcome';
-import translate from '../controllers/translate'
-import path from 'path'
 
+import welcome from '../controllers/welcome';
 
 const router = Router();
 
-router.get('/', welcome);
-router.post('/translate', translate);
+router.use('/', welcome);
 
 export default router;
