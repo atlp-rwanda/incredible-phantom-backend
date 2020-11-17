@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import { Op } from 'sequelize';
 import jwt from 'jsonwebtoken';
+import redisClient from '../configs/redisClient';
 import successRes from '../helpers/successHandler';
 import errorRes from '../helpers/errorHandler';
 import Models from '../database/models';
@@ -9,6 +10,10 @@ import sendEmail from '../utils/mail2';
 import hashPwd from '../helpers/pwd';
 
 const { User, Role } = Models;
+
+const setToken = (key, value) => {
+  Promise.resolve(redisClient.set(key, value));
+};
 
 export const register = async (req, res) => {
   const validRole = await Role.findOne({ where: { role: req.body.role } });
@@ -109,12 +114,14 @@ export const signin = async (req, res) => {
         const token = jwt.sign(
           { id: foundUser.id, email: foundUser.email },
           process.env.JWT_KEY,
-          { expiresIn: '8h' },
         );
-        successRes(res, 200, 'Signed in successfullt', {
-          token,
-          user: foundUser,
-        });
+        (async () => {
+          await setToken(token, foundUser.id);
+          successRes(res, 200, 'Signed in successfullt', {
+            token,
+            user: foundUser,
+          });
+        })();
       } else {
         return errorRes(res, 500, 'Incorrect password');
       }

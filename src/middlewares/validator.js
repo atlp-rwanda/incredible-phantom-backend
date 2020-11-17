@@ -6,6 +6,7 @@ const { User } = Models;
 export const validateRegisterInput = (req, res, next) => {
   const { error } = RegisterValidator.validate(req.body);
   if (error) {
+    console.log(error);
     return errorRes(res, 500, 'Validation error', validateRegisterInput.error);
   }
   return next();

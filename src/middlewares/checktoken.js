@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken';
+import redisClient from '../configs/redisClient';
 import errorRes from '../helpers/errorHandler';
 import Models from '../database/models';
 
@@ -9,16 +9,14 @@ export default async (req, res, next) => {
 
     if (!token) return errorRes(res, 401, 'Please login first');
 
-    const decoded = jwt.verify(token, process.env.JWT_KEY);
+    redisClient.get(token, async (err, reply) => {
+      if (err || !reply) errorRes(res, 401, 'Not Authorized');
+      const user = await User.findOne({ where: { id: reply } });
 
-    if (!decoded) return errorRes('Unauthorized');
-
-    const user = await User.findOne({ where: { id: decoded.id } });
-
-    if (!user) return errorRes(res, 404, 'User Not Authorized');
-    req.user = decoded;
-
-    return next();
+      if (!user) return errorRes(res, 404, 'User Not Authorized');
+      req.user = user;
+      return next();
+    });
   } catch (error) {
     return errorRes(res, 401, 'Not Authorized');
   }

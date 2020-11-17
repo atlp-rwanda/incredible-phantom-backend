@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-'use strict';
->>>>>>> ch-CRUD-role
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('Roles', {

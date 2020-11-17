@@ -62,13 +62,16 @@ const userRouter = Router();
  *       - Users
  *     name: Get all
  *     summary: Getting all Users(Admin  and operator are allowed only)
+ *     consumes:
+ *       - application/json
  *     produces:
  *       - application/json
-
  *     parameters:
  *       - name: auth
  *         in: header
  *         description: Token you get after signin
+ *         required: true
+ *         type: string
  *     responses:
  *       '200':
  *             description:  Users fetched successfully.
