@@ -7,6 +7,7 @@ install:
   - npm install
 
 notifications:
+
   email: false
 services:
   - postgresql
@@ -18,3 +19,26 @@ script:
   - npm run coverage
 after_success:
   - npm run coveralls
+
+  email: false
+services:
+  - postgresql
+before_script:
+  - psql -c 'create database phantom_test;' -U postgres
+  - npm run build
+script:
+  - npm run test
+  - "npm ci"
+  - "npm run coverage"
+
+after_success:
+  - npm run coveralls
+after_success: 
+  - "npm run coveralls"
+before_script: 
+  - "psql -c 'create database phantom_test;' -U postgres"
+env: 
+  - PORT=3000
+
+  
+

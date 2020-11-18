@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "Welcome to Phantom": "Welcome to phantom",
   "Welcome to phantom an app which is used to track buses": "Welcome to phantom an app which is used to track buses",
   "There was error welcoming you": "There was error welcoming you",
@@ -34,3 +35,7 @@
   "Validation error: lastName is required": "Validation error: lastName is required",
   "There was error while verfing your Account": "There was error while verfing your Account"
 }
+=======
+	"\n     <h1>PHANTOM</h1>\n     <h3>Track your buses movement</h3>\n     <p>This app will help you track bus movements at the tips of your hands</p>\n    ": "\n     <h1>PHANTOM</h1>\n     <h3>Track your buses movement</h3>\n     <p>This app will help you track bus movements at the tips of your hands</p>\n    "
+}
+>>>>>>> ft(assign-buses): assign buses to their respective routes

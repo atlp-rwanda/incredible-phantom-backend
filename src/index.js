@@ -22,7 +22,11 @@ app.get('/', (req, res) => {
   successRes(res, 200, res.__('Welcome to Phantom'));
 });
 
+app.get('/', (req, res) => {
+  res.status(200).json('Welcome to Phantom ');
+});
 app.use('/api', router);
+app.use(bus);
 
 const port = process.env.PORT;
 app.listen(port, console.log(`Server started on port ${port}`));

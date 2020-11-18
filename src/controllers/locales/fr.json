@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "Welcome to Phantom": "Bienvenue dans Phantom",
   "Welcome to phantom an app which is used to track buses": "Bienvenue dans Phantom, une application utilisée pour suivre les bus",
   "There was error welcoming you": "Une erreur s'est produite lors de la bienvenue",
@@ -32,3 +33,7 @@
   "There was error loging out": "Une erreur s'est produite lors de la déconnexion",
   "There was error while verfing your Account": "Une erreur s'est produite lors de la vérification de votre compte"
 }
+=======
+	"\n     <h1>PHANTOM</h1>\n     <h3>Track your buses movement</h3>\n     <p>This app will help you track bus movements at the tips of your hands</p>\n    ": "\n     <h1>PHANTOM</h1>\n     <h3>Suivez le mouvement de vos bus</h3>\n     <p>Cette application vous aidera à suivre les mouvements des bus au bout de vos mains</p>\n    "
+}
+>>>>>>> ft(assign-buses): assign buses to their respective routes

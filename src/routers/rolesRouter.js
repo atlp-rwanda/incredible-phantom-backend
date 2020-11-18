@@ -1,12 +1,12 @@
-import { Router } from 'express';
+import { Router } from "express";
 import {
   createRole,
   ReadRole,
   UpdateRole,
   DeleteRole,
-} from '../controllers/RolesController';
-import checkToken from '../middlewares/checktoken';
-import { isNotDriver, isNotOperator } from '../middlewares/validator';
+} from "../controllers/RolesController";
+import checkToken from "../middlewares/checktoken";
+import { isNotDriver, isNotOperator } from "../middlewares/validator";
 
 const rolesRouter = Router();
 
@@ -68,7 +68,7 @@ const rolesRouter = Router();
  * */
 
 rolesRouter
-  .route('/')
+  .route("/")
   .post(checkToken, isNotOperator, isNotDriver, createRole)
   .get(checkToken, isNotOperator, isNotDriver, ReadRole);
 
@@ -135,7 +135,7 @@ rolesRouter
  * */
 
 rolesRouter
-  .route('/:id')
+  .route("/:id")
   .patch(checkToken, isNotDriver, isNotDriver, UpdateRole)
   .delete(checkToken, isNotOperator, isNotDriver, DeleteRole);
 

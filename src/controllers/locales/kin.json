@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "Welcome to Phantom": "Murakza neza kuri Phantom",
   "Welcome to phantom an app which is used to track buses": "Murakza neza kuri phantom igufasha kureba ingendo za bus yawe",
   "There was error welcoming you": "Hari ikibazo cyagateganyo kivutse mugiha turi kubaramutsa",
@@ -32,3 +33,7 @@
   "There was error loging out": "Habayemo ikibazo mukuva muri  Phantom",
   "There was error while verfing your Account": "Habayemo ikibazo turi kwemeza conti yawe"
 }
+=======
+	"\n     <h1>PHANTOM</h1>\n     <h3>Track your buses movement</h3>\n     <p>This app will help you track bus movements at the tips of your hands</p>\n    ": "\n     <h1>PHANTOM</h1>\n     <h3>Track your buses movement</h3>\n     <p>This app will help you track bus movements at the tips of your hands</p>\n    "
+}
+>>>>>>> ft(assign-buses): assign buses to their respective routes
