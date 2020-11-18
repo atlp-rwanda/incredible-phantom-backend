@@ -21,6 +21,6 @@ app.use('/api/documentation', swagger.serve, swagger.setup(swaggerDoc));
 app.use('/api', router);
 
 const port = process.env.PORT;
-app.listen(3000, console.log(`Server started on port ${port}`));
+app.listen(port, console.log(`Server started on port ${port}`));
 
 export default app;
