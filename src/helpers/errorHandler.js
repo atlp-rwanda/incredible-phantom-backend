@@ -1,8 +1,8 @@
-const successRes = (res, status, message) => {
+const errorRes = (res, status, message) => {
   res.status(status).json({
-    success: true,
+    success: false,
     message,
   });
 };
 
-export default successRes;
+export default errorRes;
