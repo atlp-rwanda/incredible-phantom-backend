@@ -1,14 +1,21 @@
-import { Router } from 'express';
-import {
-  register,
-  getAll,
-  signin,
-  verifyAccount,
-} from '../controllers/usersController';
-import checktoken from '../middlewares/checktoken';
-import { isNotDriver, validateRegisterInput } from '../middlewares/validator';
+"use strict";
 
-const userRouter = Router();
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _express = require("express");
+
+var _usersController = require("../controllers/usersController");
+
+var _checktoken = _interopRequireDefault(require("../middlewares/checktoken"));
+
+var _validator = require("../middlewares/validator");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+var userRouter = (0, _express.Router)();
 /**
  * @swagger
  * /api/users:
@@ -22,11 +29,7 @@ const userRouter = Router();
  *     consumes:
  *       - application/json
  *     parameters:
-<<<<<<< HEAD
- *       - name: auth
-=======
  *       - name: Authorization
->>>>>>> cff9d91... ft(register): Register users, roles & permission
  *         in: header
  *         description: Token you get after signin
  *     requestBody:
@@ -70,11 +73,7 @@ const userRouter = Router();
  *       - application/json
 
  *     parameters:
-<<<<<<< HEAD
- *       - name: auth
-=======
  *       - name: Authorization
->>>>>>> cff9d91... ft(register): Register users, roles & permission
  *         in: header
  *         description: Token you get after signin
  *     responses:
@@ -86,51 +85,11 @@ const userRouter = Router();
  *             description: There was an error while getting Users.
  * */
 
-userRouter
-  .route('/')
-
-  .post(checktoken, isNotDriver, validateRegisterInput, register)
-  .get(checktoken, isNotDriver, getAll);
-
-<<<<<<< HEAD
+userRouter.route('/').post(_checktoken["default"], _validator.isNotDriver, _validator.validateRegisterInput, _usersController.register).get(_checktoken["default"], _validator.isNotDriver, _usersController.getAll);
+userRouter.post('/signin', _usersController.signin);
 /**
  * @swagger
- * /api/users/signin:
- *   post:
- *     tags:
- *       - Users
- *     name: Signin
- *     summary:
- *     produces:
- *       - application/json
- *     requestBody:
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               email:
- *                 type: string
- *               password:
- *                 type: string
- *     responses:
- *       '200':
- *             description:  Signed in successfully
- *       '500':
- *             description: There was an error while signing in or incorrect password.
- * */
-
-=======
->>>>>>> cff9d91... ft(register): Register users, roles & permission
-userRouter.post('/signin', signin);
-
-/**
- * @swagger
-<<<<<<< HEAD
- * /api/users/verify/{id}:
-=======
  * /api/users/verify/{userId}:
->>>>>>> cff9d91... ft(register): Register users, roles & permission
  *   put:
  *     tags:
  *       - Users
@@ -153,6 +112,6 @@ userRouter.post('/signin', signin);
  *             description: There was an error while comfirming your account
  * */
 
-userRouter.put('/verify/:id', verifyAccount);
-
-export default userRouter;
+userRouter.put('/verify/:id', _usersController.verifyAccount);
+var _default = userRouter;
+exports["default"] = _default;

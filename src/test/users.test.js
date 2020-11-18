@@ -48,7 +48,10 @@ describe('Users Related Tests', async () => {
 
   it('Should Get all Users as Admin', async () => {
     const token = await siginIn(mockAdmin);
-    const res = await chai.request(app).get('/api/users').set('auth', token);
+    const res = await chai
+      .request(app)
+      .get('/api/users')
+      .set('Authorization', token);
     expect(res.status).to.be.equal(200);
     expect(res.body).to.have.property('message', 'Successfully got All users');
   });
