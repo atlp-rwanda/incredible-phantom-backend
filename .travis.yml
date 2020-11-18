@@ -1,21 +1,19 @@
-language: node_js
-
 sudo: false
 
-node_js:  
-      - 'stable'
-
-  
-
-# install:
-#       - npm ci
-      
-env:
-  - PORT=3000
-
-script:
-  - npm ci
-  - npm test
+language: node_js
+node_js:
+  - 'stable'
+install:
+  - npm install
 
 notifications:
   email: false
+services:
+  - postgresql
+before_script:
+  - psql -c 'create database phantom_test;' -U postgres
+  - npm run build
+script:
+  - npm run test
+after_success:
+  - npm run coveralls
