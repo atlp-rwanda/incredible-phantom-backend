@@ -6,7 +6,7 @@ const welcome = async (req, res) => {
     return sucessRes(
       res,
       200,
-      'Welcome to phantom an app which is used to track buses',
+      res.__('Wlcm'),
     );
   } catch (error) {
     return errorRes(res, 500, 'There was error welcoming you');

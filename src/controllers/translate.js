@@ -16,8 +16,8 @@ const translate = new Translate({
 
 
 const translateText = async (req,res) => {
-    var text = req.body.html;
-    let targetLanguage = req.body.language
+    var text = "The best";
+    let targetLanguage = "kin"
     try {
         let [response] = await translate.translate(text, targetLanguage);
         return sucessRes(res,200,response);

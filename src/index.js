@@ -6,6 +6,7 @@ import swaggerDoc from '../documentation/swaggerDoc.json';
 import { config } from 'dotenv';
 import router from './routers/index';
 import bodyParser from 'body-parser';
+import i18n from './i18n'
 
 config();
 
@@ -15,6 +16,7 @@ app.use(cors());
 app.use(json());
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(express.static('public'));
+app.use(i18n.init)
 
 app.use('/api/documentation', swagger.serve, swagger.setup(swaggerDoc));
 
