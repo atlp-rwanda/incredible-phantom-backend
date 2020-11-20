@@ -1,13 +1,14 @@
 import sucessRes from '../helpers/successHandler';
 import errorRes from '../helpers/errorHandler';
-// import {Translate} from '@google-cloud/translate';
-const { Translate } = require('@google-cloud/translate').v2;
-require('dotenv').config();
+import pkg from '@google-cloud/translate';
+import dotenv from 'dotenv';
 
-// Your credentials
+dotenv.config();
+const { Translate } = pkg.v2;
+
+//Google cloud translate API credentials
 const CREDENTIALS = JSON.parse(process.env.CREDENTIALS);
 
-// Configuration for the client
 const translate = new Translate({
     credentials: CREDENTIALS,
     projectId: CREDENTIALS.project_id
@@ -22,7 +23,7 @@ const translateText = async (req,res) => {
         let [response] = await translate.translate(text, targetLanguage);
         return sucessRes(res,200,response);
     } catch (error) {
-        return errorRes(res,500,`Error while translating Text --> ${error}`);
+        return errorRes(res,500,`Opps there was an error while translating Text --> ${error}`);
     }
 };
 
