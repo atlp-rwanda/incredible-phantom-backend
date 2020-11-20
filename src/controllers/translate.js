@@ -48,7 +48,6 @@ export default translateText
 
 
 
-
 // const detectLanguage = async (text) => {
 
 //     try {
