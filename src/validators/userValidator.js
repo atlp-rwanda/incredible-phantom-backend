@@ -7,7 +7,6 @@ export default Joi.object({
   nationalId: Joi.number().min(16).required(),
   phone: Joi.string().min(10).max(13),
   role: Joi.string().required(),
-  language: Joi.string().default('en'),
   email: Joi.string()
     .required()
     .email({
