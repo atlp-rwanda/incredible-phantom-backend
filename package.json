@@ -10,6 +10,7 @@
     "@babel/preset-env": "^7.12.1",
     "@babel/register": "^7.12.1",
     "@google-cloud/translate": "^6.0.3",
+    "@sendgrid/mail": "^7.4.0",
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
@@ -17,44 +18,47 @@
     "dotenv": "^8.2.0",
     "eslint-plugin-prettier": "^3.1.4",
     "express": "^4.17.1",
-<<<<<<< HEAD
+
     "i18n": "^0.13.2",
-=======
->>>>>>> feat(authentication):signin
+
     "joi": "^17.3.0",
     "jsdom": "^16.4.0",
     "jsonwebtoken": "^8.5.1",
+    "mailgen": "^2.0.14",
     "morgan": "^1.10.0",
+    "nodemailer": "^6.4.16",
     "nodemon": "^2.0.6",
     "nyc": "^15.1.0",
     "path": "^0.12.7",
-    "sinon": "^9.2.1",
     "pg": "^8.5.1",
     "pg-hstore": "^2.3.3",
     "sequelize": "^6.3.5",
+    "sinon": "^9.2.1",
     "swagger-ui-express": "^4.1.4",
     "translate": "^1.1.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.1",
+
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "mocha": "^8.2.1",
-<<<<<<< HEAD
-=======
-    "@babel/cli": "^7.12.1",
+
+
     "@babel/core": "^7.12.3",
->>>>>>> feat(authentication):signin
+
+ 
     "eslint": "^7.13.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
     "sequelize-cli": "^6.2.0"
+    
   },
   "scripts": {
     "dev": "nodemon --exec babel-node src ",
     "start": "babel-node src",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
-    "test": "mocha ./src/test/test.js --require @babel/register --exit",
+    "test": "NODE_ENV=test mocha --timeout 20000 ./src/test/**.js --require @babel/register --exit",
     "coverage": "nyc npm run test",
     "migrate": "sequelize db:migrate",
     "migrate:undo": "sequelize db:migrate:undo"
