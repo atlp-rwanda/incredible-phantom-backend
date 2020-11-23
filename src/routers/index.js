@@ -1,12 +1,13 @@
 import { Router } from 'express';
 import welcome from '../controllers/welcome';
-import translate from '../controllers/translate'
 import path from 'path'
+import translation from '../controllers/i18n'
 
 
 const router = Router();
 
 router.get('/', welcome);
-router.post('/translate', translate);
+router.get('/translate' , translation);
+
 
 export default router;
