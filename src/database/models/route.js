@@ -1,7 +1,9 @@
 'use strict';
-import { Model } from 'sequelize';
+import pkg from 'sequelize';
+const { Model } = pkg;
+
 module.exports = (sequelize, DataTypes) => {
-  class Users extends Model {
+  class Route extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,16 +13,13 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   };
-  Users.init({
-    firstName: DataTypes.STRING,
-    lastName: DataTypes.STRING,
-    email: DataTypes.STRING,
-    nationalId: DataTypes.BIGINT,
-    role: DataTypes.STRING,
-    phone: DataTypes.BIGINT
+  Route.init({
+    start: { type : DataTypes.STRING, allowNull : true },
+    end: { type : DataTypes.STRING, allowNull : true },
+    distance: { type : DataTypes.STRING, allowNull : true }
   }, {
     sequelize,
-    modelName: 'Users',
+    modelName: 'Route',
   });
-  return Users;
+  return Route;
 };
