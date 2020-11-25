@@ -5,6 +5,7 @@ import swagger from 'swagger-ui-express';
 import swaggerDoc from '../documentation/swaggerDoc.json';
 import { config } from 'dotenv';
 import router from './routers/index';
+import routes from './routers/routes';
 import bodyParser from 'body-parser';
 
 config();
@@ -19,6 +20,7 @@ app.use(express.static('public'));
 app.use('/api/documentation', swagger.serve, swagger.setup(swaggerDoc));
 
 app.use('/api', router);
+app.use('/route' , routes);
 
 const port = process.env.PORT;
 app.listen(port, console.log(`Server started on port ${port}`));
