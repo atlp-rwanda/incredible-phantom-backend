@@ -4,25 +4,20 @@ import successRes from '../helpers/successHandler';
 import errorRes from '../helpers/errorHandler';
 import Models from '../database/models';
 import userValidationSchema from '../validators/userValidator';
+import generatePassword from '../utils/passwordGenerator';
 
 const { User } = Models;
 
 export const register = async (req, res) => {
   try {
     const validateUser = userValidationSchema.validate(req.body);
-    const {
-      firstName,
-      lastName,
-      email,
-      nationalId,
-      phone,
-      password,
-      role,
-    } = req.body;
+    const { firstName, lastName, email, nationalId, phone, role } = req.body;
     if (validateUser.error) {
       errorRes(res, 500, 'Validation error', validateUser.error);
     } else {
-      await bcrypt.hash(password, 10, async (err, hash) => {
+      const generatedPwd = generatePassword();
+
+      await bcrypt.hash(generatedPwd, 10, async (err, hash) => {
         if (err) {
           errorRes(res, 500, 'error while hashing password');
         }
@@ -36,6 +31,7 @@ export const register = async (req, res) => {
           role,
           language: 'en',
         });
+
         return successRes(res, 201, 'User created Successfully', user);
       });
     }

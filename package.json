@@ -10,6 +10,7 @@
     "@babel/preset-env": "^7.12.1",
     "@babel/register": "^7.12.1",
     "@google-cloud/translate": "^6.0.3",
+    "@sendgrid/mail": "^7.4.0",
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
