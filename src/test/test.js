@@ -14,5 +14,6 @@ describe('API testing', () => {
         const res = await chai.request(app).get('/api');
         expect(res.status).to.be.equal(200);
         expect(res.body).to.have.property('message', 'Welcome to phantom an app which is used to track buses');
-    });
+    })
+    
 });
