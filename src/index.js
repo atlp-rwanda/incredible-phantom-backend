@@ -1,5 +1,5 @@
 import '@babel/polyfill';
-
+import i18n from './controllers/i18n'
 import express, { json } from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
@@ -14,7 +14,7 @@ app.use(morgan('dev'));
 app.use(cors());
 app.use(json());
 app.use(express.static('public'));
-
+app.use(i18n.init);
 app.use('/api/documentation', docRouter);
 
 app.get('/', (req, res) => {
