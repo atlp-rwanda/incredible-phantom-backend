@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+'use strict';
+>>>>>>> ch-CRUD-role
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('Roles', {
@@ -5,7 +9,11 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
+<<<<<<< HEAD
         type: Sequelize.INTEGER,
+=======
+        type: Sequelize.INTEGER
+>>>>>>> ch-CRUD-role
       },
       role: {
         type: Sequelize.STRING,

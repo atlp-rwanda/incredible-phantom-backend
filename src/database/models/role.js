@@ -1,5 +1,11 @@
 'use strict';
+<<<<<<< HEAD
 const { Model } = require('sequelize');
+=======
+const {
+  Model
+} = require('sequelize');
+>>>>>>> ch-CRUD-role
 module.exports = (sequelize, DataTypes) => {
   class Role extends Model {
     /**
