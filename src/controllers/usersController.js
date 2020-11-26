@@ -3,24 +3,26 @@ import jwt from 'jsonwebtoken';
 import successRes from '../helpers/successHandler';
 import errorRes from '../helpers/errorHandler';
 import Models from '../database/models';
-import userValidationSchema from '../validators/userValidator';
+import { RegisterValidator } from '../validators/userValidator';
 
 const { User } = Models;
 
 export const register = async (req, res) => {
   try {
-    const validateUser = userValidationSchema.validate(req.body);
+    const validateUser = RegisterValidator.validate(req.body);
     const {
       firstName,
       lastName,
       email,
-      nationalId,
       phone,
+      language,
+      nationalId,
       password,
       role,
     } = req.body;
     if (validateUser.error) {
-      errorRes(res, 500, 'Validation error', validateUser.error);
+      console.log(validateUser.error.message);
+      return errorRes(res, 500, 'Validation error', validateUser.error);
     } else {
       await bcrypt.hash(password, 10, async (err, hash) => {
         if (err) {
@@ -29,17 +31,18 @@ export const register = async (req, res) => {
         const user = await User.create({
           firstName,
           lastName,
-          email,
           nationalId,
+          email,
+          language,
           password: hash,
           phone,
           role,
-          language: 'en',
         });
         return successRes(res, 201, 'User created Successfully', user);
       });
     }
   } catch (error) {
+    console.log(error);
     return errorRes(res, 500, 'There was an error while registering a user');
   }
 };
