@@ -19,4 +19,8 @@ const userValidationSchema = Joi.object({
       tlds: { allow: ['com', 'net', 'rw', 'co'] },
     }),
 });
+
+
+
+
 export default userValidationSchema;

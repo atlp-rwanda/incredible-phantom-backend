@@ -5,6 +5,8 @@ import { config } from 'dotenv';
 import swagger from 'swagger-ui-express';
 import swaggerDoc from '../documentation/swaggerDoc.json';
 import router from './routers/index';
+import nodemailer from 'nodemailer';
+
 
 config();
 

@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import crypto from 'crypto'
 import successRes from '../helpers/successHandler';
 import errorRes from '../helpers/errorHandler';
 import Models from '../database/models';
@@ -105,6 +106,16 @@ export const signin = async (req, res) => {
       });
     }
   } catch (error) {
-    errorRes(res, 500, 'There was error while signining in');
+   return errorRes(res, 500, 'There was error while signining in');
   }
 };
+
+export const forgotPassword= async  (req, res)=> {
+  const email = req.body.email
+ const user=await User.findOne({ email: email })
+
+  if (!user) {
+  return errorRes(res, 'No user found with that email address.')
+  }
+
+}
