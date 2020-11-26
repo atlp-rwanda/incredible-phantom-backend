@@ -5,6 +5,7 @@ import errorRes from '../helpers/errorHandler';
 import Models from '../database/models';
 import userValidationSchema from '../validators/userValidator';
 import generatePassword from '../utils/passwordGenerator';
+import sendEmail from '../utils/mail2';
 
 const { User } = Models;
 
@@ -13,9 +14,11 @@ export const register = async (req, res) => {
     const validateUser = userValidationSchema.validate(req.body);
     const { firstName, lastName, email, nationalId, phone, role } = req.body;
     if (validateUser.error) {
+      // console.log(validateUser.error);
       errorRes(res, 500, 'Validation error', validateUser.error);
     } else {
       const generatedPwd = generatePassword();
+      console.log('This is a password', generatedPwd);
 
       await bcrypt.hash(generatedPwd, 10, async (err, hash) => {
         if (err) {
@@ -31,8 +34,19 @@ export const register = async (req, res) => {
           role,
           language: 'en',
         });
+        const sent = await sendEmail('verify', {
+          name: user.firstName,
+          email: user.email,
+          id: user.id,
+          password: generatedPwd,
+        });
 
-        return successRes(res, 201, 'User created Successfully', user);
+        return successRes(
+          res,
+          201,
+          'User created Successfully and email was sent',
+          user,
+        );
       });
     }
   } catch (error) {
@@ -61,7 +75,7 @@ export const signin = async (req, res) => {
           const token = jwt.sign(
             { id: foundUser.id, email: foundUser.email },
             process.env.JWT_KEY,
-            { expiresIn: '4h' },
+            { expiresIn: '8h' },
           );
           successRes(res, 200, 'Signed in successfullt', {
             token,
