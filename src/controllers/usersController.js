@@ -14,15 +14,14 @@ export const register = async (req, res) => {
     const validateUser = userValidationSchema.validate(req.body);
     const { firstName, lastName, email, nationalId, phone, role } = req.body;
     if (validateUser.error) {
-      // console.log(validateUser.error);
-      errorRes(res, 500, 'Validation error', validateUser.error);
+      return errorRes(res, 500, 'Validation error', validateUser.error);
     } else {
       const generatedPwd = generatePassword();
       console.log('This is a password', generatedPwd);
 
       await bcrypt.hash(generatedPwd, 10, async (err, hash) => {
         if (err) {
-          errorRes(res, 500, 'error while hashing password');
+          return errorRes(res, 500, 'error while hashing password');
         }
         const user = await User.create({
           firstName,
@@ -34,7 +33,7 @@ export const register = async (req, res) => {
           role,
           language: 'en',
         });
-        const sent = await sendEmail('verify', {
+        await sendEmail('verify', {
           name: user.firstName,
           email: user.email,
           id: user.id,
@@ -54,12 +53,31 @@ export const register = async (req, res) => {
   }
 };
 
+export const verifyAccount = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ where: { email } });
+    sendEmail('comfirmation', {
+      name: user.name,
+      email: user.email,
+      id: user.id,
+    });
+    return successRes(
+      res,
+      200,
+      'Successfully verfied your Email. Check your email to get Comfirmation message.',
+    );
+  } catch (error) {
+    return errorRes(res, 500, 'There was error while verfing your Account');
+  }
+};
+
 export const getAll = async (req, res) => {
   try {
     const users = await User.findAll();
     successRes(res, 200, 'Successfully got All users', users);
   } catch (error) {
-    errorRes(res, 500, 'There was an error while getting all a user');
+    return errorRes(res, 500, 'There was an error while getting all a user');
   }
 };
 

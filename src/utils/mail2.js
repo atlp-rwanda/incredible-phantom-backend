@@ -25,7 +25,7 @@ const sendEmail = async (type, data = {}) => {
 
     switch (type) {
       case 'comfirmation':
-        mailOptions.html = `<h1>Welcome to Phantom  ${data.name}, Your confimation was received. </h1> <p>you can now login to your using this password: <b>${data.password}</b></p>`;
+        mailOptions.html = `<h1>Welcome to Phantom  ${data.name}, Your confimation was received. Enjoy your new role</h1>`;
         break;
       case 'verify':
         mailOptions.html = `<b>verify your email</b> <a href='http://localhost:${PORT}/users/verify/${token}'>click here to verify your Account</a><h2>Remember if you dont do it this link will expire in 1day</h2></p>`;
@@ -38,7 +38,7 @@ const sendEmail = async (type, data = {}) => {
     const info = await transporter.sendMail(mailOptions);
     console.log('Preview URL:', nodemailer.getTestMessageUrl(info));
   } catch (error) {
-    console.log(error);
+    return console.log(error);
   }
 };
 

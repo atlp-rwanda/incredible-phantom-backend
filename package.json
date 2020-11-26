@@ -50,7 +50,7 @@
     "dev": "nodemon --exec babel-node src ",
     "start": "node dist/index",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
-    "test": "mocha ./src/test/test.js --require @babel/register --exit",
+    "test": "NODE_ENV=test mocha --timeout 20000 ./src/test/**.js --require @babel/register --exit",
     "coverage": "nyc npm run test",
     "migrate": "sequelize db:migrate",
     "migrate-undo": "sequelize-cli db:migrate:undo",
