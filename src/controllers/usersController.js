@@ -1,6 +1,5 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import crypto from 'crypto'
 import successRes from '../helpers/successHandler';
 import errorRes from '../helpers/errorHandler';
 import Models from '../database/models';
@@ -15,6 +14,7 @@ export const register = async (req, res) => {
     const validateUser = userValidationSchema.validate(req.body);
     const { firstName, lastName, email, nationalId, phone, role } = req.body;
     if (validateUser.error) {
+      console.log(validateUser.error.message)
       return errorRes(res, 500, 'Validation error', validateUser.error);
     } else {
       const generatedPwd = generatePassword();
@@ -111,11 +111,40 @@ export const signin = async (req, res) => {
 };
 
 export const forgotPassword= async  (req, res)=> {
-  const email = req.body.email
- const user=await User.findOne({ email: email })
+  try{const email = req.body.email
+ const user=await User.findOne({where:{email: email}})
 
   if (!user) {
-  return errorRes(res, 'No user found with that email address.')
+  return errorRes(res,500,'No user found with that email address.')
+  }else{
+ await  sendEmail('forgotPassword',{
+      email:user.email,
+      id:user.id
+    })
+    successRes(res,200,"check your email")
+  }}
+  catch(error){
+    errorRes(res,500,'error while requesting!')
   }
+}
+export const resetPassword= async (req, res)=>{
 
+  try{const{ email,password}=req.body
+  
+  const user=await User.findOne({where:{email:email}})
+  if(!user){
+    return errorRes(res,'No user found with that email address.')
+  }else{
+    const newPassword  = await bcrypt.hash(password,10, async(err,result)=>{
+      if(result){
+     await  User.update({password:newPassword},{where:{id:user.id}})
+
+     await sendEmail('resetPassword',{email:user.email})
+      successRes(res,200,"Reseted Password Successfully",user)
+      }
+    })
+  }}
+  catch(error){
+    errorRes(res,500,'No reset!try again')
+  }
 }

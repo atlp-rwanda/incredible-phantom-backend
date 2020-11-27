@@ -28,9 +28,16 @@ const sendEmail = async (type, data = {}) => {
         mailOptions.html = `<h1>Welcome to Phantom  ${data.name}, Your confimation was received. Enjoy your new role</h1>`;
         break;
       case 'verify':
-        mailOptions.html = `<b>verify your email</b> <a href='http://localhost:${PORT}/users/verify/${token}'>click here to verify your Account</a><h2>Remember if you dont do it this link will expire in 1day</h2></p>`;
+        mailOptions.html = `<b>verify your email</b> <a href='http://localhost:${PORT}/api/users/verify/${token}'>click here to verify your Account</a><h2>Remember if you dont do it this link will expire in 1day</h2></p>`;
         break;
-
+        case 'forgotPassword':
+          mailOptions.html=`<p>Reset your password use this link</p> <a href='http://localhost:${PORT}/api/users/forgot/${token}'></a>click here to reset your password</a>`
+        break;
+        // case 'resetPassword':
+        //   mailOptions.html=`<p>Reset your password use this link</p> <a href='http://localhost:${PORT}/api/users/reset/${token}'></a>`
+        //   break;
+          case 'password-Conformation':
+            mailOptions.html=`<p>Password reseted successfully!<p/>`
       default:
         mailOptions.html = '';
     }
