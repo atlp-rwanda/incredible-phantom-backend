@@ -42,6 +42,16 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      comfirmed: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+      },
+      verficationLink: {
+        type: Sequelize.STRING,
+      },
+      resetLink: {
+        type: Sequelize.STRING,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
