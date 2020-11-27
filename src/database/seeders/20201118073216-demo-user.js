@@ -4,27 +4,26 @@ module.exports = {
       {
         firstName: 'John',
         lastName: 'Doe',
-        email: 'fake@gmail.com',
+        email: 'admin@gmail.com',
         nationalId: 1197000000000000,
-        password: '123abc',
+        password:
+          '$2b$10$8WdnrCR8QypWwkOP2aDTOeA.nRa695r8oZWqEQX6EiV8egzT0vfqW',
         phone: '073222222',
         language: 'en',
         role: 'admin',
-<<<<<<< HEAD
         comfirmed: false,
         verficationLink: '',
         resetLink: '',
-=======
->>>>>>> feat(authentication):signin
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
         firstName: 'Guevara',
         lastName: 'Che',
-        email: 'fake1@gmail.com',
+        email: 'driver@gmail.com',
         nationalId: 1198000000000000,
-        password: '123abc',
+        password:
+          '$2b$10$8WdnrCR8QypWwkOP2aDTOeA.nRa695r8oZWqEQX6EiV8egzT0vfqW',
         role: 'driver',
         phone: '072222222',
         language: 'en',
@@ -37,10 +36,11 @@ module.exports = {
       {
         firstName: 'Egide',
         lastName: 'last',
-        email: 'fake2@gmail.com',
+        email: 'operator@gmail.com',
         nationalId: 1199000000000000,
-        password: '123abc',
-        role: 'admin',
+        password:
+          '$2b$10$8WdnrCR8QypWwkOP2aDTOeA.nRa695r8oZWqEQX6EiV8egzT0vfqW',
+        role: 'operator',
         phone: '0788888888',
         language: 'en',
         comfirmed: false,

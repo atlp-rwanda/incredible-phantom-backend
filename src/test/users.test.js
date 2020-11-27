@@ -1,53 +1,106 @@
 import mocha from 'mocha';
-import chai from 'chai';
+import chai, { request } from 'chai';
+import { Op } from 'sequelize';
+import { config } from 'dotenv';
 import chaiHttp from 'chai-http';
 import app from '../index';
 import Models from '../database/models';
+import { mockAdmin, mockUser, wrongPwd } from './mocks/mockUsers';
+
+config();
 
 chai.use(chaiHttp);
 
 const { it, describe, beforeEach, afterEach } = mocha;
 const { expect } = chai;
 
-const { User } = Models;
+const { User, Role } = Models;
 
-const mockUser = {
-  firstName: 'Fake',
-  lastName: 'Fakename',
-  email: 'fakeemail@gmail.com',
-  nationalId: 1199999999999999,
-  phone: '0788888888',
-  language: 'en',
-  role: 'operator',
+const siginIn = async (user) => {
+  const userData = await chai.request(app).post('/api/users/signin').send(user);
+  return `Bearer ${userData.body.data.token}`;
 };
 
-describe('Users Related Tests', () => {
+describe('Users Related Tests', async () => {
   beforeEach(async () => {
     await User.destroy({
+      where: { id: { [Op.not]: 1 } },
+    });
+    await Role.destroy({
       where: {},
       truncate: true,
     });
   });
-
   afterEach(async () => {
     await User.destroy({
-      where: {},
-      truncate: true,
+      where: { id: { [Op.not]: 1 } },
     });
   });
 
-  it('Get all Users', async () => {
-    const res = await chai.request(app).get('/api/users');
+  it(' Should not sign in Incorect password', async () => {
+    const res = await chai
+      .request(app)
+      .post('/api/users/signin')
+      .send(wrongPwd);
+    expect(res.status).to.be.equal(500);
+    expect(res.body).to.have.property('message', 'Incorrect password');
+  });
+
+  it('Should Get all Users as Admin', async () => {
+    const token = await siginIn(mockAdmin);
+    const res = await chai
+      .request(app)
+      .get('/api/users')
+      .set('Authorization', token);
     expect(res.status).to.be.equal(200);
     expect(res.body).to.have.property('message', 'Successfully got All users');
   });
 
-  it('Register a User', async () => {
-    const res = await chai.request(app).post('/api/users').send(mockUser);
+  it('Should Register a User', async () => {
+    const token = await siginIn(mockAdmin);
+
+    await chai
+      .request(app)
+      .post('/api/roles')
+      .send({ role: 'operator' })
+      .set('Authorization', token);
+
+    const res = await chai
+      .request(app)
+      .post('/api/users')
+      .send(mockUser)
+      .set('Authorization', token);
+
     expect(res.status).to.be.equal(201);
     expect(res.body).to.have.property(
       'message',
       'User created Successfully and email was sent',
+    );
+  });
+
+  it('Should Comfirm User email', async () => {
+    const token = await siginIn(mockAdmin);
+
+    await chai
+      .request(app)
+      .post('/api/roles')
+      .send({ role: 'operator' })
+      .set('Authorization', token);
+
+    const res1 = await chai
+      .request(app)
+      .post('/api/users')
+      .send(mockUser)
+      .set('Authorization', token);
+
+    const res = await request(app).put(
+      `/api/users/verify/${res1.body.data.id}`,
+    );
+    console.log('THIS MY CONSOLE', res.body);
+    expect(res.status).to.be.equal(200);
+    expect(res.body).to.have.property(
+      'message',
+      'Successfully verfied your Email.',
     );
   });
 });

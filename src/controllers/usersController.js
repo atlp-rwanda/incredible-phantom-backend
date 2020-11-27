@@ -6,14 +6,13 @@ import errorRes from '../helpers/errorHandler';
 import Models from '../database/models';
 import generatePassword from '../utils/passwordGenerator';
 import sendEmail from '../utils/mail2';
-import { hashPwd } from '../helpers/pwd';
+import hashPwd from '../helpers/pwd';
 
 const { User, Role } = Models;
 
 export const register = async (req, res) => {
   const validRole = await Role.findOne({ where: { role: req.body.role } });
-  if (!validRole)
-    return errorRes(res, 404, `Role ${req.body.role} is not allowed`);
+  if (!validRole) errorRes(res, 404, `Role ${req.body.role} is not allowed`);
 
   try {
     const userFromToken = req.user;
@@ -21,7 +20,7 @@ export const register = async (req, res) => {
 
     if (signedUser.role === 'operator') {
       if (req.body.role === 'operator') {
-         errorRes(res, 401, 'Please sign in as admin');
+        return errorRes(res, 401, 'Please sign in as admin');
       }
     }
 
@@ -82,7 +81,7 @@ export const getAll = async (req, res) => {
 
     if (signedUser.role === 'operator') {
       const users = await User.findAll({ where: { role: 'driver' } });
-      return successRes(res, 200, 'Successfully got All drivers', users);
+      successRes(res, 200, 'Successfully got All drivers', users);
     } else {
       const users = await User.findAll({
         where: {
@@ -91,10 +90,9 @@ export const getAll = async (req, res) => {
           },
         },
       });
-      successRes(res, 200, 'Successfully got All users', users);
+      return successRes(res, 200, 'Successfully got All users', users);
     }
   } catch (error) {
-    console.log(error);
     return errorRes(res, 500, 'There was an error while getting all a user');
   }
 };
@@ -103,26 +101,24 @@ export const signin = async (req, res) => {
   try {
     const { email, password } = req.body;
     const foundUser = await User.findOne({ where: { email } });
-    if (!foundUser) {
-      errorRes(res, 404, 'User  Not found ');
-    } else {
-      await bcrypt.compare(password, foundUser.password, (err, result) => {
-        if (result) {
-          const token = jwt.sign(
-            { id: foundUser.id, email: foundUser.email },
-            process.env.JWT_KEY,
-            { expiresIn: '8h' },
-          );
-          successRes(res, 200, 'Signed in successfullt', {
-            token,
-            user: foundUser,
-          });
-        } else {
-          errorRes(res, 500, 'Incorrect password');
-        }
-      });
-    }
+    if (!foundUser) return errorRes(res, 404, 'User  Not found ');
+
+    await bcrypt.compare(password, foundUser.password, (err, result) => {
+      if (result) {
+        const token = jwt.sign(
+          { id: foundUser.id, email: foundUser.email },
+          process.env.JWT_KEY,
+          { expiresIn: '8h' },
+        );
+        successRes(res, 200, 'Signed in successfullt', {
+          token,
+          user: foundUser,
+        });
+      } else {
+        return errorRes(res, 500, 'Incorrect password');
+      }
+    });
   } catch (error) {
-    errorRes(res, 500, 'There was error while signining in');
+    return errorRes(res, 500, 'There was error while signining in');
   }
 };

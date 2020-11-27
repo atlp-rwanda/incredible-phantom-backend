@@ -1,21 +1,29 @@
-language: node_js
-
 sudo: false
 
-node_js:  
-      - 'stable'
+language: node_js
 
-  
+node_js:
+  - 'stable'
 
-# install:
-#       - npm ci
-      
+services:
+  - postgresql
+
+before_script:
+  - psql -c 'CREATE DATABASE phantom-test;' -U postgres
+
 env:
-  - PORT=3000
+  - TEST_DATABASE_URL: postgres://localhost:5432/phantom-test
+  - PORT: 3000
 
-script:
-  - npm ci
-  - npm test
+cache:
+  npm: false
 
 notifications:
   email: false
+
+script:
+  - npm ci
+  - npm run coverage
+
+after_success:
+  - npm run coveralls
