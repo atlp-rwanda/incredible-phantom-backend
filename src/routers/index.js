@@ -3,6 +3,7 @@ import welcome from '../controllers/welcome';
 
 import rolesRouter from './rolesRouter';
 import userRouter from './usersRouter';
+import busRouter from './bus';
 import translation from '../controllers/i18n';
 
 const router = Router();
@@ -24,9 +25,11 @@ const router = Router();
  *             description: There was an error while welcoming you.
  * */
 
+
 router.get('/', welcome);
 router.use('/users', userRouter);
 router.use('/roles', rolesRouter);
+router.use('/bus', busRouter);
 router.get('/translate', translation);
 
 router.use('/users', userRouter);

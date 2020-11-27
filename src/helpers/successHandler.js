@@ -1,4 +1,4 @@
-const errorRes = (res, status, message, data) => {
+const successRes = (res, status, message, data) => {
   res.status(status).json({
     success: true,
     message,
@@ -6,4 +6,4 @@ const errorRes = (res, status, message, data) => {
   });
 };
 
-export default errorRes;
+export default successRes;

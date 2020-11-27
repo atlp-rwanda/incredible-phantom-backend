@@ -51,7 +51,7 @@ describe('Users Related Tests', async () => {
     const res = await chai
       .request(app)
       .get('/api/users')
-      .set('Authorization', token);
+      .set('auth', token);
     expect(res.status).to.be.equal(200);
     expect(res.body).to.have.property('message', 'Successfully got All users');
   });

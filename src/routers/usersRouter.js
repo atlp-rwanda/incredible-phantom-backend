@@ -22,11 +22,7 @@ const userRouter = Router();
  *     consumes:
  *       - application/json
  *     parameters:
-<<<<<<< HEAD
  *       - name: auth
-=======
- *       - name: Authorization
->>>>>>> cff9d91... ft(register): Register users, roles & permission
  *         in: header
  *         description: Token you get after signin
  *     requestBody:
@@ -70,11 +66,7 @@ const userRouter = Router();
  *       - application/json
 
  *     parameters:
-<<<<<<< HEAD
  *       - name: auth
-=======
- *       - name: Authorization
->>>>>>> cff9d91... ft(register): Register users, roles & permission
  *         in: header
  *         description: Token you get after signin
  *     responses:
@@ -92,7 +84,6 @@ userRouter
   .post(checktoken, isNotDriver, validateRegisterInput, register)
   .get(checktoken, isNotDriver, getAll);
 
-<<<<<<< HEAD
 /**
  * @swagger
  * /api/users/signin:
@@ -120,17 +111,11 @@ userRouter
  *             description: There was an error while signing in or incorrect password.
  * */
 
-=======
->>>>>>> cff9d91... ft(register): Register users, roles & permission
 userRouter.post('/signin', signin);
 
 /**
  * @swagger
-<<<<<<< HEAD
  * /api/users/verify/{id}:
-=======
- * /api/users/verify/{userId}:
->>>>>>> cff9d91... ft(register): Register users, roles & permission
  *   put:
  *     tags:
  *       - Users
