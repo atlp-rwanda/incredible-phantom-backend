@@ -4,6 +4,7 @@
   "main": "index.js",
   "dependencies": {
     "@babel/node": "^7.12.6",
+    "@babel/plugin-transform-runtime": "^7.12.1",
     "@babel/polyfill": "^7.12.1",
     "@babel/preset-env": "^7.12.1",
     "@babel/register": "^7.12.1",
@@ -15,14 +16,17 @@
     "express": "^4.17.1",
     "i18n": "^0.13.2",
     "jsdom": "^16.4.0",
+    "mocha": "^8.2.1",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.6",
     "nyc": "^15.1.0",
     "path": "^0.12.7",
-    "sinon": "^9.2.1",
     "pg": "^8.5.1",
     "pg-hstore": "^2.3.3",
     "sequelize": "^6.3.5",
+    "sequelize-cli": "^6.2.0",
+    "sinon": "^9.2.1",
+    "swagger-jsdoc": "^6.0.0-rc.3",
     "swagger-ui-express": "^4.1.4",
     "translate": "^1.1.2"
   },
@@ -30,18 +34,16 @@
     "@babel/cli": "^7.12.1",
     "@babel/core": "^7.12.3",
     "chai": "^4.2.0",
-    "chai-http": "^4.3.0",
-    "mocha": "^8.2.1",
-    "sequelize-cli": "^6.2.0"
+    "chai-http": "^4.3.0"
   },
   "scripts": {
     "dev": "nodemon --exec babel-node src ",
-    "start":"node dist/index",
+    "start": "npm run migrate && node dist/index",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
-    "test": "mocha ./src/test/test.js --require @babel/register --exit",
+    "test": "NODE_ENV=test npm run migrate && NODE_ENV=test  mocha ./src/test/ --require @babel/register --exit",
     "coverage": "nyc npm run test",
     "migrate": "sequelize db:migrate",
-    "migrate-undo":"sequelize-cli db:migrate:undo",
+    "migrate-undo": "sequelize-cli db:migrate:undo",
     "build": "babel src --out-dir dist"
   },
   "repository": {
