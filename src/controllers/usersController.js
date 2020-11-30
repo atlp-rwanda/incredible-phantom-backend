@@ -25,7 +25,7 @@ export const register = async (req, res) => {
           return errorRes(res, 500, 'error while hashing password');
         }
         const user = await User.create({
-          firstName,
+          firstName: firstName.req,
           lastName,
           email,
           nationalId,
@@ -139,7 +139,7 @@ export const resetPassword= async (req, res)=>{
       if(result){
      await  User.update({password:newPassword},{where:{id:user.id}})
 
-     await sendEmail('resetPassword',{email:user.email})
+    //  await sendEmail('resetPassword',{email:user.email})
       successRes(res,200,"Reseted Password Successfully",user)
       }
     })

@@ -8,6 +8,7 @@ const { EMAIL, PASS, JWT_KEY, PORT } = process.env;
 const sendEmail = async (type, data = {}) => {
   try {
     const token = jwt.sign(data, JWT_KEY, { expiresIn: '8h' });
+    console.log(token);
     const transporter = nodemailer.createTransport({
       host: 'smtp.gmail.com',
       port: 587,
@@ -31,7 +32,7 @@ const sendEmail = async (type, data = {}) => {
         mailOptions.html = `<b>verify your email</b> <a href='http://localhost:${PORT}/api/users/verify/${token}'>click here to verify your Account</a><h2>Remember if you dont do it this link will expire in 1day</h2></p>`;
         break;
         case 'forgotPassword':
-          mailOptions.html=`<p>Reset your password use this link</p> <a href='http://localhost:${PORT}/api/users/forgot/${token}'></a>click here to reset your password</a>`
+          mailOptions.html=`<p>Reset your password use this link <a href="http://localhost:${PORT}/api/users/forgot/${token}">click here to reset your password</a></p>`
         break;
         // case 'resetPassword':
         //   mailOptions.html=`<p>Reset your password use this link</p> <a href='http://localhost:${PORT}/api/users/reset/${token}'></a>`
