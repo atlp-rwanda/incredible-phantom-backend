@@ -8,17 +8,27 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      start: {
-        type: Sequelize.STRING,
-        allowNull : false,
+      routeID: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        unique: true
       },
-      end: {
+      origin: {
         type: Sequelize.STRING,
-        allowNull : false,
+        allowNull: false
+      },
+      destination: {
+        type: Sequelize.STRING,
+        allowNull: false
       },
       distance: {
         type: Sequelize.STRING,
-        allowNull : false,
+        allowNull: true
+      },
+      busStops: {
+        type: Sequelize.ARRAY(Sequelize.INTEGER),
+        allowNull: true,
+        defaultValue: []
       },
       createdAt: {
         allowNull: false,

@@ -1,3 +1,234 @@
 {
-    
-}
+    "swagger": "2.0",
+    "info": {
+      "description": "Phantom is a web application that allows users to track their buses realtime on the tips of their fingers",
+      "version": "1.0",
+      "title": "Phantom App",
+      "termsOfService": "http://swagger.io/terms/",
+      "contact": {
+        "email": "incredible-phantom@gmail.com"
+      },
+      "license": {
+        "name": "MIT",
+        "url": "https://github.com/atlp-rwanda/incredible-phantom-backend/README.md"
+      }
+    },
+    "host": "localhost:3000",
+    "basePath": "/",
+    "schemes": ["http", "https"],
+    "consumes": ["application/json"],
+    "produces": ["application/json"],
+    "paths": {
+      "/route": {
+        "get": {
+          "tags": ["routes"],
+          "summary": "Admin get all routes",
+          "description": "This endpoint uses get request to get all routes",
+          "operationId": "getAllroutes",
+          "parameters": [
+            {
+              "name": "Authorization",
+              "in": "header",
+              "required": false,
+              "type": "string",
+              "description": "Admin Token"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "All routes"
+            },
+            "401": {
+              "description": "You are not authorized to use this router"
+            },
+            "404": {
+              "description": "Routes not found"
+            },
+            "500": {
+              "description": "internal server error"
+            }
+          }
+        },
+        "post": {
+          "tags": ["routes"],
+          "summary": "Admin add new route",
+          "description": "This endpoint uses post request to add new route",
+          "operationId": "createNewRoute",
+          "parameters": [
+            {
+              "name": "Authorization",
+              "in": "header",
+              "required": true,
+              "type": "string",
+              "description": "Admin Token"
+            },
+            {
+              "description": "Route object use",
+              "in": "body",
+              "name": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/RouteInput"
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "The Route created successfully"
+            },
+            "409": {
+              "description": "conflict"
+            },
+            "401": {
+              "description": "You are not authorized to use this resource"
+            },
+            "404": {
+              "description": "The Bus stop for origin does not exist"
+            },
+            "400": {
+              "description": "invalid input"
+            },
+            "500": {
+              "description": "internal server error"
+            }
+          }
+        }
+      },
+  
+      "/routes/{id}": {
+        "get": {
+          "tags": ["routes"],
+          "summary": "Admin get specific route",
+          "description": "This endpoint uses get request to get specific route by id",
+          "operationId": "getSpecificRoute",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "description": "user object that need get user by id",
+              "required": true
+            },
+            {
+              "name": "Authorization",
+              "in": "header",
+              "required": true,
+              "type": "string",
+              "description": "Admin Token"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "route retrieved"
+            },
+            "401": {
+              "description": "You are not authorized to complete this task"
+            },
+            "404": {
+              "description": "Route Not found!"
+            },
+            "500": {
+              "description": "internal server error"
+            }
+          }
+        },
+        "delete": {
+          "tags": ["routes"],
+          "summary": "Admin delete specific route",
+          "description": "This endpoint uses delete request to delete specific route by id",
+          "operationId": "deleteSpecificRoute",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "description": "user object that need delete route by id",
+              "required": true
+            },
+            {
+              "name": "Authorization",
+              "in": "header",
+              "required": true,
+              "type": "string",
+              "description": "Admin Token"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Route has been deleted successfully."
+            },
+            "401": {
+              "description": "You are not authorized to complete this task"
+            },
+            "404": {
+              "description": "Cannot delete route with id = ${id}"
+            },
+            "500": {
+              "description": "internal server error"
+            }
+          }
+        },
+        "patch": {
+          "tags": ["routes"],
+          "summary": "Admin update specific route",
+          "description": "This endpoint uses update request to update specific route by id",
+          "operationId": "updateSpecificRoute",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "description": "user object that need update route by id",
+              "required": true
+            },
+            {
+              "name": "Authorization",
+              "in": "header",
+              "required": true,
+              "type": "string",
+              "description": "Admin Token"
+            },
+            {
+              "description": "Route object use",
+              "in": "body",
+              "name": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/RouteInput"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Route updated successfully.."
+            },
+            "401": {
+              "description": "You are not authorized to complete this task"
+            },
+            "404": {
+              "description": "Cannot update route with id = ${id}"
+            },
+            "500": {
+              "description": "internal server error"
+            }
+          }
+        }
+      }
+    },
+  
+    "definitions": {
+      "RouteInput": {
+        "type": "object",
+        "properties": {
+          "start": {
+            "type": "string"
+          },
+          "end": {
+            "type": "string"
+          },
+          "distance": {
+            "type": "integer",
+            "required": true
+          }
+        }
+      }
+    }
+  }
+  

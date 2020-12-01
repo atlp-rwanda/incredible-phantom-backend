@@ -1,16 +1,24 @@
 import  model  from '../database/models'
 import succesRes from '../helpers/successHandler'
 import errorRes from '../helpers/errorHandler'
+import cryptoRandomString from 'crypto-random-string'
 
 const { Route } = model;
 
 
 const createRoute = async (req,res) => {
     try{
-        
-        const searchRoute = await Route.findAll({ where : req.body });
-        if(searchRoute.length === 0){
-            const route = await Route.create(req.body);
+        let route_id = cryptoRandomString({length: 5, type: 'numeric'})
+        const searchRoute = await Route.findAll( { where : req.body } );
+        const searchRouteId = await Route.findAll( { where : { routeID : route_id } } )
+        if(searchRoute.length === 0 && searchRouteId.length === 0){
+            const route = await Route.create({
+                origin : req.body.origin,
+                destination : req.body.destination,
+                distance : req.body.distance,
+                routeID: route_id,
+                busStops: [] 
+            });
             return succesRes(res,200,"Route created successfully" , route);
         } else{
             return succesRes(res,200,"Route already exists");
@@ -39,8 +47,8 @@ const getRoute =  async (req,res) => {
 
 const oneRoute = async (req,res) => {
     try{
-        const id = req.params;
-        const route = await Route.findOne({ where :  id });
+        const routeID = req.params;
+        const route = await Route.findOne({ where :  routeID });
         if(!route){
             return succesRes(res,200,"Route not found :(");
         }else{
@@ -54,13 +62,13 @@ const oneRoute = async (req,res) => {
 
 const updateRoute = async (req,res) => {
     try{
-        const id = req.params;
-        const searchRoute = await Route.findOne({ where : id });
+        const routeID = req.params;
+        const searchRoute = await Route.findOne({ where : routeID });
         if (searchRoute) {
             const existence = await Route.findAll( { where : req.body } );
             if(existence.length === 0){
-                const [ updated ]  = await  Route.update(req.body , { where :  id });
-                const updatedRoute = await Route.findOne({ where : id });
+                const [ updated ]  = await  Route.update(req.body , { where :  routeID });
+                const updatedRoute = await Route.findOne({ where : routeID });
                 return succesRes(res,200,"Updated successfully", updatedRoute);
             }else{
                 return succesRes(res,200,"One of the routes has the same information");
@@ -75,8 +83,8 @@ const updateRoute = async (req,res) => {
 
 const deleteRoute = async (req,res) => {
     try{
-        const id = req.params;
-        const route = await Route.destroy({ where :  id  });
+        const routeID = req.params;
+        const route = await Route.destroy({ where :  routeID  });
         if(route){
             return succesRes(res,200,"Route deleted");
         }else{

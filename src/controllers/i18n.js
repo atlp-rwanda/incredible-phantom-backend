@@ -8,16 +8,14 @@ i18n.configure({
     locales: ['en', 'kin', 'fr','sw'],
     directory: `${__dirname}/locales`,
     defaultLocale: 'en',
-    headers: 'Accept-language',
+    headers: 'Accept-Language',
     queryParameter: 'lang',
     cookie: 'locale',
-    retryInDefaultLocale: false,
 })
 
 
 async function detect(req,res){
     i18n.init(req,res)
-    res.cookie('locale', 'fr')
     let translation = req.body.html;
     try{
         const translatedText = await res.__(translation);
@@ -32,7 +30,6 @@ async function detect(req,res){
 async function translate(req,res){
     i18n.init(req, res)
     let translation = req.body.html;
-    res.cookie('locale', 'fr')
     try{
         const translatedText = await res.__(translation);
        return sucessRes(res,200, translatedText)
