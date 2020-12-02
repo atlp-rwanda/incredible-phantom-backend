@@ -3,6 +3,9 @@ import succesRes from '../helpers/successHandler'
 import errorRes from '../helpers/errorHandler'
 import cryptoRandomString from 'crypto-random-string'
 
+import { Router } from 'express';
+const router = Router();
+
 const { busStop } = model;
 
 
@@ -27,7 +30,6 @@ const createBusStop = async (req,res) => {
     }
 }
 
-
 const getBusStops =  async (req,res) => {
     try{
         const Stop = await busStop.findAll();
@@ -43,7 +45,6 @@ const getBusStops =  async (req,res) => {
     }
 }
 
-
 const oneStop = async (req,res) => {
     try{
         const busStopId = req.params;
@@ -57,7 +58,6 @@ const oneStop = async (req,res) => {
         return errorRes(res,500,"Internal server error :" + error.message);
     }
 }
-
 
 const updateBusStop = async (req,res) => {
     try{
