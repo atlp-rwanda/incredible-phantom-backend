@@ -168,6 +168,7 @@ router.patch('/:routeID', route.updateRoute);
  *    200: 
  *     description: Deleted route
  */
+router.patch('/:routeID/addBusStop' , route.addBusStop);
 router.delete('/:routeID' , route.deleteRoute);
 
 export default router;

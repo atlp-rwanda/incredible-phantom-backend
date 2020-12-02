@@ -7,6 +7,24 @@ import { config } from 'dotenv';
 import router from './routers/index';
 import routes from './routers/routes';
 import bodyParser from 'body-parser';
+import busStop from './routers/busStops';
+import swaggerJSDoc from 'swagger-jsdoc';
+import swaggerui from 'swagger-ui-express';
+const swaggerDefinition = {
+    definition: {
+      info: {
+        title: 'Phantom',
+        version: '1.0.0',
+        description:
+              'Phantom is a web application that tracks the movement of transport buses on any device. ',
+      },
+      servers: [{
+        url: 'http://localhost:3000',
+      },
+      ],
+    },
+    apis: ['./src/routers/*.js'],
+  };
 
 config();
 
