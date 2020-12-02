@@ -7,6 +7,7 @@ import { config } from 'dotenv';
 import router from './routers/index';
 import routes from './routers/routes';
 import bodyParser from 'body-parser';
+import busStop from './routers/busStops';
 
 config();
 
@@ -21,6 +22,7 @@ app.use('/api/documentation', swagger.serve, swagger.setup(swaggerDoc));
 
 app.use('/api', router);
 app.use('/route' , routes);
+app.use('/busStop', busStop);
 
 const port = process.env.PORT;
 app.listen(port, console.log(`Server started on port ${port}`));
