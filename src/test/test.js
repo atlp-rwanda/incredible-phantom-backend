@@ -16,3 +16,34 @@ describe('API testing', () => {
         expect(res.body).to.have.property('message', 'Welcome to phantom an app which is used to track buses');
     });
 });
+describe('get/api/post',()=>{
+    it ('it should send a link in the email', ()=>{
+
+        const email={
+        email:'fake@gmail.com'
+        };
+        chai.request(app)
+        .post('/api/users/forgot')
+        .send(email)
+        .end((err,response)=>{
+            response.should.be.status(200)
+            done();
+        })
+    })
+})
+describe('get/api/patch',()=>{
+    it ('it should update the password', ()=>{
+
+        const data={
+        email:'fake@gmail.com',
+        password:'fakepassword'
+        };
+        chai.request(app)
+        .patch('/api/users/reset')
+        .send(data)
+        .end((err,response)=>{
+            response.should.have.status(200)
+            done();
+        })
+    })
+})
