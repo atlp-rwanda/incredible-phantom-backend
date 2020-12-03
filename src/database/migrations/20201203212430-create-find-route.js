@@ -1,26 +1,23 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('AssignBuses', {
+    await queryInterface.createTable('FindRoutes', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      driver: {
+      routeI: {
         type: Sequelize.STRING
       },
-      busCompany: {
+      direction: {
         type: Sequelize.STRING
       },
-      busPlate: {
+      from: {
         type: Sequelize.STRING
       },
-      brand: {
-        type: Sequelize.STRING
-      },
-      routeId: {
+      to: {
         type: Sequelize.STRING
       },
       createdAt: {
@@ -34,6 +31,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('AssignBuses');
+    await queryInterface.dropTable('FindRoutes');
   }
 };
