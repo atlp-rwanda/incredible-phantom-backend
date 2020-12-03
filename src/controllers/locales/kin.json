@@ -101,5 +101,10 @@
   "Successfully got drivers at work": "Byagenze neza abshoferi bafite bus ngabo",
   "Error while getting occupied drivers": "Ikibazo mukuzana abashoferi bafite bus",
   "route with  locations not found": " Uwo icyo kerekezo cy'umuhanda ntikiboneka",
-  "no bus available to this route": "Nta modoka iboneka kuri uno muhanda"
+  "no bus available to this route": "Nta modoka iboneka kuri uno muhanda",
+  "All information you need about the bus":"Amakuru ya Bisi ukeneye",
+  "error occured!Try again":"habayemo ikibazo!Ongera ugerageze",
+  "No Bus is found!":"Bisi ntibashije kuboneka",
+  "recent Information about the Bus":"Amakuru yabisi ahigeze",
+  "failed to update":"Habayemo Ikibazo"
 }

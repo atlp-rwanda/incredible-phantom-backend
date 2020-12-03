@@ -14,5 +14,10 @@
   "User Updated": "imesasishwa mtumiaji",
   "There was an error while updating the User": "Kulikuwa na hitilafu wakati wa kusasisha Mtumiaji",
   "route with  locations not found":"njia na maeneo hayakupatikana",
-  "no bus available to this route":"hakuna basi inayopatikana kwa njia hii"
+  "no bus available to this route":"hakuna basi inayopatikana kwa njia hii",
+  "All information you need about the bus":"Habari yote unayohitaji juu ya basi",
+  "error occured!Try again":"kosa limetokea! Jaribu tena",
+  "No Bus is found!":"Hakuna Basi inayopatikana!",
+  "recent Information about the Bus":"Habari za hivi karibuni juu ya Basi",
+  "failed to update":"imeshindwa kusasisha"
 }

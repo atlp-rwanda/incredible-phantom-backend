@@ -16,9 +16,25 @@ module.exports = {
         allowNull: false,
         unique: true
       },
+      
       seats: {
         type: Sequelize.INTEGER,
         defaultValue: 0
+      },
+      location: {
+        type: Sequelize.STRING,
+        allowNull: true 
+      },
+      status: {
+        type: Sequelize.STRING, 
+        defaultValue:"stop"
+      },
+      commuters: {
+        type: Sequelize.INTEGER, 
+        defaultValue: 0
+      },
+      type: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

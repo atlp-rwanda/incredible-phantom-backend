@@ -26,6 +26,7 @@ import {
 } from '../controllers/assignDriverTobusController';
 
 const userRouter = Router();
+userRouter.route('/reset').patch(checktoken,resetPassword);
 /**
  * @swagger
  * /api/users:
