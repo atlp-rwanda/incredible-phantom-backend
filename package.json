@@ -19,10 +19,12 @@
     "nodemon": "^2.0.6",
     "nyc": "^15.1.0",
     "path": "^0.12.7",
-    "sinon": "^9.2.1",
     "pg": "^8.5.1",
     "pg-hstore": "^2.3.3",
     "sequelize": "^6.3.5",
+    "sinon": "^9.2.1",
+    "socket.io": "^3.0.3",
+    "swagger-jsdoc": "^6.0.0-rc.3",
     "swagger-ui-express": "^4.1.4",
     "translate": "^1.1.2"
   },
@@ -36,12 +38,12 @@
   },
   "scripts": {
     "dev": "nodemon --exec babel-node src ",
-    "start":"node dist/index",
+    "start": "node dist/index",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "test": "mocha ./src/test/test.js --require @babel/register --exit",
     "coverage": "nyc npm run test",
     "migrate": "sequelize db:migrate",
-    "migrate-undo":"sequelize-cli db:migrate:undo",
+    "migrate-undo": "sequelize-cli db:migrate:undo",
     "build": "babel src --out-dir dist"
   },
   "repository": {
