@@ -25,6 +25,7 @@ export const register = async (req, res) => {
           return errorRes(res, 500, 'error while hashing password');
         }
         const user = await User.create({
+        
           firstName: firstName.req,
           lastName,
           email,
