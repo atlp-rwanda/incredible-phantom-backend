@@ -10,8 +10,8 @@ import docRouter from './documentation/index';
 import socket from './utils/socket.io';
 
 config();
-
 const app = express();
+
 app.use(morgan('dev'));
 app.use(cors());
 app.use(json());

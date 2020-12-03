@@ -4,12 +4,103 @@ import {
   getBus,
   getOneBus,
   updateBus,
-  deleteBus
+  deleteBus,
+  busesInfo,
+  onebusInfo,
+  updateoneBus
 } from '../controllers/busControllers';
+
 import checkToken from '../middlewares/checktoken';
 import { viewListOfBuses } from '../controllers/busesOnRouteContoller';
 import { isNotDriver, validateBusInput } from '../middlewares/validator';
 const busRouter = Router();
+/**
+ * @swagger
+ * /api/bus/busInfo:
+ *   get:
+ *     tags:
+ *       - BusInfo
+ *     name: Getting Bus info
+ *     summary: enquiring buses info
+ *     produces:
+ *       - application/json
+ *     consumes:
+ *       - application/json
+ *     parameters:
+ *       - in: query
+ *         name: lang
+ *     responses:
+ *       '200':
+ *             description:  All information you need about the bus
+ *       '500':
+ *             description: error occured!Try again
+ * */
+ busRouter.route('/busInfo').get(busesInfo)
+ 
+/**
+ * @swagger
+ *
+ * /api/bus/busInfo/{id}:
+ *  get:
+ *    summary: Get Bus's information
+ *    description: Get Bus's Info
+ *    tags:
+ *    - BusInfo
+ *    parameters:
+ *    - in: path
+ *      name: id
+ *      required: true
+ *      type: integer
+ *    - in: query
+ *      name: lang
+ *      description: Enter language
+ *    responses:
+ *     200:
+ *      description: All information you need about the bus
+ *     500:
+ *      description:  error occured!Try again
+ */
+ busRouter.route('/busInfo/:id').get(onebusInfo)
+ /**
+ * @swagger
+ *
+ * /api/bus/busInfo/{id}:
+ *  put:
+ *    summary: update existing bus info
+ *    description: Update bus information in system
+ *    tags:
+ *    - BusInfo
+ *    parameters:
+ *    - in: path
+ *      name: id
+ *      required: true
+ *      type: integer
+ *      description: Enter bus id
+ *    - in: query
+ *      name: lang
+ *    requestBody:
+ *     content:
+ *       application/json:
+ *         schema:
+ *           type: object
+ *           properties:
+ *             location:
+ *               type: string
+ *             status:
+ *               type: string
+ *             commuters:
+ *               type: integer
+ *             seats:
+ *               type: integer
+ *    responses:
+ *     200:
+ *      description: Bus info updated successfully
+ *     404:
+ *      description: Bus not found
+ *     500:
+ *      description:  Internal server error
+ */
+ busRouter.route('/busInfo/:id').put(updateoneBus)
 /**
  * @swagger
  *
@@ -38,10 +129,16 @@ const busRouter = Router();
  *               type: string
  *             plateNo:
  *               type: string
- *             driver:
- *               type: string
  *             seats:
  *               type: integer
+ *             location: 
+ *               type: string
+ *             status:
+ *               type: string
+ *             commuters:
+ *               type: integer
+ *             type:
+ *               type: string
  *   responses:
  *    201:
  *     description: Bus created successfully

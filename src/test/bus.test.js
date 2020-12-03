@@ -72,7 +72,7 @@ describe('Bus CRUD tesing', async () => {
       .set('auth', token)
       .send(updateMockBus);
     expect(res.status).to.be.equal(200);
-    expect(res.body.message).to.be.equal('Bus updated successfully');
+    expect(res.body.message).to.be.equal('Bus info updated successfully');
     expect(res.body.success).to.be.equal(true);
   });
   it('it should delete a bus', async () => {
@@ -90,4 +90,50 @@ describe('Bus CRUD tesing', async () => {
     expect(res.status).to.be.equal(201);
     expect(res.body.message).to.be.equal('Bus deleted successfully');
   });
+  
+  it('it should create a bus ', async () => {
+    const token = await signIn(mockAdmin);
+    const res = await chai
+      .request(app)
+      .post('/api/bus')
+      .set('auth', token)
+      .send(mockBus);
+    expect(res.status).to.be.equal(201);
+    expect(res.body.message).to.be.equal('Bus created successfully.');
+  });
+  it('it should get all info about all buses ', async () => {
+    const res = await chai
+      .request(app)
+      .get('/api/bus/busInfo')
+    expect(res.status).to.be.equal(200);
+  });
+  it('it should get one bus info', async () => {
+    const token = await signIn(mockAdmin);
+    const res3 = await chai
+      .request(app)
+      .post('/api/bus')
+      .set('auth', token)
+      .send(mockBus);
+    const busID = res3.body.Bus.id;
+    const res = await chai.request(app).get(`/api/bus/busInfo/${busID}`);
+    expect(res.status).to.be.equal(200);
+    expect(res.body.message).to.be.equal('All information you need about the bus');
+  });
+  it('it should update a bus information', async () => {
+    const token = await signIn(mockAdmin);
+    const res4 = await chai
+      .request(app)
+      .post('/api/bus')
+      .set('auth', token)
+      .send(mockBus);
+    const busID = res4.body.Bus.id;
+    const res = await chai
+      .request(app)
+      .put(`/api/bus/busInfo/${busID}`)
+      .send(updateMockBus);
+    expect(res.status).to.be.equal(200);
+    expect(res.body.message).to.be.equal('Information updated successfully');
+    expect(res.body.success).to.be.equal(true);
+  });
+
 });
