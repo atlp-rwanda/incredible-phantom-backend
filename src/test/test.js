@@ -1,5 +1,7 @@
 import mocha from 'mocha';
 import chai from 'chai';
+import jwt from 'jsonwebtoken';
+import "dotenv/config";
 import chaiHttp from 'chai-http';
 import app from '../index.js';
 
@@ -35,11 +37,17 @@ describe('get/api/patch',()=>{
     it ('it should update the password', ()=>{
 
         const data={
-        email:'fake@gmail.com',
-        password:'fakepassword'
+            email:'fake@gmail.com',
+            password:'fakepassword'
         };
+        const token = jwt.sign(
+            { id: "foundUser.id", email: "foundUser.email" },
+            process.env.JWT_KEY,
+          );
+
         chai.request(app)
         .patch('/api/users/reset')
+        .set("authorization",`Bearer ${token}`)
         .send(data)
         .end((err,response)=>{
             response.should.have.status(200)

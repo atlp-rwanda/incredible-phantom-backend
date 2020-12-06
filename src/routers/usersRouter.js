@@ -21,7 +21,7 @@ userRouter.route('/forgot').post(forgotPassword);
  *   summary: forgot password 
  *   description: creating a new password
  *   tags: 
- *      - reset password
+ *      - forgot password
  *   parameters: 
  *   - in: body
  *     name: password
@@ -35,9 +35,31 @@ userRouter.route('/forgot').post(forgotPassword);
  *    200: 
  *     description: link sent in your email
  */
-
 userRouter.route('/reset').patch(checkToken,resetPassword);
-
+/** 
+ * @swagger
+ * 
+ * /reset:
+ *  patch: 
+ *   summary: reset password 
+ *   description: creating a new password
+ *   tags: 
+ *      - reset password
+ *   parameters: 
+ *   - in: body
+ *     name: password
+ *     description: Enter your email and password
+ *     schema: 
+ *       type: object 
+ *       properties:
+ *        email: 
+ *         type: string 
+ *        password:
+ *         type: string
+ *   responses:
+ *    200: 
+ *     description: pasword updated successful
+ */
    
 userRouter.post('/signin', signin);
 userRouter.post('/verify', verifyAccount);

@@ -6,6 +6,7 @@ import swagger from 'swagger-ui-express';
 import swaggerDoc from '../documentation/swaggerDoc.json';
 import router from './routers/index';
 import nodemailer from 'nodemailer';
+import docrouter from '../documentation/swaggerDoc.js'
 
 
 config();
@@ -17,7 +18,7 @@ app.use(json());
 app.use(express.static('public'));
 
 app.use('/api/documentation', swagger.serve, swagger.setup(swaggerDoc));
-
+app.use('/api/docs',docrouter);
 app.use('/api', router);
 
 const port = process.env.PORT;
