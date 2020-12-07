@@ -134,18 +134,18 @@ export const resetPassword= async (req, res)=>{
   
   const user=await User.findOne({where:{email:email}})
   if(!user){
-    return errorRes(res,'No user found with that email address.')
+    return errorRes(res,'Sorry!No user found with that email address.')
   }else{
     const newPassword  = await bcrypt.hash(password,10, async(err,result)=>{
       if(result){
      await  User.update({password:newPassword},{where:{id:user.id}})
 
     //  await sendEmail('resetPassword',{email:user.email})
-      successRes(res,200,"Reseted Password Successfully",user)
+      successRes(res,200,"your Password is reseted Successfully",user)
       }
     })
   }}
   catch(error){
-    errorRes(res,500,'No reset!try again')
+    errorRes(res,500,'No reset!try again!')
   }
 }
