@@ -1,12 +1,11 @@
 import express from 'express';
 import assign from '../controllers/assignBusesToRoutes';
-import checkUser from '../middleware/checkUser';
 import isOperator from '../middleware/isOperator';
 import { validationBusesRoutes } from '../validations/assignmentBusesRoutes';
 import findBus from '../middleware/findBus';
 import findRoute from '../middleware/findRoute';
 
-const router = express.Router();
+export const router = express.Router();
 
 /**
 * @swagger
@@ -44,7 +43,7 @@ const router = express.Router();
 *             description: Bad request.
 * */
 
-router.patch('/assignment/:id', checkUser, isOperator, validationBusesRoutes, findBus, findRoute, assign.assignRoute);
+router.patch('/assignment/:id', isOperator, validationBusesRoutes, findBus, findRoute, assign.assignRoute);
 
 /**
 * @swagger
@@ -81,6 +80,5 @@ router.patch('/assignment/:id', checkUser, isOperator, validationBusesRoutes, fi
 *             description: No assigned bus(es) found.
 * */
 
-router.get('/assignment', checkUser, isOperator, assign.busesAssignedToRoutes);
+router.get('/assignment', isOperator, assign.busesAssignedToRoutes);
 
-export default router;
