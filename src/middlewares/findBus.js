@@ -10,6 +10,7 @@ export  const busToFind = async (req, res, next) => {
 
   if (!busToAssign) {
     return errorRes(res, 404, 'Bus not found');
+  }
   next();
 };
 

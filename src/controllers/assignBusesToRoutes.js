@@ -4,7 +4,6 @@ import { paginate } from 'paginate-info';
 import Models from '../database/models';
 import successRes from '../helpers/successHandler';
 import errorRes from '../helpers/errorHandler';
-import { async } from 'crypto-random-string';
 
 const { Op } = Sequelize;
 

@@ -1,9 +1,8 @@
 import express from 'express';
 import assign from '../controllers/assignBusesToRoutes';
-import isOperator from '../middleware/isOperator';
-import { validationBusesRoutes } from '../validations/assignmentBusesRoutes';
 import findBus from '../middleware/findBus';
 import findRoute from '../middleware/findRoute';
+import { isAdminOrOperator } from '../middlewares/isAdminOrOperator';
 
 export const router = express.Router();
 
@@ -38,12 +37,12 @@ export const router = express.Router();
 *                 type: integer
 *     responses:
 *       '201':
-*             description: The bus was assign to a route successfully.
+*             description: The bus was assigned to a route successfully.
 *       '400':
 *             description: Bad request.
 * */
 
-router.patch('/assignment/:id', isOperator, validationBusesRoutes, findBus, findRoute, assign.assignRoute);
+router.patch('/assignment/:id', isAdminOrOperator, validationBusesRoutes, findBus, findRoute, assign.assignRoute);
 
 /**
 * @swagger
@@ -80,5 +79,5 @@ router.patch('/assignment/:id', isOperator, validationBusesRoutes, findBus, find
 *             description: No assigned bus(es) found.
 * */
 
-router.get('/assignment', isOperator, assign.busesAssignedToRoutes);
+router.get('/assignment', isAdminOrOperator, assign.busesAssignedToRoutes);
 
