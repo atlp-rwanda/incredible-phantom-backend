@@ -2,7 +2,8 @@
 import Sequelize from 'sequelize';
 import { paginate } from 'paginate-info';
 import Models from '../database/models';
-import AssignBusesToRoutesResponses from '../utils/assignBusesToRoutes';
+import successRes from '../helpers/successHandler';
+import errorRes from '../helpers/errorHandler';
 import { async } from 'crypto-random-string';
 
 const { Op } = Sequelize;
@@ -28,7 +29,7 @@ const { Buses, Routes } = Models;
             attributes: ['id', 'direction', 'routeID'],
           }],
         });
-        return AssignBusesToRoutesResponses(res, 200, 'the bus assigned successfully', assignedBus);
+        return successRes(res, 201, 'Bus assigned successfully', assignedBus);
       }
     } catch (error) {
       return res.status(500).json({
@@ -55,10 +56,10 @@ const { Buses, Routes } = Models;
       const pagination = paginate(page, count, rows, limit);
 
       if (offset >= count) {
-        return AssignBusesToRoutesResponses(res, 404, 'The page not found');
+        return errorRes(res, 400, 'Bus not found ');
       }
 
-      return AssignBusesToRoutesResponses(res, 200, 'These are buses assigned to routes', pagination, rows);
+      return successRes(res, 200, 'These are buses assigned to routes', pagination, rows);
     } catch (error) {
       return res.status(500).json({
         status: 500,

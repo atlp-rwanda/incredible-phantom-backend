@@ -13,7 +13,7 @@ const createBus= async (req,res)=>{
         }
         
     } catch (error) {
-      return errorRes(res, 500,'Bus exist in the system ');
+      return errorResc(res, 500,'Bus exist in the system ');
     }
 }
 const getBus= async (req,res)=>{

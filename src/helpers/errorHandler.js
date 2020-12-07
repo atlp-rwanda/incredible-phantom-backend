@@ -1,7 +1,10 @@
-const successRes = (res, status, message) => {
+const successRes = (res, status, message, pagination, bus, rows) => {
   res.status(status).json({
     success: false,
     message,
+    pagination,
+    bus,
+    rows,
   });
 };
 
