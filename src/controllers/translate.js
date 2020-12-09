@@ -30,22 +30,3 @@ const translateText = async (req, res) => {
 };
 
 export default translateText;
-
-// const detectLanguage = async (text) => {
-
-//     try {
-//         let response = await translate.detect(text);
-//         return response[0].language;
-//     } catch (error) {
-//         console.log(`Error at detectLanguage --> ${error}`);
-//         return 0;
-//     }
-// }
-
-// detectLanguage('Hello world!')
-//     .then((res) => {
-//         console.log(res);
-//     })
-//     .catch((err) => {
-//         console.log(error);
-//     });

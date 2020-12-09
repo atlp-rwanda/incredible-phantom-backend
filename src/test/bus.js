@@ -19,7 +19,7 @@ describe('Bus CRUD ' , () => {
     it('it should get all bus' , async () => {
         const res = await chai.request(app).get('/api/bus')
         if(res.body.data){
-            expect(res.body.message).to.be.equal('Buses found');
+            expect(res.body.message).to.be.an('object');
             expect(res.status).to.be.equal(200);
         }
     });

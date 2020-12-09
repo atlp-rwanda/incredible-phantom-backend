@@ -2,4 +2,5 @@ node_modules
 .nyc_output
 .env
 build
-.DS_STORE
+.DS_Store
+.dccache

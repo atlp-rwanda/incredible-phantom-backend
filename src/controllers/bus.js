@@ -1,6 +1,6 @@
 import successRes from '../helpers/successHandler';
 import errorRes from '../helpers/errorHandler';
-
+import { paginate } from 'paginate-info'
 import model from '../database/models';
 const {Bus}=model;
 export const createBus = async (req,res)=>{
@@ -17,20 +17,25 @@ export const createBus = async (req,res)=>{
       
     }
 }
-export const getBus= async (req,res)=>{
+export const getBus = async (req, res) => {
     try {
-        const bus=await Bus.findAll();
-        return successRes(res, 200, 'Buses found', bus);
-
+      const { query: { page = 1, limit = 10 } } = req;
+      const offset = (page - 1) * limit;
+      const { rows, count } = await Bus.findAndCountAll({
+        page,
+        limit,
+        offset,
+      });
+      const pagination = paginate(page, count, rows, limit);
+  
+      if (offset >= count) {
+        errorRes(res,401,'There are no buses registered in the system')
+      }
+      return successRes(res,200,pagination,rows)
     } catch (error) {
-        return res.status(400).send({
-            status: 400,
-            message: error.message,
-          });
-        
+      return errorRes(res,400,error)
     }
-
-}
+  };
 export const getOneBus= async (req,res)=>{
     try {
         const { id } = req.params;
@@ -45,23 +50,6 @@ export const getOneBus= async (req,res)=>{
     }
 
 }
-// const updateBus = async (req, res) => {
-//     try {
-//       const id = req.params.id;
-//       const [updated] = await Bus.update(req.body, {
-//         where: { id: id },
-//       });
-//       if (updated) {
-//         const updatedBus = await Bus.findOne({ where: { id: id } });
-//         return successRes(res, 200, 'Bus updated successfully', updatedBus);
-        
-//       }
-//       return errorRes(res, 404, 'Bus not found ');
-//     } catch (error) {
-//       return res.status(500).send(error.message);
-//     }
-//   };
-
 export const updateBus = async (req,res) => {
   try{
       const busID = req.params;
@@ -88,15 +76,16 @@ export const deleteBus = async (req,res)=>{
     try {
       
         const id=req.params.id;
+        const deletedBus = await Bus.findOne({where:  {id} });
         const bus= await  Bus.destroy({
             where: { id },
           });
         if(bus){
-          return successRes(res, 200, 'Bus deleted successfully', bus);
+          return successRes(res, 200, 'Bus deleted successfully',deletedBus);
         }
         return errorRes(res, 404, 'Bus not found ');
     } catch (error) {
-      return res.status(500).send(error.message);
+      return errorRes(res,500,error)
     }
 }
 
