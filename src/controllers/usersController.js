@@ -53,6 +53,7 @@ export const register = async (req, res) => {
     }
   } catch (error) {
     return errorRes(res, 500, 'There was an error while registering a user');
+
   }
 };
 

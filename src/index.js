@@ -25,12 +25,20 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api', router);
-
+app.get('/TrackBuses', function(req, res){
+  res.sendFile(__dirname + '/index.html');
+});
 const port = process.env.PORT;
 const server=app.listen(port, console.log(`Server started on port ${port}`));
 const io=socket(server)
+const BusesInfo= 'I am tracking buses!'
 io.on('connection', (socket) => {
   console.log('User connected');
+  socket.emit('sendToUser', { Bus: `${BusesInfo}` });
+     
+    socket.on('receivedFromUser', function (data) {
+        console.log(data);
+    });
   socket.on("disconnect", () => {
       console.log("user disconnected");
     });
