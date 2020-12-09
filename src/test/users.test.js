@@ -5,7 +5,7 @@ import { config } from 'dotenv';
 import chaiHttp from 'chai-http';
 import app from '../index';
 import Models from '../database/models';
-import { mockAdmin, mockUser, wrongPwd } from './mocks/mockUsers';
+import { mockAdmin, mockOperator, mockUser, wrongPwd } from './mocks/mockUsers';
 
 config();
 
@@ -24,7 +24,7 @@ const siginIn = async (user) => {
 describe('Users Related Tests', async () => {
   beforeEach(async () => {
     await User.destroy({
-      where: { email: { [Op.not]: 'admin@gmail.com' } },
+      where: { email: { [Op.not]: ['admin@gmail.com', 'operator@gmail.com'] } },
     });
     await Role.destroy({
       where: {},
@@ -33,7 +33,7 @@ describe('Users Related Tests', async () => {
   });
   afterEach(async () => {
     await User.destroy({
-      where: { email: { [Op.not]: 'admin@gmail.com' } },
+      where: { email: { [Op.not]: ['admin@gmail.com', 'operator@gmail.com'] } },
     });
   });
 
@@ -42,7 +42,7 @@ describe('Users Related Tests', async () => {
       .request(app)
       .post('/api/users/signin')
       .send(wrongPwd);
-    expect(res.status).to.be.equal(500);
+    expect(res.status).to.be.equal(400);
     expect(res.body).to.have.property('message', 'Incorrect password');
   });
 
@@ -51,6 +51,15 @@ describe('Users Related Tests', async () => {
     const res = await chai.request(app).get('/api/users').set('auth', token);
     expect(res.status).to.be.equal(200);
     expect(res.body).to.have.property('message', 'Successfully got All users');
+  });
+  it('Should Get all Users as Operator', async () => {
+    const token = await siginIn(mockOperator);
+    const res = await chai.request(app).get('/api/users').set('auth', token);
+    expect(res.status).to.be.equal(200);
+    expect(res.body).to.have.property(
+      'message',
+      'Successfully got All drivers',
+    );
   });
 
   it('Should Register a User', async () => {
@@ -73,6 +82,27 @@ describe('Users Related Tests', async () => {
       'message',
       'User created Successfully and email was sent',
     );
+  });
+
+  it('Should Not Register a User (validation error)', async () => {
+    const token = await siginIn(mockAdmin);
+
+    await chai
+      .request(app)
+      .post('/api/roles')
+      .send({ role: 'operator' })
+      .set('auth', token);
+
+    const res = await chai
+      .request(app)
+      .post('/api/users')
+      .send({
+        firstName: 'tester1',
+      })
+      .set('auth', token);
+
+    expect(res.status).to.be.equal(500);
+    expect(res.body).to.have.property('message');
   });
 
   it('Should Comfirm User email', async () => {
@@ -99,5 +129,15 @@ describe('Users Related Tests', async () => {
       'message',
       'Successfully verfied your Email.',
     );
+  });
+
+  it('Should Logout a User', async () => {
+    const token = await siginIn(mockAdmin);
+    const res = await chai
+      .request(app)
+      .post('/api/users/logout')
+      .set('auth', token);
+    expect(res.status).to.be.equal(200);
+    expect(res.body).to.have.property('message', 'Logged out successfully');
   });
 });

@@ -11,7 +11,11 @@ export const mockAdmin = {
   email: 'admin@gmail.com',
   password: '123abc',
 };
+export const mockOperator = {
+  email: 'operator@gmail.com',
+  password: '123abc',
+};
 export const wrongPwd = {
   email: 'admin@gmail.com',
-  password: '123ab2',
+  password: '123ab278',
 };

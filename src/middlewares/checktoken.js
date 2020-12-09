@@ -1,25 +1,37 @@
-import jwt from 'jsonwebtoken';
+import redisClient from '../configs/redisClient';
 import errorRes from '../helpers/errorHandler';
 import Models from '../database/models';
 
 const { User } = Models;
 export default async (req, res, next) => {
   try {
-    const token = req.headers.auth?.split(' ')[1];
+    const token = req.headers.auth.split(' ')[1];
 
-    if (!token) return errorRes(res, 401, 'Please login first');
+    if (!token) {
+      return errorRes(
+        res,
+        401,
+        res.__('Please login first or check the token you are sending.'),
+      );
+    }
 
-    const decoded = jwt.verify(token, process.env.JWT_KEY);
+    redisClient.get(token, async (err, reply) => {
+      if (err || !reply) {
+        return errorRes(
+          res,
+          401,
+          res.__('You are not allowed. Check Your token'),
+        );
+      }
+      const user = await User.findOne({ where: { id: reply } });
 
-    if (!decoded) return errorRes(res, 404, 'Unauthorized');
-
-    const user = await User.findOne({ where: { id: decoded.id } });
-
-    if (!user) return errorRes(res, 404, 'User Not Authorized');
-    req.user = decoded;
-
-    return next();
+      if (!user) {
+        return errorRes(res, 401, res.__('User not found in the database '));
+      }
+      req.user = user;
+      return next();
+    });
   } catch (error) {
-    return errorRes(res, 401, 'Not Authorized');
+    return errorRes(res, 401, res.__('Not authorized. No token provided'));
   }
 };

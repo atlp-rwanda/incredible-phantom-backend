@@ -1,36 +1,71 @@
 import jwt from 'jsonwebtoken';
 import { config } from 'dotenv';
 import nodemailer from 'nodemailer';
+import Mailgen from 'mailgen';
 
 config();
-const { EMAIL, PASS, JWT_KEY, PORT } = process.env;
+const { EMAIL, PASS, JWT_KEY, HOST } = process.env;
 
 const sendEmail = async (type, data = {}) => {
   try {
+    const mailGenerator = new Mailgen({
+      theme: 'default',
+      product: {
+        name: 'Phantom',
+        link: `${process.env.HOST}`,
+      },
+    });
+
     const token = jwt.sign(data, JWT_KEY, { expiresIn: '8h' });
     const transporter = nodemailer.createTransport({
       host: 'smtp.gmail.com',
       port: 587,
       secure: false,
       auth: {
-        user: EMAIL, // generated ethereal user
-        pass: PASS, // generated ethereal password
+        user: EMAIL,
+        pass: PASS,
       },
     });
     const mailOptions = {
-      from: '"Phantom" atlpincredible@gmail.com ', // sender address
-      to: `${data.email}`, // list of receivers
-      subject: `${type}`, // Subject line
+      to: `${data.email}`,
+      subject: `${type}`,
+      html: '',
     };
-
+    let email = '';
     switch (type) {
       case 'comfirmation':
-        mailOptions.html = `<h1>Welcome to Phantom  ${data.name}, Enjoy your new role</h1>`;
+        email = {
+          body: {
+            name: 'John Appleseed',
+            intro:
+              'Welcome to Phantom! You have successfully Verified Your email. Enjoy Your New role',
+            outro:
+              "Need help, or have questions? Just reply to this email, we'd love to help.",
+          },
+        };
+
+        mailOptions.html = mailGenerator.generate(email);
+
         break;
       case 'verify':
-        mailOptions.html = `<h1>verify your email</h1>
-        <p>Your Password is <h2>${data.password}</h2></p>
-         <a href='http://localhost:${PORT}/users/verify/${token}'>click here to verify your Account</a><h2>Remember if you dont do it this link will expire in 1day</h2></p>`;
+        email = {
+          body: {
+            name: data.name,
+            intro: `Welcome to Phantom! We're very excited to have you on board. Your Password is: <h1>${data.password}</h1> `,
+            action: {
+              instructions: 'Click the button below to verify your Email',
+              button: {
+                color: '#008c52',
+                text: 'Confirm your Email',
+                link: `${HOST}/users/verify/${token}`,
+              },
+            },
+            outro:
+              "Remember, if you don't do it this link will expire in 1day.",
+          },
+        };
+
+        mailOptions.html = mailGenerator.generate(email);
         break;
 
       default:
