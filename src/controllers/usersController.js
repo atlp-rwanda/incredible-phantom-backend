@@ -52,6 +52,7 @@ export const register = async (req, res) => {
     }
   } catch (error) {
     return errorRes(res, 500, 'There was an error while registering a user');
+
   }
 };
 
@@ -78,6 +79,7 @@ export const getAll = async (req, res) => {
   try {
     const users = await User.findAll();
     successRes(res, 200, 'Successfully got All users', users);
+    
   } catch (error) {
     return errorRes(res, 500, 'There was an error while getting all a user');
   }
