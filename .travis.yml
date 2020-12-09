@@ -10,10 +10,11 @@ notifications:
   email: false
 services:
   - postgresql
+  - redis-server
 before_script:
   - psql -c 'create database phantom_test;' -U postgres
   - npm run build
 script:
-  - npm run test
+  - npm run coverage
 after_success:
   - npm run coveralls

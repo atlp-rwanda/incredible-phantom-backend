@@ -5,7 +5,7 @@ export default Joi.object({
   lastName: Joi.string().min(2).max(64).required(),
   password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')),
   nationalId: Joi.number().min(16).required(),
-  language: Joi.string(),
+  language: Joi.string().default('en'),
   phone: Joi.string().min(10).max(13),
   role: Joi.string().required(),
   email: Joi.string()

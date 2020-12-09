@@ -5,6 +5,7 @@ import morgan from 'morgan';
 import { config } from 'dotenv';
 import i18n from './controllers/i18n';
 import router from './routers/index';
+import successRes from './helpers/successHandler';
 import docRouter from './documentation/index';
 
 config();
@@ -13,11 +14,12 @@ const app = express();
 app.use(morgan('dev'));
 app.use(cors());
 app.use(json());
+app.use(express.static('public'));
 app.use(i18n.init);
 app.use('/api/documentation', docRouter);
 
 app.get('/', (req, res) => {
-  res.status(200).json('Welcome to Phantom ');
+  successRes(res, 200, res.__('Welcome to Phantom'));
 });
 
 app.use('/api', router);

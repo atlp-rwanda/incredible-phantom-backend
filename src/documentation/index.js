@@ -27,7 +27,7 @@ const spec = {
         url: 'https://incredible-phantom.herokuapp.com',
       },
       {
-        url: 'https://incredible-p-ft-registe-3svvwj.herokuapp.com',
+        url: 'https://incredible-p-ft-reset-p-wmaxgt.herokuapp.com',
       },
     ],
   },

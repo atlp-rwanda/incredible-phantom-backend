@@ -4,6 +4,7 @@ import {
   getAll,
   signin,
   verifyAccount,
+  logout,
 } from '../controllers/usersController';
 import checktoken from '../middlewares/checktoken';
 import { isNotDriver, validateRegisterInput } from '../middlewares/validator';
@@ -62,13 +63,16 @@ const userRouter = Router();
  *       - Users
  *     name: Get all
  *     summary: Getting all Users(Admin  and operator are allowed only)
+ *     consumes:
+ *       - application/json
  *     produces:
  *       - application/json
-
  *     parameters:
  *       - name: auth
  *         in: header
  *         description: Token you get after signin
+ *         required: true
+ *         type: string
  *     responses:
  *       '200':
  *             description:  Users fetched successfully.
@@ -139,5 +143,30 @@ userRouter.post('/signin', signin);
  * */
 
 userRouter.put('/verify/:id', verifyAccount);
+
+/**
+ * @swagger
+ * /api/users/logout:
+ *   post:
+ *     tags:
+ *       - Users
+ *     name: Logout
+ *     summary: Logout from account
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: auth
+ *         in: header
+ *         description: The token you get after signin
+ *     responses:
+ *       '200':
+ *             description: Logged out successfully .
+ *       '401':
+ *             description: User not found
+ *       '500':
+ *             description: There was an error while logging out
+ * */
+
+userRouter.post('/logout', checktoken, logout);
 
 export default userRouter;
