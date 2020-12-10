@@ -11,6 +11,28 @@ import checktoken from '../middlewares/checkpasstoken';
 import { isNotDriver, validateRegisterInput } from '../middlewares/validator';
 
 const userRouter = Router();
+/** 
+ * @swagger
+ * 
+ * /forgot:
+ *  post: 
+ *   summary: forgot password 
+ *   description: creating a new password
+ *   tags: 
+ *      - forgot password
+ *   parameters: 
+ *   - in: body
+ *     name: password
+ *     description: Enter your email
+ *     schema: 
+ *       type: object 
+ *       properties:
+ *        email: 
+ *         type: string 
+ *   responses:
+ *    200: 
+ *     description: link sent in your email
+ */
 userRouter.route('/forgot').post(forgotPassword);
 userRouter.route('/reset').patch(checktoken,resetPassword);
 /**
