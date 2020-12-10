@@ -5,7 +5,7 @@ import translation from '../controllers/i18n';
 
 import rolesRouter from './rolesRouter';
 import userRouter from './usersRouter';
-import translation from '../controllers/i18n';
+
 
 const router = Router();
 

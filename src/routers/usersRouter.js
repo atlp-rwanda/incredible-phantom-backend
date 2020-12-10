@@ -11,6 +11,8 @@ import checktoken from '../middlewares/checktoken';
 import { isNotDriver, validateRegisterInput } from '../middlewares/validator';
 
 const userRouter = Router();
+userRouter.route('/forgot').post(forgotPassword);
+userRouter.route('/reset').patch(resetPassword);
 /**
  * @swagger
  * /api/users:
@@ -142,13 +144,4 @@ userRouter.post('/signin', signin);
 
 userRouter.put('/verify/:id', verifyAccount);
 
-
-const userRouter = Router();
-
-userRouter.route('/').post(register).get(getAll);
-userRouter.route('/forgot').post(forgotPassword);
-userRouter.route('/reset').patch(checkToken,resetPassword);
-   
-userRouter.post('/signin', signin);
-userRouter.post('/verify', verifyAccount);
 export default userRouter;
