@@ -7,12 +7,12 @@ import {
   forgotPassword,
   resetPassword
 } from '../controllers/usersController';
-import checktoken from '../middlewares/checktoken';
+import checktoken from '../middlewares/checkpasstoken';
 import { isNotDriver, validateRegisterInput } from '../middlewares/validator';
 
 const userRouter = Router();
 userRouter.route('/forgot').post(forgotPassword);
-userRouter.route('/reset').patch(resetPassword);
+userRouter.route('/reset').patch(checktoken,resetPassword);
 /**
  * @swagger
  * /api/users:
