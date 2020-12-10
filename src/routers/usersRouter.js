@@ -34,6 +34,30 @@ const userRouter = Router();
  *     description: link sent in your email
  */
 userRouter.route('/forgot').post(forgotPassword);
+/** 
+ * @swagger
+ * 
+ * /reset:
+ *  patch: 
+ *   summary: reset password 
+ *   description: creating a new password
+ *   tags: 
+ *      - reset password
+ *   parameters: 
+ *   - in: body
+ *     name: password
+ *     description: Enter your email and password
+ *     schema: 
+ *       type: object 
+ *       properties:
+ *        email: 
+ *         type: string 
+ *        password:
+ *         type: string
+ *   responses:
+ *    200: 
+ *     description: pasword updated successful
+ */
 userRouter.route('/reset').patch(checktoken,resetPassword);
 /**
  * @swagger
