@@ -11,6 +11,16 @@
   "rules": {
     "no-console": "off",
     "newline-per-chained-call": "off",
-    "no-underscore-dangle": "off"
+    "no-underscore-dangle": "off",
+    "comma-dangle": [
+      "error",
+      {
+        "arrays": "never",
+        "objects": "never",
+        "imports": "never",
+        "exports": "never",
+        "functions": "never"
+      }
+    ]
   }
 }

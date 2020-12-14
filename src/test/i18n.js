@@ -14,7 +14,7 @@ describe('Testing translations', () => {
     expect(res.status).to.be.equal(200);
     expect(res.body).to.have.property(
       'message',
-      'Bienvenue dans Phantom, une application utilisée pour suivre les bus',
+      'Bienvenue dans Phantom, une application utilisée pour suivre les bus'
     );
   });
   it('it should translate the welcoming message to kinyarwanda', async () => {
@@ -22,7 +22,7 @@ describe('Testing translations', () => {
     expect(res.status).to.be.equal(200);
     expect(res.body).to.have.property(
       'message',
-      'Murakza neza kuri phantom igufasha kureba ingendo za bus yawe',
+      'Murakaza neza kuri phantom igufasha kureba ingendo za bus yawe'
     );
   });
 });

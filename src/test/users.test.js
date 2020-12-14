@@ -13,7 +13,6 @@ chai.use(chaiHttp);
 
 const { it, describe, beforeEach, afterEach } = mocha;
 const { expect } = chai;
-
 const { User, Role } = Models;
 
 const siginIn = async (user) => {
