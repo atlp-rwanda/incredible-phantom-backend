@@ -13,7 +13,7 @@ import {
   mockUpdate,
   noNameFound,
   emptyFirstname,
-  emptyLastname
+  emptyLastname,
 } from './mocks/mockUsers';
 
 config();
@@ -32,16 +32,16 @@ const siginIn = async (user) => {
 describe('Users Related Tests', async () => {
   beforeEach(async () => {
     await User.destroy({
-      where: { email: { [Op.not]: ['admin@test.test', 'operator@test.test'] } }
+      where: { email: { [Op.not]: ['admin@test.test', 'operator@test.test'] } },
     });
     await Role.destroy({
       where: {},
-      truncate: true
+      truncate: true,
     });
   });
   afterEach(async () => {
     await User.destroy({
-      where: { email: { [Op.not]: ['admin@test.test', 'operator@test.test'] } }
+      where: { email: { [Op.not]: ['admin@test.test', 'operator@test.test'] } },
     });
   });
 
@@ -104,7 +104,7 @@ describe('Users Related Tests', async () => {
       .request(app)
       .post('/api/users')
       .send({
-        firstName: 'tester1'
+        firstName: 'tester1',
       })
       .set('auth', token);
 
@@ -163,7 +163,7 @@ describe('Users Related Tests', async () => {
       .set('auth', token);
 
     const res1 = await request(app).post('/api/users/forgot').send({
-      email: res.body.data.email
+      email: res.body.data.email,
     });
 
     const resetToken = res1.body.data.split('reset/')[1];

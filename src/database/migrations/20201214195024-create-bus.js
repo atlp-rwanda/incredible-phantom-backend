@@ -24,6 +24,9 @@ module.exports = {
         type: Sequelize.INTEGER,
         defaultValue: 0,
       },
+      routeID: {
+        type: Sequelize.INTEGER,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

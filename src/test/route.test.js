@@ -63,7 +63,11 @@ describe('Route tesing', async () => {
   });
   it('it should add a bus stop to a route', async () => {
     const token = await signIn(mockAdmin);
-    await chai.request(app).post('/api/busStop').send(mockBusStop).set('auth', token);
+    await chai
+      .request(app)
+      .post('/api/busStop')
+      .send(mockBusStop)
+      .set('auth', token);
     const route = await chai.request(app).get('/api/route').set('auth', token);
     const routeId = route.body.data[0].routeID;
     const stop = await chai.request(app).get('/api/busStop').set('auth', token);

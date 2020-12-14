@@ -52,7 +52,7 @@ export const register = async (req, res) => {
 
     await User.update(
       { verficationLink, resetLink },
-      { where: { id: user.id } },
+      { where: { id: user.id } }
     );
 
     await sendEmail('verify', {
@@ -65,13 +65,13 @@ export const register = async (req, res) => {
       res,
       201,
       res.__('User created Successfully and email was sent'),
-      user,
+      user
     );
   } catch (error) {
     return errorRes(
       res,
       500,
-      res.__('There was an error while registering a user'),
+      res.__('There was an error while registering a user')
     );
   }
 };
@@ -91,7 +91,7 @@ export const verifyAccount = async (req, res) => {
     return errorRes(
       res,
       500,
-      res.__('There was error while verfing your Account'),
+      res.__('There was error while verfing your Account')
     );
   }
 };
@@ -118,7 +118,7 @@ export const getAll = async (req, res) => {
     return errorRes(
       res,
       500,
-      res.__('There was an error while getting all a user'),
+      res.__('There was an error while getting all a user')
     );
   }
 };
@@ -145,6 +145,7 @@ export const signin = async (req, res) => {
       }
     });
   } catch (error) {
+    console.log(error);
     return errorRes(res, 500, res.__('There was error while signining in'));
   }
 };
@@ -170,7 +171,7 @@ export const forgotPassword = async (req, res) => {
       return errorRes(
         res,
         404,
-        res.__('No user found with that email address.'),
+        res.__('No user found with that email address.')
       );
     }
     const token = signToken({ email: user.email, id: user.id });
@@ -185,7 +186,7 @@ export const forgotPassword = async (req, res) => {
       res,
       200,
       res.__('check your email'),
-      `${HOST}/api/users/reset/${token}`,
+      `${HOST}/api/users/reset/${token}`
     );
   } catch (error) {
     return errorRes(res, 500, res.__('error while requesting!'));
@@ -202,18 +203,18 @@ export const resetPassword = async (req, res) => {
       return errorRes(
         res,
         500,
-        res.__('Sorry. You are not allowed to reset password on that email'),
+        res.__('Sorry. You are not allowed to reset password on that email')
       );
     }
     const newPassword = await hashPwd(password);
     const updateUser = await User.update(
       { password: newPassword },
-      { where: { id: user.id } },
+      { where: { id: user.id } }
     );
     successRes(
       res,
       200,
-      res.__('your Password is reset Successfully', updateUser),
+      res.__('your Password is reset Successfully', updateUser)
     );
     const delTok = await deleteToken(token);
     if (!delTok) errorRes(res, 500, res.__('error while clearing your data'));
@@ -221,7 +222,7 @@ export const resetPassword = async (req, res) => {
     return errorRes(
       res,
       500,
-      res.__('There was an error while reseting password'),
+      res.__('There was an error while reseting password')
     );
   }
 };

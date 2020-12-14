@@ -5,9 +5,9 @@ import userRouter from './usersRouter';
 import routes from './routes';
 import busStop from './busStops';
 import busRouter from './busRouter';
+import assignments from './assignBuses';
 
 const router = Router();
-
 /**
  * @swagger
  * /api:
@@ -32,10 +32,11 @@ const router = Router();
  * */
 router.get('/', welcome);
 router.use('/roles', rolesRouter);
+router.use('/bus', busRouter);
 router.use('/busStop', busStop);
 router.use('/route', routes);
-
 router.use('/users', userRouter);
 
 router.use('/bus', busRouter);
+router.use('/assignments', assignments);
 export default router;

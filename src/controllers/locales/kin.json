@@ -79,5 +79,12 @@
   "Bus deleted successfully": "Bisi yasibwe neza",
   "Bus not found ": "Bisi ntiboneka ",
   "Bus already exists in the system.": "Bisi isanzwe ibitse muri sisitemu.",
-  "Bus created successfully.": "Bus created successfully."
+  "Bus created successfully.": "Bus created successfully.",
+  "Bus assigned to route successfully": "Bus yashizwe munzira neza",
+  "That bus is not registered": "Iyo bisi ntabwo yanditswe",
+  "That route is not found": "Iyo nzira ntabwo iboneka",
+  "there was an error while assigning bus": "habaye ikosa mugihe utanga bisi",
+  "This page does not exist": "Uru rupapuro ntirubaho",
+  "These are  buses assigned to routes": "Izi ni bisi zahawe inzira",
+  "there was an error while getting all assigned buses": "habaye ikosa mugihe kubona bisi zose zahawe"
 }
