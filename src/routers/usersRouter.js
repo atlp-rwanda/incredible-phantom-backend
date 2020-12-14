@@ -6,7 +6,7 @@ import {
   verifyAccount,
   forgotPassword,
   resetPassword,
-  logout,
+  logout
 } from '../controllers/usersController';
 import checktoken from '../middlewares/checktoken';
 import { isNotDriver, validateRegisterInput } from '../middlewares/validator';
