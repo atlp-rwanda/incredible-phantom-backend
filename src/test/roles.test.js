@@ -10,7 +10,9 @@ config();
 
 chai.use(chaiHttp);
 
-const { it, describe, beforeEach, afterEach } = mocha;
+const {
+  it, describe, beforeEach, afterEach,
+} = mocha;
 const { expect } = chai;
 
 const { Role } = Models;

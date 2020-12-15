@@ -62,5 +62,7 @@
 	"One bus stop":"Un arrêts de bus",
 	"Bus stop updated successfully":"Arrêt de bus mis à jour avec succès",
 	"One of the bus stops has the same information":"L'un des arrêts de bus a les mêmes informations",
-	"bus stop deleted":"arrêt de bus supprimé"
+	"bus stop deleted":"arrêt de bus supprimé",
+  "User Updated": "Utilisateur mis à jour",
+  "There was an error while updating the User": "Une erreur s'est produite lors de la mise à jour de l'utilisateur"
 }

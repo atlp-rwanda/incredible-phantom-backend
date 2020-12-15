@@ -2,6 +2,7 @@ import errorRes from '../helpers/errorHandler';
 import RegisterValidator from '../validators/userValidator';
 import validateBusStop from '../validators/busStopValidator';
 import validateRoute from '../validators/routeValidator';
+import UpdateValidator from '../validators/updateValidator';
 import Models from '../database/models';
 
 const { User } = Models;
@@ -62,7 +63,19 @@ export const validateRouteInput = (req, res, next) => {
     return errorRes(
       res,
       500,
-      res.__(`Validation error: ${error.details[0].message.replace(/"/g, '')}`)
+      res.__(`Validation error: ${error.details[0].message.replace(/"/g, '')}`),
+    );
+  }
+  return next();
+};
+
+export const validateUpdateInput = (req, res, next) => {
+  const { error } = UpdateValidator.validate(req.body);
+  if (error) {
+    return errorRes(
+      res,
+      400,
+      res.__(`Validation error: ${error.details[0].message.replace(/"/g, '')}`),
     );
   }
   return next();

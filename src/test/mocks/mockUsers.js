@@ -19,3 +19,31 @@ export const wrongPwd = {
   email: 'admin@test.test',
   password: '123ab278',
 };
+export const mockUpdate = {
+  firstName: 'tester2',
+  lastName: 'tester3',
+  phone: '0935045502',
+  language: 'en',
+};
+
+export const noNameFound = {
+  role: 'driver',
+  phone: '0785464542',
+  language: 'en',
+};
+
+export const emptyFirstname = {
+  firstName: '',
+  lastName: 'Andy',
+  role: 'driver',
+  phone: '0785464542',
+  language: 'en',
+
+};
+export const emptyLastname = {
+  firstName: 'Ntare',
+  lastName: '',
+  role: 'driver',
+  phone: '0785464542',
+  language: 'en',
+};

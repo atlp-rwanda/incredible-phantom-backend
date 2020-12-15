@@ -65,5 +65,7 @@
   "Bus stop updated successfully": "Arete bus ihinduwe imyirondoro yayo birakozwe",
   "One of the bus stops has the same information": "Imwe muri arete bus isanzwe ifite iyo myirondoro",
   "bus stop deleted": "Arete bus irasibwe",
-  "bus stop not found": "bus stop not found"
+  "bus stop not found": "bus stop not found",
+  "User Updated": "Umukoresha Yavuguruwe",
+  "There was an error while updating the User": "Habayeho kwibeshya mugihe cyo kuvugurura Umukoresha"
 }
