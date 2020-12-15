@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import redisClient from '../configs/redisClient';
 import errorRes from '../helpers/errorHandler';
 import Models from '../database/models';

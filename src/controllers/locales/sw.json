@@ -10,5 +10,7 @@
   "No token received": "Hakuna ishara iliyopokelewa",
   "No user found with that token": "Hakuna mtumiaji aliyepatikana na ishara hiyo",
   "Not authorized, check your token": "Haijaruhusiwa, angalia tokeni yako",
-  "Sorry. You are not allowed to reset password on that email": "Samahani. Hauruhusiwi kuweka upya nywila kwenye barua pepe hiyo"
+  "Sorry. You are not allowed to reset password on that email": "Samahani. Hauruhusiwi kuweka upya nywila kwenye barua pepe hiyo",
+  "User Updated": "imesasishwa mtumiaji",
+  "There was an error while updating the User": "Kulikuwa na hitilafu wakati wa kusasisha Mtumiaji"
 }

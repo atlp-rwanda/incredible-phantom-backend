@@ -1,5 +1,10 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable consistent-return */
+/* eslint-disable no-undef */
 import bcrypt from 'bcrypt';
 import { Op } from 'sequelize';
+import jwt from 'jsonwebtoken';
+import { parse } from 'path';
 import redisClient from '../configs/redisClient';
 import successRes from '../helpers/successHandler';
 import errorRes from '../helpers/errorHandler';
@@ -218,5 +223,39 @@ export const resetPassword = async (req, res) => {
       500,
       res.__('There was an error while reseting password'),
     );
+  }
+};
+
+export const updateProfile = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const foundUser = await User.findOne({ where: { id } });
+    if (!foundUser) {
+      return errorRes(res, 404, 'User Not Found');
+    }
+    const userId = req.user.dataValues.id;
+    const userRole = req.user.dataValues.role;
+    if (userId === parseInt(id, 10) || userRole === 'admin') {
+      const {
+        firstName, lastName, role, phone, language,
+      } = req.body;
+      const updatedUser = await User.update(
+        {
+          firstName,
+          lastName,
+          role,
+          phone,
+          language,
+        },
+        { where: { id }, returning: true, plain: true },
+      );
+      const updatedResponse = updatedUser[1].dataValues;
+
+      return successRes(res, 200, res.__('User Updated'), updatedResponse);
+    }
+    return errorRes(res, 403, 'You can only update your profile');
+  } catch (error) {
+    console.log(error);
+    return errorRes(res, 500, res.__('There was an error while updating the User'));
   }
 };

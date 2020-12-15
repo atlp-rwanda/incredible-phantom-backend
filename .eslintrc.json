@@ -10,6 +10,7 @@
   },
   "rules": {
     "no-console": "off",
+    "extends": ["airbnb-base", "prettier"],
     "newline-per-chained-call": "off",
     "no-underscore-dangle": "off",
     "comma-dangle": [

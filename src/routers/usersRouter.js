@@ -6,10 +6,11 @@ import {
   verifyAccount,
   forgotPassword,
   resetPassword,
-  logout
+  logout,
+  updateProfile
 } from '../controllers/usersController';
 import checktoken from '../middlewares/checktoken';
-import { isNotDriver, validateRegisterInput } from '../middlewares/validator';
+import { isNotDriver, validateRegisterInput, validateUpdateInput } from '../middlewares/validator';
 import checkTokenreset from '../middlewares/checkpasstoken';
 
 const userRouter = Router();
@@ -233,52 +234,46 @@ userRouter.post('/logout', checktoken, logout);
 
 /**
  * @swagger
- * /api/users/logout:
- *   post:
+ * /api/users/update/{id}:
+ *   patch:
  *     tags:
  *       - Users
- *     name: Logout
- *     summary: Logout from account
+ *     name: Update
+ *     summary: Update User Profile
  *     produces:
  *       - application/json
  *     parameters:
  *       - name: auth
  *         in: header
  *         description: The token you get after signin
+ *       - name: id
+ *         in: path
+ *         description: The id of user
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               firstName:
+ *                 type: string
+ *               lastName:
+ *                 type: string
+ *               phone:
+ *                 type: string
+ *               language:
+ *                 type: string
+ *               role:
+ *                 type: string
+ *
  *     responses:
  *       '200':
- *             description: Logged out successfully .
- *       '401':
- *             description: User not found
+ *             description: Updated User .
+ *
  *       '500':
- *             description: There was an error while logging out
+ *             description: There was an error while updating the User
  * */
+userRouter.patch('/update/:id', checktoken, validateUpdateInput, updateProfile);
 
-userRouter.post('/logout', checktoken, logout);
-
-/**
- * @swagger
- * /api/users/logout:
- *   post:
- *     tags:
- *       - Users
- *     name: Logout
- *     summary: Logout from account
- *     produces:
- *       - application/json
- *     parameters:
- *       - name: auth
- *         in: header
- *         description: The token you get after signin
- *     responses:
- *       '200':
- *             description: Logged out successfully .
- *       '401':
- *             description: User not found
- *       '500':
- *             description: There was an error while logging out
- * */
-
-userRouter.post('/logout', checktoken, logout);
 
 export default userRouter;
