@@ -4,13 +4,12 @@ import {
   getBus,
   getOneBus,
   updateBus,
-  deleteBus,
+  deleteBus
 } from '../controllers/busControllers';
 import checkToken from '../middlewares/checktoken';
 import { isNotDriver, validateBusInput } from '../middlewares/validator';
-
+import { viewListOfBuses } from '../controllers/viewBuses';
 const busRouter = Router();
-
 /**
  * @swagger
  *
@@ -39,6 +38,8 @@ const busRouter = Router();
  *               type: string
  *             plateNo:
  *               type: string
+ *             driver:
+ *               type: string
  *             seats:
  *               type: integer
  *   responses:
@@ -49,8 +50,36 @@ const busRouter = Router();
  *    500:
  *     description:  Internal server error
  */
-
 busRouter.post('/', validateBusInput, checkToken, isNotDriver, createBus);
+/**
+ * @swagger
+ * /api/bus/listOfBuses?origin=value&destination=value:
+ *   get:
+ *     summary: Get Bus list on a Specific route
+ *     tags:
+ *       - Bus
+ *     parameters:
+ *         - in: query
+ *           name: origin
+ *         - in: query
+ *           name: destination
+ *         - in: query
+ *           name: lang
+ *           schema:
+ *           type: string
+ *           description: Your preferred language
+ *     name: Retrieve all Buses on a Specific route
+ *     produces:
+ *       - application/json
+ *     consumes:
+ *       - application/json
+ *     responses:
+ *       '200':
+ *             description: Buses found successfully.
+ *       '404':
+ *             description: no Bus available for this route .
+ */
+busRouter.get('/listOfBuses', viewListOfBuses);
 /**
  * @swagger
  * /api/bus:
@@ -74,7 +103,6 @@ busRouter.post('/', validateBusInput, checkToken, isNotDriver, createBus);
  *     500:
  *      description:  Internal server error
  */
-
 busRouter.get('/', getBus);
 /**
  * @swagger
@@ -102,6 +130,7 @@ busRouter.get('/', getBus);
  *      description:  Internal server error
  */
 busRouter.get('/:id', getOneBus);
+
 /**
  * @swagger
  *
@@ -131,6 +160,8 @@ busRouter.get('/:id', getOneBus);
  *               type: string
  *             plateNo:
  *               type: string
+ *             driver:
+ *               type: string
  *             seats:
  *               type: integer
  *    responses:
@@ -141,9 +172,7 @@ busRouter.get('/:id', getOneBus);
  *     500:
  *      description:  Internal server error
  */
-
 busRouter.patch('/:id', checkToken, isNotDriver, updateBus);
-
 /**
  * @swagger
  * /api/bus/{id}:
@@ -171,5 +200,4 @@ busRouter.patch('/:id', checkToken, isNotDriver, updateBus);
  *      description:  Internal server error
  */
 busRouter.delete('/:id', checkToken, isNotDriver, deleteBus);
-
 export default busRouter;
