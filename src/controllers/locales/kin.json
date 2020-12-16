@@ -67,5 +67,17 @@
   "bus stop deleted": "Arete bus irasibwe",
   "bus stop not found": "bus stop not found",
   "User Updated": "Umukoresha Yavuguruwe",
-  "There was an error while updating the User": "Habayeho kwibeshya mugihe cyo kuvugurura Umukoresha"
+  "There was an error while updating the User": "Habayeho kwibeshya mugihe cyo kuvugurura Umukoresha",
+  "Bus created successfully": "Bisi yaremwe neza",
+  "There was an error while creating a bus": "Habayeho ikosa mugihe cyo gukora bisi",
+  "There are no buses registered in the system": "Nta bisi zanditswe muri sisitemu",
+  "Bus not found": "Bisi ntiyabonetse",
+  "Bus found": "Bisi yabonetse",
+  "Bus updated successfully": "Bisi yaravuguruwe neza",
+  "Bus not updated ": "Bisi ntiyavuguruwe ",
+  "Bus not registered in the system ": "Bisi ntiyanditse muri sisitemu ",
+  "Bus deleted successfully": "Bisi yasibwe neza",
+  "Bus not found ": "Bisi ntiboneka ",
+  "Bus already exists in the system.": "Bisi isanzwe ibitse muri sisitemu.",
+  "Bus created successfully.": "Bus created successfully."
 }
