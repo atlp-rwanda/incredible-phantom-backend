@@ -97,6 +97,5 @@
   "Error Unassigning driver to bus": "Erreur lors de la désaffectation du pilote au bus",
   "We can't get that page": "Nous ne pouvons pas obtenir cette page",
   "Successfully got drivers at work": "Conducteurs au travail avec succès",
-  "Error while getting occupied drivers": "Erreur lors de l'occupation des conducteurs",
-  "Bus not updated ": "Bus not updated "
+  "Error while getting occupied drivers": "Erreur lors de l'occupation des conducteurs"
 }

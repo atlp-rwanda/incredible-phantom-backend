@@ -133,5 +133,10 @@
 	"Error while getting occupied drivers": "Error while getting occupied drivers",
 	"Bus assigned to route successfully": "Bus assigned to route successfully",
 	"Route not found": "Route not found",
-	"Bus is un-assigned to this route successfully": "Bus is un-assigned to this route successfully"
+	"Bus is un-assigned to this route successfully": "Bus is un-assigned to this route successfully",
+	"no bus available to this route": "no bus available to this route",
+	"Bus is already assigned to this route": "Bus is already assigned to this route",
+	"Bus is already un-assigned to this route": "Bus is already un-assigned to this route",
+	"route with locations not found": "route with locations not found",
+	"Buses returned successfully": "Buses returned successfully"
 }

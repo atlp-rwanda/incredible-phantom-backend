@@ -32,15 +32,9 @@ const router = Router();
  * */
 router.get('/', welcome);
 router.use('/roles', rolesRouter);
-router.use('/bus', busRouter);
 router.use('/busStop', busStop);
-router.use('/route', routes);
-router.use('/users', userRouter);
-
 router.use('/bus', busRouter);
 router.use('/assignBusToRoute', assignBusToRoute);
-router.use('/busStop', busStop);
 router.use('/route', routes);
 router.use('/users', userRouter);
-
 export default router;

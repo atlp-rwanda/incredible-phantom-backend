@@ -32,6 +32,9 @@ const spec = {
       {
         url: 'https://incredible-p-ft-assignd-satil3.herokuapp.com',
       },
+      {
+        url: 'https://incredible-p-ft-crud-fo-9mpxdj.herokuapp.com',
+      },
     ],
   },
   apis: ['./src/routers/*.js'],
