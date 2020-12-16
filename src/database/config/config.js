@@ -9,11 +9,13 @@ module.exports = {
   },
   test: {
     url: TEST_DATABASE_URL,
-    dialect: 'postgres'
+    dialect: 'postgres',
+    logging: false
   },
   production: {
     url: DATABASE_URL,
     dialect: 'postgres',
-    use_env_variable: 'DATABASE_URL'
+    use_env_variable: 'DATABASE_URL',
+    logging: false
   }
 };

@@ -4,6 +4,7 @@ import rolesRouter from './rolesRouter';
 import userRouter from './usersRouter';
 import routes from './routes';
 import busStop from './busStops';
+import busRouter from './busRouter';
 
 const router = Router();
 
@@ -36,4 +37,5 @@ router.use('/route', routes);
 
 router.use('/users', userRouter);
 
+router.use('/bus', busRouter);
 export default router;
