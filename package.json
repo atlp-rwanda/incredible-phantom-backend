@@ -62,7 +62,8 @@
     "build": "babel ./src --out-dir build",
     "start": "npm run seed && npm run build && node build",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
-    "test": "npm run seed:test && cross-env NODE_ENV=test mocha --timeout 40000 ./src/test/**.js --require @babel/register --exit",
+    "createdb": "NODE_ENV=test npx sequelize-cli db:create",
+    "test": "npm run createdb && npm run seed:test && NODE_ENV=test mocha --timeout 20000 ./src/test/**.js --require @babel/register --exit",
     "coverage": "nyc npm run test"
   },
   "repository": {

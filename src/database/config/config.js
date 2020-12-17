@@ -8,6 +8,9 @@ module.exports = {
   test: {
     url: process.env.TEST_DATABASE_URL,
     dialect: 'postgres',
+    database: 'phantom_test',
+    username: 'postgres',
+    password: 'postgres'
   },
   production: {
     url: process.env.DATABASE_URL,
