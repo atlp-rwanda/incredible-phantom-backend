@@ -18,6 +18,10 @@ jobs:
     services:
       postgres:
         image: postgres
+        env:
+          POSTGRES\_USER: postgres
+          POSTGRES\_PASSWORD: postgres
+          POSTGRES\_DB: postgres
         ports:
           - 5432:5432
       redis:
