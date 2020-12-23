@@ -79,7 +79,7 @@ describe('busStop API', () => {
       .set('auth', token)
       .send(mockRoute);
     const route = await chai.request(app).get('/api/route').set('auth', token);
-    const foundRouteId = route.body.data[0].routeID;
+    const foundRouteId = route.body.data.routes[0].routeID;
     const { busStopId } = foundBusStop.body.data[0];
     const response = await chai
       .request(app)

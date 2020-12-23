@@ -77,5 +77,18 @@
   "Bus not found ": "Bus introuvable ",
   "Internal Server Error : ": "Internal Server Error : ",
   "Bus created successfully.": "Bus created successfully.",
-  "Bus already exists in the system.": "Le bus existe déjà dans le système."
+  "Bus already exists in the system.": "Le bus existe déjà dans le système.",
+  "Bus assigned to route successfully": "Bus attribué à la route avec succès",
+  "That bus is not registered": "Ce bus n'est pas enregistré",
+  "Route not found": "Cette route n'est pas trouvée",
+  "there was an error while assigning bus": "il y a eu une erreur lors de l'attribution du bus",
+  "This page does not exist": "Cette page n'existe pas",
+  "These are  buses assigned to routes": "Ce sont des bus affectés aux routes",
+  "there was an error while getting all assigned buses": "une erreur s'est produite lors de l'obtention de tous les bus attribués",
+  "Bus is already assigned to this route": "Le bus est déjà affecté à cette route",
+  "Bus already not on certain route": "Bus déjà pas sur certaines routes",
+  "Bus is not yet assigned to any route": "Le bus n'est encore affecté à aucune route",
+  "unassigned bus from route successfully": "Autobus non attribué de la route avec succès",
+  "There was an error while unassigning bus": "Une erreur s'est produite lors de l'annulation de l'attribution du bus",
+  "Bus is un-assigned to this route successfully": "Le bus n'est pas affecté à cet itinéraire avec succès"
 }

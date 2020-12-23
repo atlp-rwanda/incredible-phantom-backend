@@ -59,23 +59,33 @@ router.post('/', checktoken, validateRouteInput, isNotDriver, createRoute);
 /**
  * @swagger
  *
- * /api/route:
+ * /api/route?page={page}&limit={limit}:
  *  get:
  *   summary: Getting all routes (admin and operator are allowed only)
  *   description: This GET request retrieves all the routes in the system
  *   tags:
  *      - Routes
  *   parameters:
- *   - in: header
- *     name: auth
- *     required: true
- *     type: string
- *     description: Enter Authorization token
- *   - in: query
- *     name: lang
- *     schema:
- *         type: string
- *     description: Your preferred language
+ *      - name: auth
+ *        in: header
+ *        description: token after signin
+ *      - in: query
+ *        name: page
+ *        required: true
+ *        type: integer
+ *        default: 1
+ *        description: Enter page number
+ *      - in: query
+ *        name: limit
+ *        required: true
+ *        type: integer
+ *        default: 5
+ *        description: Put in here the limit number of routes
+ *      - in: query
+ *        name: lang
+ *        schema:
+ *          type: string
+ *          description: Your preferred language
  *   responses:
  *    200:
  *     description: List of all Routes

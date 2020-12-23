@@ -27,7 +27,7 @@ const spec = {
         url: 'https://incredible-phantom.herokuapp.com'
       },
       {
-        url: 'https://incredible-p-ft-crud-fo-9mpxdj.herokuapp.com'
+        url: 'https://incredible-p-feat-assig-5wnz6n.herokuapp.com/'
       }
     ]
   },

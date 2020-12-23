@@ -5,42 +5,47 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.INTEGER
       },
       routeID: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        unique: true,
+        unique: true
       },
       origin: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: false
       },
       destination: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: false
       },
       distance: {
         type: Sequelize.STRING,
         allowNull: true,
-        defaultValue: '0km',
+        defaultValue: '0km'
       },
       busStops: {
         type: Sequelize.ARRAY(Sequelize.INTEGER),
         allowNull: true,
-        defaultValue: [],
+        defaultValue: []
+      },
+      assignedBuses: {
+        type: Sequelize.ARRAY(Sequelize.INTEGER),
+        allowNull: true,
+        defaultValue: []
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.DATE
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE,
-      },
+        type: Sequelize.DATE
+      }
     });
   },
   down: async (queryInterface) => {
     await queryInterface.dropTable('Routes');
-  },
+  }
 };

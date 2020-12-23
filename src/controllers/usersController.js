@@ -45,33 +45,33 @@ export const register = async (req, res) => {
       password: hash,
       verficationLink: '',
       comfirmed: false,
-      resetLink: '',
+      resetLink: ''
     });
     const verficationLink = `${process.env.HOST}/api/users/verify/${user.id}`;
     const resetLink = `${process.env.HOST}/api/users/reset/${user.id}`;
 
     await User.update(
       { verficationLink, resetLink },
-      { where: { id: user.id } },
+      { where: { id: user.id } }
     );
 
     await sendEmail('verify', {
       name: user.firstName,
       email: user.email,
       id: user.id,
-      password: generatedPwd,
+      password: generatedPwd
     });
     return successRes(
       res,
       201,
       res.__('User created Successfully and email was sent'),
-      user,
+      user
     );
   } catch (error) {
     return errorRes(
       res,
       500,
-      res.__('There was an error while registering a user'),
+      res.__('There was an error while registering a user')
     );
   }
 };
@@ -84,14 +84,14 @@ export const verifyAccount = async (req, res) => {
     await sendEmail('comfirmation', {
       name: user.firstName,
       email: user.email,
-      id,
+      id
     });
     return successRes(res, 200, res.__('Successfully verfied your Email.'));
   } catch (error) {
     return errorRes(
       res,
       500,
-      res.__('There was error while verfing your Account'),
+      res.__('There was error while verfing your Account')
     );
   }
 };
@@ -108,9 +108,9 @@ export const getAll = async (req, res) => {
       const users = await User.findAll({
         where: {
           role: {
-            [Op.or]: ['operator', 'driver'],
-          },
-        },
+            [Op.or]: ['operator', 'driver']
+          }
+        }
       });
       return successRes(res, 200, res.__('Successfully got All users'), users);
     }
@@ -118,7 +118,7 @@ export const getAll = async (req, res) => {
     return errorRes(
       res,
       500,
-      res.__('There was an error while getting all a user'),
+      res.__('There was an error while getting all a user')
     );
   }
 };
@@ -137,7 +137,7 @@ export const signin = async (req, res) => {
           successRes(res, 200, res.__('Signed in successfully'), {
             id: foundUser.id,
             email: foundUser.email,
-            token,
+            token
           });
         })();
       } else {
@@ -170,7 +170,7 @@ export const forgotPassword = async (req, res) => {
       return errorRes(
         res,
         404,
-        res.__('No user found with that email address.'),
+        res.__('No user found with that email address.')
       );
     }
     const token = signToken({ email: user.email, id: user.id });
@@ -179,13 +179,13 @@ export const forgotPassword = async (req, res) => {
     await sendEmail('forgotPassword', {
       email: user.email,
       id: user.id,
-      token,
+      token
     });
     successRes(
       res,
       200,
       res.__('check your email'),
-      `${HOST}/api/users/reset/${token}`,
+      `${HOST}/api/users/reset/${token}`
     );
   } catch (error) {
     return errorRes(res, 500, res.__('error while requesting!'));
@@ -202,18 +202,18 @@ export const resetPassword = async (req, res) => {
       return errorRes(
         res,
         500,
-        res.__('Sorry. You are not allowed to reset password on that email'),
+        res.__('Sorry. You are not allowed to reset password on that email')
       );
     }
     const newPassword = await hashPwd(password);
     const updateUser = await User.update(
       { password: newPassword },
-      { where: { id: user.id } },
+      { where: { id: user.id } }
     );
     successRes(
       res,
       200,
-      res.__('your Password is reset Successfully', updateUser),
+      res.__('your Password is reset Successfully', updateUser)
     );
     const delTok = await deleteToken(token);
     if (!delTok) errorRes(res, 500, res.__('error while clearing your data'));
@@ -221,7 +221,7 @@ export const resetPassword = async (req, res) => {
     return errorRes(
       res,
       500,
-      res.__('There was an error while reseting password'),
+      res.__('There was an error while reseting password')
     );
   }
 };
@@ -236,18 +236,16 @@ export const updateProfile = async (req, res) => {
     const userId = req.user.dataValues.id;
     const userRole = req.user.dataValues.role;
     if (userId === parseInt(id, 10) || userRole === 'admin') {
-      const {
-        firstName, lastName, role, phone, language,
-      } = req.body;
+      const { firstName, lastName, role, phone, language } = req.body;
       const updatedUser = await User.update(
         {
           firstName,
           lastName,
           role,
           phone,
-          language,
+          language
         },
-        { where: { id }, returning: true, plain: true },
+        { where: { id }, returning: true, plain: true }
       );
       const updatedResponse = updatedUser[1].dataValues;
 
@@ -255,7 +253,10 @@ export const updateProfile = async (req, res) => {
     }
     return errorRes(res, 403, 'You can only update your profile');
   } catch (error) {
-    console.log(error);
-    return errorRes(res, 500, res.__('There was an error while updating the User'));
+    return errorRes(
+      res,
+      500,
+      res.__('There was an error while updating the User')
+    );
   }
 };
