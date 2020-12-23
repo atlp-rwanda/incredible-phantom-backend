@@ -5,36 +5,39 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.INTEGER
       },
       brand: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: false
       },
       plateNo: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: true,
+        unique: true
       },
       driver: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: false
       },
       seats: {
         type: Sequelize.INTEGER,
-        defaultValue: 0,
+        defaultValue: 0
+      },
+      routeID: {
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.DATE
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE,
-      },
+        type: Sequelize.DATE
+      }
     });
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('Buses');
-  },
+  }
 };

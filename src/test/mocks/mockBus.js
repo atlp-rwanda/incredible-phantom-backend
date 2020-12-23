@@ -10,3 +10,10 @@ export const updateMockBus = {
   driver: 'updateTest',
   seats: 30
 };
+
+export const assigBusMock = {
+  brand: 'test',
+  plateNo: 'test',
+  driver: 'test',
+  seats: 30
+};

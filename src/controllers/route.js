@@ -1,5 +1,6 @@
 import cryptoRandomString from 'crypto-random-string';
 import sequelize, { Op } from 'sequelize';
+import { paginate } from 'paginate-info';
 import model from '../database/models';
 import succesRes from '../helpers/successHandler';
 import errorRes from '../helpers/errorHandler';
@@ -14,7 +15,7 @@ const createRoute = async (req, res) => {
     const existenceOfRoute = await Route.findOne({
       where: { origin, destination }
     });
-    if (!existenceOfRoute) {
+    if (existenceOfRoute === null) {
       const route = await Route.create({
         origin,
         destination,
@@ -36,11 +37,27 @@ const createRoute = async (req, res) => {
 
 const getRoute = async (req, res) => {
   try {
+    const {
+      query: { page = 1, limit = 10 }
+    } = req;
+    const offset = (page - 1) * limit;
+    const { rows, count } = await Route.findAndCountAll({
+      page,
+      limit,
+      offset
+    });
     const route = await Route.findAll();
     if (route.length === 0) {
       return errorRes(res, 404, res.__('No created routes , Please add one'));
     }
-    return succesRes(res, 200, res.__('All routes'), route);
+    const pagination = paginate(page, count, rows, limit);
+    if (offset >= count) {
+      return errorRes(res, 404, res.__('This page does not exist'));
+    }
+    return succesRes(res, 200, res.__('All routes'), {
+      pagination,
+      routes: rows
+    });
   } catch (error) {
     return errorRes(
       res,

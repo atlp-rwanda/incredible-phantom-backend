@@ -17,7 +17,7 @@ const signIn = async (user) => {
   return `Bearer ${userData.body.data.token}`;
 };
 
-describe('Route tesing', async () => {
+describe('Route testing', async () => {
   after(async () => {
     await Route.destroy({ where: { origin: 'test' } });
     await busStop.destroy({ where: { sector: 'test' } });
@@ -41,7 +41,7 @@ describe('Route tesing', async () => {
   it('it should update a route', async () => {
     const token = await signIn(mockAdmin);
     const route = await chai.request(app).get('/api/route').set('auth', token);
-    const id = route.body.data[0].routeID;
+    const id = route.body.data.routes[0].routeID;
     const res = await chai
       .request(app)
       .patch(`/api/route/${id}`)
@@ -53,7 +53,7 @@ describe('Route tesing', async () => {
   it('it should get one route', async () => {
     const token = await signIn(mockAdmin);
     const route = await chai.request(app).get('/api/route').set('auth', token);
-    const id = route.body.data[0].routeID;
+    const id = route.body.data.routes[0].routeID;
     const res = await chai
       .request(app)
       .get(`/api/route/${id}`)
@@ -63,9 +63,13 @@ describe('Route tesing', async () => {
   });
   it('it should add a bus stop to a route', async () => {
     const token = await signIn(mockAdmin);
-    await chai.request(app).post('/api/busStop').send(mockBusStop).set('auth', token);
+    await chai
+      .request(app)
+      .post('/api/busStop')
+      .send(mockBusStop)
+      .set('auth', token);
     const route = await chai.request(app).get('/api/route').set('auth', token);
-    const routeId = route.body.data[0].routeID;
+    const routeId = route.body.data.routes[0].routeID;
     const stop = await chai.request(app).get('/api/busStop').set('auth', token);
     const { busStopId } = stop.body.data[0];
     const res = await chai
@@ -81,7 +85,8 @@ describe('Route tesing', async () => {
   it('it should delete a route', async () => {
     const token = await signIn(mockAdmin);
     const route = await chai.request(app).get('/api/route').set('auth', token);
-    const id = route.body.data[0].routeID;
+
+    const id = route.body.data.routes[0].routeID;
     const res = await chai
       .request(app)
       .delete(`/api/route/${id}`)

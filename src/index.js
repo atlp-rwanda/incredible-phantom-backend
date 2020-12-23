@@ -23,8 +23,6 @@ app.get('/', (req, res) => {
   successRes(res, 200, res.__('Welcome to Phantom'));
 });
 
-
-
 const port = process.env.PORT;
 app.listen(port, console.log(`Server started on port ${port}`));
 
