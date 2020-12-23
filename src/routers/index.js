@@ -6,6 +6,7 @@ import routes from './routes';
 import busStop from './busStops';
 import busRouter from './busRouter';
 import assignBusToRoute from './assignBuses';
+// import viewListOfBuses from './viewBusesRoute';
 
 const router = Router();
 /**
@@ -33,6 +34,7 @@ const router = Router();
 router.get('/', welcome);
 router.use('/roles', rolesRouter);
 router.use('/busStop', busStop);
+// router.use('/busesOnRoute', viewListOfBuses);
 router.use('/bus', busRouter);
 router.use('/assignBusToRoute', assignBusToRoute);
 router.use('/route', routes);

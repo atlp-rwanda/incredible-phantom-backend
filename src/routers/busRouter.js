@@ -7,8 +7,8 @@ import {
   deleteBus
 } from '../controllers/busControllers';
 import checkToken from '../middlewares/checktoken';
+import { viewListOfBuses } from '../controllers/busesOnRouteContoller';
 import { isNotDriver, validateBusInput } from '../middlewares/validator';
-import { viewListOfBuses } from '../controllers/viewBuses';
 const busRouter = Router();
 /**
  * @swagger
@@ -51,35 +51,7 @@ const busRouter = Router();
  *     description:  Internal server error
  */
 busRouter.post('/', validateBusInput, checkToken, isNotDriver, createBus);
-/**
- * @swagger
- * /api/bus/listOfBuses?origin=value&destination=value:
- *   get:
- *     summary: Get Bus list on a Specific route
- *     tags:
- *       - Bus
- *     parameters:
- *         - in: query
- *           name: origin
- *         - in: query
- *           name: destination
- *         - in: query
- *           name: lang
- *           schema:
- *           type: string
- *           description: Your preferred language
- *     name: Retrieve all Buses on a Specific route
- *     produces:
- *       - application/json
- *     consumes:
- *       - application/json
- *     responses:
- *       '200':
- *             description: Buses found successfully.
- *       '404':
- *             description: no Bus available for this route .
- */
-busRouter.get('/listOfBuses', viewListOfBuses);
+
 /**
  * @swagger
  * /api/bus:
@@ -104,6 +76,39 @@ busRouter.get('/listOfBuses', viewListOfBuses);
  *      description:  Internal server error
  */
 busRouter.get('/', getBus);
+
+/**
+ * @swagger
+ * /api/bus/busesOnRoute?origin=value&destination=value:
+ *   get:
+ *     summary: Get Bus list on a Specific route
+ *     tags:
+ *       - Bus
+ *     parameters:
+ *         - in: query
+ *           name: origin
+ *           required: true
+ *         - in: query
+ *           name: destination
+ *           required: true
+ *         - in: query
+ *           name: lang
+ *           schema:
+ *           type: string
+ *           description: Your preferred language
+ *     name: Retrieve all Buses on a Specific route
+ *     produces:
+ *       - application/json
+ *     consumes:
+ *       - application/json
+ *     responses:
+ *       '200':
+ *             description: Buses found successfully.
+ *       '404':
+ *             description: no Bus available for this route .
+ */
+busRouter.get('/busesOnRoute', viewListOfBuses);
+
 /**
  * @swagger
  *
