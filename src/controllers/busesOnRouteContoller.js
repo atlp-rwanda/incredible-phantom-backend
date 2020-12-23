@@ -8,26 +8,22 @@ export const viewListOfBuses = async (req, res) => {
     const route = await Route.findAll({ where: { origin, destination } });
     if (route.length === 0) {
       return errorRes(res, 404, res.__('route with locations not found'));
-    } else {
-      const { assignedBuses } = route[0].dataValues;
-      const buses = assignedBuses.map(async (assignedBus) => {
-        const oneBus = await Bus.findOne({ where: { id: assignedBus } });
-        if (oneBus !== null) {
-          return oneBus.dataValues;
-        }
-        return errorRes(res, 404, res.__('Bus not found'));
-      });
-      const response = await Promise.all(buses);
-      return successRes(
-        res,
-        200,
-        res.__('Buses on this route returned successfully'),
-        {
-          counts: response.length,
-          data: response
-        }
-      );
     }
+    const { assignedBuses } = route[0].dataValues;
+    const buses = assignedBuses.map(async (assignedBus) => {
+      const oneBus = await Bus.findOne({ where: { id: assignedBus } });
+      return oneBus.dataValues;
+    });
+    const response = await Promise.all(buses);
+    return successRes(
+      res,
+      200,
+      res.__('Buses on this route returned successfully'),
+      {
+        counts: response.length,
+        buses: response
+      }
+    );
   } catch (err) {
     return errorRes(
       res,

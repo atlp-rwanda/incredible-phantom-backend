@@ -99,5 +99,7 @@
   "Error Unassigning driver to bus": "Ikibazo mugukura umushoferi kuri bus",
   "We can't get that page": "Ntamakuru ahari",
   "Successfully got drivers at work": "Byagenze neza abshoferi bafite bus ngabo",
-  "Error while getting occupied drivers": "Ikibazo mukuzana abashoferi bafite bus"
+  "Error while getting occupied drivers": "Ikibazo mukuzana abashoferi bafite bus",
+  "route with  locations not found": " Uwo icyo kerekezo cy'umuhanda ntikiboneka",
+  "no bus available to this route": "Nta modoka iboneka kuri uno muhanda"
 }

@@ -5,7 +5,7 @@ import {
   oneRoute,
   updateRoute,
   deleteRoute,
-  addBusStop,
+  addBusStop
 } from '../controllers/route';
 import checktoken from '../middlewares/checktoken';
 import { isNotDriver, validateRouteInput } from '../middlewares/validator';
