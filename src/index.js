@@ -12,10 +12,9 @@ import socket from './utils/socket.io';
 config();
 const app = express();
 
-app.use(morgan('dev'));
 app.use(cors());
+app.use(morgan('dev'));
 app.use(json());
-app.use(express.static('public'));
 app.use(express.static('simulateSockets'));
 app.use(i18n.init);
 app.use('/api/documentation', docRouter);
