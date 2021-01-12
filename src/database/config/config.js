@@ -6,17 +6,18 @@ module.exports = {
   development: {
     url: DEV_DATABASE_URL,
     dialect: 'postgres',
-    logging: false
+    logging: false,
   },
   test: {
     url: TEST_DATABASE_URL,
     dialect: 'postgres',
-    logging: false
+    logging: false,
   },
   production: {
     url: DATABASE_URL,
     dialect: 'postgres',
     use_env_variable: 'DATABASE_URL',
-    logging: false
-  }
+    logging: false,
+    ssl: true,
+  },
 };

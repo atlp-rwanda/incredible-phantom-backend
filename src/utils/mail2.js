@@ -55,7 +55,7 @@ const sendEmail = async (type, data = {}, busInfo) => {
               button: {
                 color: '#008c52',
                 text: 'Confirm your Email',
-                link: `${HOST}/users/verify/${token}`,
+                link: `${HOST}/verify/?${token}`,
               },
             },
             outro:
@@ -75,7 +75,7 @@ const sendEmail = async (type, data = {}, busInfo) => {
               button: {
                 color: '#008c52',
                 text: 'Reset your password',
-                link: `${HOST}/api/users/reset/${data.token}`,
+                link: `${HOST}/reset/?${data.token}`,
               },
             },
             outro:
