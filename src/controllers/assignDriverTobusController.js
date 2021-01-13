@@ -19,7 +19,7 @@ const checkDriverExistence = async (res, driverId) => {
     email: driver.email,
     id: driver.id,
     name: driver.firstName,
-    busId: driver.busId,
+    busId: driver.busId
   };
   return data;
 };
@@ -29,7 +29,7 @@ const checkBusExistence = async (res, busId) => {
   if (!searchBus) errorRes(res, 404, res.__('The bus does not exit'));
   const busInfo = {
     plate: searchBus.plateNo,
-    brand: searchBus.brand,
+    brand: searchBus.brand
   };
   return busInfo;
 };
@@ -38,7 +38,7 @@ const sendNotification = async (user, content) => {
   await Notification.create({
     is_read: false,
     content,
-    receiverId: user.id,
+    receiverId: user.id
   });
 };
 
@@ -57,12 +57,12 @@ export const assignDriverToBus = async (req, res) => {
 
     await sendNotification(
       driver,
-      `You are assigned to bus: Plate no:${busInfo.plate} Brand: ${busInfo.brand}`,
+      `You are assigned to bus: Plate no:${busInfo.plate} Brand: ${busInfo.brand}`
     );
 
     const afterAssignment = await User.findOne({
       where: { id: driverId },
-      include: ['bus', 'notifications'],
+      include: ['bus', 'notifications']
     });
     await sendEmail('assignment', driver, busInfo);
     emitter.emit('request created', '');
@@ -71,7 +71,7 @@ export const assignDriverToBus = async (req, res) => {
       res,
       200,
       res.__('Assigned Driver to a bus successfully'),
-      afterAssignment,
+      afterAssignment
     );
   } catch (error) {
     return errorRes(res, 500, res.__('Error assigning driver to bus'));
@@ -86,19 +86,19 @@ export const unAssignDriverToBus = async (req, res) => {
       return errorRes(
         res,
         400,
-        res.__('Driver already unassigned to this bus'),
+        res.__('Driver already unassigned to this bus')
       );
     }
     await User.update({ busId: null }, { where: { id: driverId } });
 
     await sendNotification(
       driver,
-      'You are Unassigned to the bus you were driving',
+      'You are Unassigned to the bus you were driving'
     );
 
     const afterUnassignment = await User.findOne({
       where: { id: driverId },
-      include: ['notifications'],
+      include: ['notifications']
     });
     await sendEmail('unassignment', driver);
 
@@ -108,7 +108,7 @@ export const unAssignDriverToBus = async (req, res) => {
       res,
       200,
       res.__('UnAssigned Driver to bus successfully'),
-      afterUnassignment,
+      afterUnassignment
     );
   } catch (error) {
     return errorRes(res, 500, res.__('Error Unassigning driver to bus'));
@@ -124,7 +124,7 @@ export const driversAssignedTobus = async (req, res) => {
       limit,
       where: { busId: { [Op.ne]: null } },
       include: ['bus'],
-      order: [['updatedAt', 'DESC']],
+      order: [['updatedAt', 'DESC']]
     });
     const pagination = paginate(page, count, rows, limit);
 
@@ -134,7 +134,7 @@ export const driversAssignedTobus = async (req, res) => {
 
     return successRes(res, 200, res.__('Successfully got drivers at work'), {
       pagination,
-      rows,
+      rows
     });
   } catch (error) {
     return errorRes(res, 500, res.__('Error while getting occupied drivers'));

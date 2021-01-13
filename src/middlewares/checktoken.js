@@ -12,7 +12,7 @@ export default async (req, res, next) => {
       return errorRes(
         res,
         401,
-        res.__('Please login first or check the token you are sending.'),
+        res.__('Please login first or check the token you are sending.')
       );
     }
 
@@ -21,7 +21,7 @@ export default async (req, res, next) => {
         return errorRes(
           res,
           401,
-          res.__('You are not allowed. Check Your token'),
+          res.__('You are not allowed. Check Your token')
         );
       }
       const user = await User.findOne({ where: { id: reply } });

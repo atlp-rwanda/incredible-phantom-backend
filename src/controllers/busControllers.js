@@ -143,7 +143,6 @@ export const busesInfo = async (req, res) => {
       response
     );
   } catch (error) {
-    
     errorRes(res, 500, res.__('error occured!Try again'));
   }
 };

@@ -122,6 +122,51 @@ export const getAll = async (req, res) => {
   }
 };
 
+export const getOne = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const user = await User.findOne({
+      where: { id: userId },
+      attributes: [
+        'id',
+        'firstName',
+        'lastName',
+        'nationalId',
+        'phone',
+        'email',
+        'role'
+      ]
+    });
+
+    if (!user) {
+      return errorRes(res, 404, res.__('User not found'));
+    }
+    return successRes(res, 200, res.__('Successfully got a user'), user);
+  } catch (error) {
+    return errorRes(res, 500, res.__('There was a server error'));
+  }
+};
+
+export const deleteOne = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const user = await User.findOne({
+      where: { id: userId }
+    });
+
+    if (!user) {
+      return errorRes(res, 404, res.__('User not found'));
+    }
+    await user.destroy({
+      where: { id: userId }
+    });
+
+    return successRes(res, 200, res.__('Successfully deleted a user'), user);
+  } catch (error) {
+    return errorRes(res, 500, res.__('There was a server error'));
+  }
+};
+
 export const signin = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -144,7 +189,7 @@ export const signin = async (req, res) => {
       }
     });
   } catch (error) {
-    return errorRes(res, 500, res.__('There was error while signining in'));
+    return errorRes(res, 500, res.__('there was an error on server, try again'));
   }
 };
 

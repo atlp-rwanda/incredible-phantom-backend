@@ -11,22 +11,24 @@ import {
   allNotifications,
   readOneNotification,
   deleteNotification,
+  getOne,
+  deleteOne
 } from '../controllers/usersController';
 import checktoken from '../middlewares/checktoken';
 import {
   isNotDriver,
   validateRegisterInput,
-  validateUpdateInput,
+  validateUpdateInput
 } from '../middlewares/validator';
 import checkTokenreset from '../middlewares/checkpasstoken';
 import {
   assignDriverToBus,
   driversAssignedTobus,
-  unAssignDriverToBus,
+  unAssignDriverToBus
 } from '../controllers/assignDriverTobusController';
-
+import checkOwner from '../middlewares/checkOwnerToken';
 const userRouter = Router();
-userRouter.route('/reset').patch(checktoken,resetPassword);
+userRouter.route('/reset').patch(checktoken, resetPassword);
 /**
  * @swagger
  * /api/users:
@@ -328,7 +330,7 @@ userRouter.patch(
   '/:driverId/assignToBus',
   checktoken,
   isNotDriver,
-  assignDriverToBus,
+  assignDriverToBus
 );
 
 /**
@@ -363,7 +365,7 @@ userRouter.patch(
   '/:driverId/unAssignToBus',
   checktoken,
   isNotDriver,
-  unAssignDriverToBus,
+  unAssignDriverToBus
 );
 
 /**
@@ -397,7 +399,7 @@ userRouter.get(
   '/driversAssignedToBuses',
   checktoken,
   isNotDriver,
-  driversAssignedTobus,
+  driversAssignedTobus
 );
 
 /**
@@ -463,7 +465,7 @@ userRouter.get('/notifications', checktoken, allNotifications);
 userRouter.get(
   '/notifications/:notificationId',
   checktoken,
-  readOneNotification,
+  readOneNotification
 );
 
 /**
@@ -501,7 +503,77 @@ userRouter.get(
 userRouter.delete(
   '/notifications/:notificationId',
   checktoken,
-  deleteNotification,
+  deleteNotification
 );
+
+/**
+ * @swagger
+ *
+ * /api/users/{userID}:
+ *  delete:
+ *   summary: Deleting a user(admin and operator are allowed only)
+ *   description: This DELETE request deletes a user from the system permanently
+ *   tags:
+ *      - Users
+ *   parameters:
+ *    - in: header
+ *      name: auth
+ *      required: true
+ *      type: string
+ *      description: Enter Authorization token
+ *    - in: path
+ *      name: userID
+ *      required: true
+ *      type: string
+ *      description: Enter User ID to delete
+ *    - in: query
+ *      name: lang
+ *      schema:
+ *        type: string
+ *      description: Your preferred language
+ *   responses:
+ *    200:
+ *     description: User deleted successfully
+ *    404:
+ *     description: User not found :(
+ *    500:
+ *     description: Internal server error
+ */
+
+userRouter.delete('/:userId', [checktoken, isNotDriver, checkOwner], deleteOne);
+
+/**
+ * @swagger
+ *
+ * /api/users/{userID}:
+ *  get:
+ *    summary: Getting one user
+ *    description: This GET request retrieves one user based on the assigned ID
+ *    tags:
+ *    - Users
+ *    parameters:
+ *    - name: auth
+ *      in: header
+ *      description: Token you get after signin
+ *    - in: path
+ *      name: userID
+ *      required: true
+ *      type: integer
+ *      description: Enter user ID
+ *    - in: query
+ *      name: lang
+ *      schema:
+ *      type: string
+ *      description: Your preferred language
+ *    responses:
+ *     200:
+ *      description: One User
+ *     404:
+ *      description: User not found :(
+ *     500:
+ *      description:  Internal server error
+ */
+
+userRouter.get('/:userId', [checktoken, checkOwner], getOne);
 
 export default userRouter;

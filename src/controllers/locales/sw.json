@@ -13,11 +13,14 @@
   "Sorry. You are not allowed to reset password on that email": "Samahani. Hauruhusiwi kuweka upya nywila kwenye barua pepe hiyo",
   "User Updated": "imesasishwa mtumiaji",
   "There was an error while updating the User": "Kulikuwa na hitilafu wakati wa kusasisha Mtumiaji",
-  "route with  locations not found":"njia na maeneo hayakupatikana",
-  "no bus available to this route":"hakuna basi inayopatikana kwa njia hii",
-  "All information you need about the bus":"Habari yote unayohitaji juu ya basi",
-  "error occured!Try again":"kosa limetokea! Jaribu tena",
-  "No Bus is found!":"Hakuna Basi inayopatikana!",
-  "recent Information about the Bus":"Habari za hivi karibuni juu ya Basi",
-  "failed to update":"imeshindwa kusasisha"
+  "route with  locations not found": "njia na maeneo hayakupatikana",
+  "no bus available to this route": "hakuna basi inayopatikana kwa njia hii",
+  "All information you need about the bus": "Habari yote unayohitaji juu ya basi",
+  "error occured!Try again": "kosa limetokea! Jaribu tena",
+  "No Bus is found!": "Hakuna Basi inayopatikana!",
+  "recent Information about the Bus": "Habari za hivi karibuni juu ya Basi",
+  "failed to update": "imeshindwa kusasisha",
+  "Successfully got a user": "Imefanikiwa kupata mtumiaji",
+  "There was a server error": "Kulikuwa na hitilafu ya seva",
+  "Cannot find user with given id": "Haiwezi kupata mtumiaji aliye na kitambulisho kilichopewa"
 }

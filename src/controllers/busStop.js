@@ -10,14 +10,14 @@ const createBusStop = async (req, res) => {
     const { coordinates, sector, cell } = req.body;
     const createdBusStopId = cryptoRandomString({ length: 5, type: 'numeric' });
     const searchBusStopId = await busStop.findOne({
-      where: { busStopId: createdBusStopId, coordinates },
+      where: { busStopId: createdBusStopId, coordinates }
     });
     if (!searchBusStopId) {
       const Stop = await busStop.create({
         coordinates,
         sector,
         cell,
-        busStopId: createdBusStopId,
+        busStopId: createdBusStopId
       });
       return succesRes(res, 201, res.__('Bus stop created successfully'), Stop);
     }
@@ -26,7 +26,7 @@ const createBusStop = async (req, res) => {
     return errorRes(
       res,
       500,
-      res.__('Internal server error : ') + error.message,
+      res.__('Internal server error : ') + error.message
     );
   }
 };
@@ -42,7 +42,7 @@ const getBusStops = async (req, res) => {
     return errorRes(
       res,
       500,
-      res.__('Internal server error : ') + error.message,
+      res.__('Internal server error : ') + error.message
     );
   }
 };
@@ -59,7 +59,7 @@ const oneStop = async (req, res) => {
     return errorRes(
       res,
       500,
-      res.__('Internal server error : ') + error.message,
+      res.__('Internal server error : ') + error.message
     );
   }
 };
@@ -68,7 +68,7 @@ const updateBusStop = async (req, res) => {
   try {
     const { busStopId } = req.params;
     const searchBusStopExistence = await busStop.findOne({
-      where: { busStopId },
+      where: { busStopId }
     });
     if (searchBusStopExistence) {
       await busStop.update(req.body, { where: { busStopId } });
@@ -77,7 +77,7 @@ const updateBusStop = async (req, res) => {
         res,
         200,
         res.__('Bus stop updated successfully'),
-        updatedBusStop,
+        updatedBusStop
       );
     }
     return errorRes(res, 404, res.__('bus stop not found :('));
@@ -93,7 +93,7 @@ const deleteBusStop = async (req, res) => {
     if (busStopToDelete) {
       await busStop.destroy({ where: { busStopId } });
       const route = await Route.findAll({
-        where: { busStops: { [Op.contains]: [busStopId] } },
+        where: { busStops: { [Op.contains]: [busStopId] } }
       });
       route.forEach(async (foundRoute) => {
         const foundRouteId = foundRoute.dataValues.routeID;
@@ -102,10 +102,10 @@ const deleteBusStop = async (req, res) => {
             busStops: sequelize.fn(
               'array_remove',
               sequelize.col('busStops'),
-              busStopId,
-            ),
+              busStopId
+            )
           },
-          { where: { routeID: foundRouteId } },
+          { where: { routeID: foundRouteId } }
         );
       });
       return succesRes(res, 200, res.__('bus stop deleted'), busStopToDelete);
@@ -115,7 +115,7 @@ const deleteBusStop = async (req, res) => {
     return errorRes(
       res,
       500,
-      res.__('Internal server error : ') + error.message,
+      res.__('Internal server error : ') + error.message
     );
   }
 };
