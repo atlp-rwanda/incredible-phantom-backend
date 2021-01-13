@@ -7,7 +7,7 @@ i18n.configure({
   autoReload: true,
   defaultLocale: 'en',
   headers: 'Accept-Language',
-  queryParameter: 'lang',
+  queryParameter: 'lang'
 });
 
 export default i18n;

@@ -13,7 +13,7 @@ import {
   mockUpdate,
   noNameFound,
   emptyFirstname,
-  emptyLastname,
+  emptyLastname
 } from './mocks/mockUsers';
 config();
 chai.use(chaiHttp);
@@ -27,16 +27,16 @@ const siginIn = async (user) => {
 describe('Users Related Tests', async () => {
   beforeEach(async () => {
     await User.destroy({
-      where: { email: { [Op.not]: ['admin@test.test', 'operator@test.test'] } },
+      where: { email: { [Op.not]: ['admin@test.test', 'operator@test.test'] } }
     });
     await Role.destroy({
       where: {},
-      truncate: true,
+      truncate: true
     });
   });
   afterEach(async () => {
     await User.destroy({
-      where: { email: { [Op.not]: ['admin@test.test', 'operator@test.test'] } },
+      where: { email: { [Op.not]: ['admin@test.test', 'operator@test.test'] } }
     });
   });
   it(' Should not sign in Incorect password', async () => {
@@ -91,7 +91,7 @@ describe('Users Related Tests', async () => {
       .request(app)
       .post('/api/users')
       .send({
-        firstName: 'tester1',
+        firstName: 'tester1'
       })
       .set('auth', token);
     expect(res.status).to.be.equal(500);
@@ -140,7 +140,7 @@ describe('Users Related Tests', async () => {
       .send(mockUser)
       .set('auth', token);
     const res1 = await request(app).post('/api/users/forgot').send({
-      email: res.body.data.email,
+      email: res.body.data.email
     });
     const resetToken = res1.body.data.split('reset/')[1];
     const res2 = await chai
@@ -210,5 +210,26 @@ describe('Users Related Tests', async () => {
       .send(emptyLastname)
       .set('auth', token);
     expect(res.status).to.be.equal(400);
+  });
+
+  it('Should Get one User', async () => {
+    const token = await siginIn(mockAdmin);
+    const res = await chai
+      .request(app)
+      .get(`/api/users/${3}`)
+      .set('auth', token);
+    expect(res.status).to.be.equal(200);
+    expect(res.body).to.have.property('message', 'Successfully got a user');
+  });
+
+  it('Should Delete one User', async () => {
+    const token = await siginIn(mockAdmin);
+    const res = await chai
+      .request(app)
+      .delete(`/api/users/${3}`)
+      .send(mockUser)
+      .set('auth', token);
+    expect(res.status).to.be.equal(200);
+    expect(res.body).to.have.property('message', 'Successfully deleted a user');
   });
 });

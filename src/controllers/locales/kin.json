@@ -102,9 +102,14 @@
   "Error while getting occupied drivers": "Ikibazo mukuzana abashoferi bafite bus",
   "route with  locations not found": " Uwo icyo kerekezo cy'umuhanda ntikiboneka",
   "no bus available to this route": "Nta modoka iboneka kuri uno muhanda",
-  "All information you need about the bus":"Amakuru ya Bisi ukeneye",
-  "error occured!Try again":"habayemo ikibazo!Ongera ugerageze",
-  "No Bus is found!":"Bisi ntibashije kuboneka",
-  "recent Information about the Bus":"Amakuru yabisi ahigeze",
-  "failed to update":"Habayemo Ikibazo"
+  "All information you need about the bus": "Amakuru ya Bisi ukeneye",
+  "error occured!Try again": "habayemo ikibazo!Ongera ugerageze",
+  "No Bus is found!": "Bisi ntibashije kuboneka",
+  "recent Information about the Bus": "Amakuru yabisi ahigeze",
+  "failed to update": "Habayemo Ikibazo",
+  "Cannot find user with given id": "Ntushobora kubona umukoresha ufite id",
+  "Successfully got a user": "Byemeye kubona umukoresha",
+  "There was a server error": "Habayeho ikosa rya seriveri",
+  "Successfully deleted a user": "Successfully deleted a user",
+  "Not authorized": "Not authorized"
 }

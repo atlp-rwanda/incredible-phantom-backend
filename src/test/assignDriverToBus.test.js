@@ -19,7 +19,7 @@ const siginIn = async (user) => {
   const userData = await chai.request(app).post('/api/users/signin').send(user);
   const data = {
     id: userData.body.data.id,
-    token: `Bearer ${userData.body.data.token}`,
+    token: `Bearer ${userData.body.data.token}`
   };
   return data;
 };
@@ -80,7 +80,7 @@ describe('Assigning driver to route related tests', async () => {
     const notification = await Notification.create({
       is_read: false,
       content: 'test not',
-      receiverId: driverId,
+      receiverId: driverId
     });
 
     const res = await chai
@@ -98,7 +98,7 @@ describe('Assigning driver to route related tests', async () => {
     const notification = await Notification.create({
       is_read: false,
       content: 'test not',
-      receiverId: driverId,
+      receiverId: driverId
     });
     const res = await chai
       .request(app)
@@ -107,7 +107,7 @@ describe('Assigning driver to route related tests', async () => {
     expect(res.status).to.be.equal(200);
   });
 
-  it('Should get a list of driver assignment to buses ang get 404 when it none  ', async () => {
+  it('Should get a list of driver assignment to buses and get 404 when it none  ', async () => {
     const userData = await siginIn(mockAdmin);
     const token = userData.token;
 
@@ -115,7 +115,6 @@ describe('Assigning driver to route related tests', async () => {
       .request(app)
       .get('/api/users/driversAssignedToBuses')
       .set('auth', token);
-
     expect(res.status).to.be.equal(404);
   });
 });
