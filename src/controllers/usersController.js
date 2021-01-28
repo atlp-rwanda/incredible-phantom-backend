@@ -171,7 +171,8 @@ export const signin = async (req, res) => {
   try {
     const { email, password } = req.body;
     const foundUser = await User.findOne({ where: { email } });
-    if (!foundUser) return errorRes(res, 404, res.__('User  Not found '));
+    if (!foundUser)
+      return errorRes(res, 400, res.__('Incorrect Email or Password '));
 
     await bcrypt.compare(password, foundUser.password, (err, result) => {
       if (result) {
@@ -185,11 +186,15 @@ export const signin = async (req, res) => {
           });
         })();
       } else {
-        return errorRes(res, 400, res.__('Incorrect password'));
+        return errorRes(res, 400, res.__('Incorrect Email or password'));
       }
     });
   } catch (error) {
-    return errorRes(res, 500, res.__('there was an error on server, try again'));
+    return errorRes(
+      res,
+      500,
+      res.__('there was an error on server, try again')
+    );
   }
 };
 
