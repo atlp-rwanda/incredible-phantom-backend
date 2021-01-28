@@ -45,7 +45,7 @@ describe('Users Related Tests', async () => {
       .post('/api/users/signin')
       .send(wrongPwd);
     expect(res.status).to.be.equal(400);
-    expect(res.body).to.have.property('message', 'Incorrect password');
+    expect(res.body).to.have.property('message', 'Incorrect Email or password');
   });
   it('Should Get all Users as Admin', async () => {
     const token = await siginIn(mockAdmin);

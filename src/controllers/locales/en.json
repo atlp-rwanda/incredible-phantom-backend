@@ -149,6 +149,7 @@
   "failed to update": "failed to update",
   "Information updated successfully": "Information updated successfully",
   "Bus info updated successfully": "Bus info updated successfully",
+  "Incorrect Email or password": "Incorrect Email or password",
   "There was a server error": "There was a server error",
   "Successfully got a user": "Successfully got a user",
   "Cannot find user with given id": "Cannot find user with given id",
