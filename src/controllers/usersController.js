@@ -182,6 +182,8 @@ export const signin = async (req, res) => {
           successRes(res, 200, res.__('Signed in successfully'), {
             id: foundUser.id,
             email: foundUser.email,
+            role: foundUser.role,
+            name: foundUser.firstName,
             token
           });
         })();
