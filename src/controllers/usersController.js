@@ -10,7 +10,7 @@ import sendEmail from '../utils/mail2';
 import hashPwd from '../helpers/pwd';
 import signToken from '../helpers/signToken';
 
-const { User, Role, Notification } = Models;
+const { User, Role, Notification, Bus } = Models;
 
 const setToken = (key, value) => Promise.resolve(redisClient.set(key, value));
 const deleteToken = (key) => Promise.resolve(redisClient.del(key));
@@ -100,7 +100,10 @@ export const getAll = async (req, res) => {
     });
 
     if (signedUser.role === 'operator') {
-      const users = await User.findAll({ where: { role: 'driver' } });
+      const users = await User.findAll({
+        where: { role: 'driver' },
+        include: ['bus']
+      });
       successRes(res, 200, res.__('Successfully got All drivers'), users);
     } else {
       const users = await User.findAll({
@@ -111,6 +114,7 @@ export const getAll = async (req, res) => {
           }
         }
       });
+
       return successRes(res, 200, res.__('Successfully got All users'), users);
     }
   } catch (error) {
